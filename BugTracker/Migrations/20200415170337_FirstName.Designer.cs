@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BugTracker.Migrations
 {
     [DbContext(typeof(BugTrackerContext))]
-    [Migration("20200413030529_CustomUserData")]
-    partial class CustomUserData
+    [Migration("20200415170337_FirstName")]
+    partial class FirstName
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
