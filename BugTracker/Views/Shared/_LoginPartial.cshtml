@@ -7,7 +7,6 @@
 @inject SignInManager<BugTrackerUser> SignInManager
 @inject UserManager<BugTrackerUser> UserManager
 @inject IAuthorizationService AuthorizationService
-@inject IHttpContextAccessor _httpContextAccessor
 
 <ul class="navbar-nav">
     @if (SignInManager.IsSignedIn(User))
