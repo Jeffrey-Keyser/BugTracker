@@ -14,6 +14,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using BugTracker.Areas.Identity.Data;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using BugTracker.Extensions;
+using Microsoft.AspNetCore.Http;
 
 namespace BugTracker
 {
@@ -32,15 +34,33 @@ namespace BugTracker
             services.AddDbContext<BugTrackerContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
-            services.AddDefaultIdentity<BugTrackerUser>(options => options.SignIn.RequireConfirmedAccount = true)
-                 .AddEntityFrameworkStores<BugTrackerContext>();
-            //services.AddIdentity<IdentityUser, BugTrackerUser>(options => options.SignIn.RequireConfirmedAccount = true) // IdentityUser, BugTrackerUser
-            //     .AddEntityFrameworkStores<ApplicationDbContext>()
-            //     .AddDefaultUI()
-            //     .AddDefaultTokenProviders();
+            //services.AddDefaultIdentity<BugTrackerUser>(options => options.SignIn.RequireConfirmedAccount = true)
+            //     .AddEntityFrameworkStores<BugTrackerContext>();
+            services.AddIdentity<BugTrackerUser, IdentityRole>()// IdentityUser, BugTrackerUser
+                 .AddEntityFrameworkStores<BugTrackerContext>()
+                 .AddDefaultUI()
+                 .AddDefaultTokenProviders();
+
+            // For adding custom contexts
+            services.AddScoped<IUserClaimsPrincipalFactory<BugTrackerUser>, AdditionalUserClaimsPrincipalFactory>();
+
+            // To access current user...
+           // services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
             services.AddControllersWithViews();
             services.AddRazorPages();
+
+            // Add Google authentication
+            services.AddAuthentication()
+                .AddGoogle(options =>
+                   {
+                        IConfigurationSection googleAuthNSection =
+                        Configuration.GetSection("Authentication:Google");
+
+                        options.ClientId = googleAuthNSection["ClientId"];
+                        options.ClientSecret = googleAuthNSection["ClientSecret"];
+                   });
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
