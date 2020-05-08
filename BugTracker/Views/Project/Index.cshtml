@@ -1,0 +1,31 @@
+﻿@page
+@model IEnumerable<BugTracker.Models.Projects>
+@{
+}
+
+<div class="container row p-0 m-0">
+    <div class="col-8">
+        <h2 class="text-info">Project List</h2>
+    </div>
+    <div class="col-4">
+        <a class="btn btn-info form-control text-white">Create New Project</a>
+    </div>
+
+    
+    <div class="col-12 border p-3 mt-3">
+        <form method="post">
+            @if (1 > 0)
+            {
+                <table class="table table-striped border">
+                    <tr class="table-secondary">
+                    </tr>
+                </table>
+
+            }
+            else
+            {
+            <p> No Projects to Display! </p>
+            }
+        </form>
+    </div>
+</div>
