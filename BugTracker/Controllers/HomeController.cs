@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using BugTracker.Models;
+using System.Runtime.InteropServices.WindowsRuntime;
 
 namespace BugTracker.Controllers
 {
@@ -18,6 +19,7 @@ namespace BugTracker.Controllers
             _logger = logger;
         }
 
+        [Route("")]
         public IActionResult Index()
         {
             return View();

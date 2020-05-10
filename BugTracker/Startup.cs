@@ -48,7 +48,8 @@ namespace BugTracker
            // services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
             services.AddControllersWithViews();
-            services.AddRazorPages();
+            services.AddControllers();
+            //services.AddRazorPages();
 
             // Add Google authentication
             services.AddAuthentication()
@@ -78,7 +79,7 @@ namespace BugTracker
                 app.UseHsts();
             }
             app.UseHttpsRedirection();
-            app.UseStaticFiles();
+            //app.UseStaticFiles();
 
             app.UseRouting();
 
@@ -87,10 +88,18 @@ namespace BugTracker
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllerRoute(
+               /* endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
-                endpoints.MapRazorPages();
+
+                endpoints.MapControllerRoute(
+                    name: "project",
+                    pattern: "{controller=Project}/{action=Index}/{id?}"
+                    ); */
+                //endpoints.MapDefaultControllerRoute();
+
+                // endpoints.MapRazorPages();
+                endpoints.MapControllers();
             });
         }
     }
