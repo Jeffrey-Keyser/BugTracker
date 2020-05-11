@@ -14,8 +14,11 @@ namespace BugTracker.Models
 
         [Required]
         [Display(Name = "Project Name")]
+        [StringLength(60, MinimumLength = 3)]
         public string ProjectName { get; set; }
 
+
+        [Required]
         public string Author { get; set; }
 
     }

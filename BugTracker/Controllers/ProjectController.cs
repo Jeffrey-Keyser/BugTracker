@@ -8,6 +8,7 @@ using BugTracker.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.CodeAnalysis;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.View;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -34,28 +35,54 @@ namespace BugTracker.Controllers
             return View(await _context.Projects.ToListAsync());
         }
 
-        public IActionResult Edit(int id)
+        // First Lookup on Edit
+        public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
             {
-                return null;
+                return NotFound();
             }
 
-            Projects Project = _context.Projects.Find(id);
+            var Project = await _context.Projects.FindAsync(id);
             if (Project == null)
             {
-                return null;
+                return NotFound();
+            }
+            return View(Project);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(int id, [Bind("Id, Author, ProjectName")] Projects Project)
+        {
+            if (id != Project.Id)
+            {
+                return NotFound();
+            }
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    _context.Update(Project);
+                    await _context.SaveChangesAsync();
+                }
+                catch(DbUpdateConcurrencyException)
+                {
+                    throw;
+                }
+                return RedirectToAction(nameof(Index));
             }
             return View(Project);
         }
 
         // GET: Projects/Create
-        public IActionResult Create(Projects Project)
+        public IActionResult Create()
         {
-            return View(Project);
+            return View();
         }
 
-   /*     [HttpPost]
+        [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind ("Id, Author, ProjectName")] Projects Project)
         {
@@ -68,6 +95,37 @@ namespace BugTracker.Controllers
 
             return View(Project);
         }
-        */
+
+        public async Task<IActionResult> Delete(int? id )
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var project = await _context.Projects.FirstOrDefaultAsync(m => m.Id == id);
+            if (project == null)
+            {
+                return NotFound();
+            }
+
+            return View(project);
+        }
+
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmed(int id)
+        {
+            var Project = await _context.Projects.FindAsync(id);
+            if (Project == null)
+            {
+                return NotFound();
+            }
+
+            _context.Projects.Remove(Project);
+            await _context.SaveChangesAsync();
+            return RedirectToAction("Index");
+        }
+        
     }
 }
