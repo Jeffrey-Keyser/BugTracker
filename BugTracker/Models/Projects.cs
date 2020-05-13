@@ -21,5 +21,8 @@ namespace BugTracker.Models
         [Required]
         public string Author { get; set; }
 
+        [Required]
+        public string userId { get; set; }
+
     }
 }

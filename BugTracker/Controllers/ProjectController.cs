@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using BugTracker.Data;
 using BugTracker.Models;
@@ -32,12 +33,20 @@ namespace BugTracker.Controllers
         // GET: /<controller>/
         public async Task<IActionResult> Index()
         {
+            ClaimsPrincipal currentUser = this.User;
+            var currentUserID = currentUser.FindFirst(ClaimTypes.NameIdentifier).Value;
+            ViewBag.userId = currentUserID;
+
             return View(await _context.Projects.ToListAsync());
         }
 
         // First Lookup on Edit
         public async Task<IActionResult> Edit(int? id)
         {
+            ClaimsPrincipal currentUser = this.User;
+            var currentUserID = currentUser.FindFirst(ClaimTypes.NameIdentifier).Value;
+            ViewBag.userId = currentUserID;
+
             if (id == null)
             {
                 return NotFound();
@@ -53,7 +62,7 @@ namespace BugTracker.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id, Author, ProjectName")] Projects Project)
+        public async Task<IActionResult> Edit(int id, [Bind("Id, Author, ProjectName, userId")] Projects Project)
         {
             if (id != Project.Id)
             {
@@ -71,7 +80,7 @@ namespace BugTracker.Controllers
                 {
                     throw;
                 }
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Index");
             }
             return View(Project);
         }
@@ -79,13 +88,21 @@ namespace BugTracker.Controllers
         // GET: Projects/Create
         public IActionResult Create()
         {
+            ClaimsPrincipal currentUser = this.User;
+            var currentUserID = currentUser.FindFirst(ClaimTypes.NameIdentifier).Value;
+            ViewBag.userId = currentUserID;
+
             return View();
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind ("Id, Author, ProjectName")] Projects Project)
+        public async Task<IActionResult> Create([Bind ("Id, Author, ProjectName, userId")] Projects Project)
         {
+            ClaimsPrincipal currentUser = this.User;
+            var currentUserID = currentUser.FindFirst(ClaimTypes.NameIdentifier).Value;
+            ViewBag.userId = currentUserID;
+
             if (ModelState.IsValid)
             {
                 _context.Add(Project);

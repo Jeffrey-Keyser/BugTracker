@@ -49,7 +49,7 @@ namespace BugTracker
 
             services.AddControllersWithViews();
             services.AddControllers();
-            //services.AddRazorPages();
+            services.AddRazorPages();
 
             // Add Google authentication
             services.AddAuthentication()
@@ -79,7 +79,7 @@ namespace BugTracker
                 app.UseHsts();
             }
             app.UseHttpsRedirection();
-            //app.UseStaticFiles();
+            app.UseStaticFiles();
 
             app.UseRouting();
 
@@ -98,7 +98,7 @@ namespace BugTracker
                     ); */
                 //endpoints.MapDefaultControllerRoute();
 
-                // endpoints.MapRazorPages();
+                endpoints.MapRazorPages();
                 endpoints.MapControllers();
             });
         }
