@@ -1,0 +1,29 @@
+﻿
+@{
+    ViewData["Title"] = "Project";
+}
+
+@model BugTracker.Models.Projects;
+
+<h1>Project @Model.ProjectName</h1>
+
+<div>
+    @if (Model.TicketList != null)
+    {
+    @foreach (var item in Model.TicketList)
+    {
+        if (Model.userId == ViewBag.userId)
+        {
+            <p> One </p>
+        }
+    }
+    }
+    else
+    {
+        <p> NULL </p>
+    }
+</div>
+
+<div>
+    @Html.ActionLink("Create New Ticket", "Create", new { id = Model.Id })
+</div>

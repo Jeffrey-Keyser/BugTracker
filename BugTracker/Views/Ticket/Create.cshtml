@@ -1,0 +1,41 @@
+﻿@model BugTracker.Models.Tickets
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>Tickets</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="TicketName" class="control-label"></label>
+                <input asp-for="TicketName" class="form-control" />
+                <span asp-validation-for="TicketName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TicketDesc" class="control-label"></label>
+                <input asp-for="TicketDesc" class="form-control" />
+                <span asp-validation-for="TicketDesc" class="text-danger"></span>
+            </div>
+            <div>
+                <input type="hidden" asp-for="ProjectId" value="@ViewBag.projectId" />
+            </div>
+            <div>
+                <input type="hidden" asp-for="userId" value="@ViewBag.userId" />
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+

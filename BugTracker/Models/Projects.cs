@@ -9,6 +9,7 @@ namespace BugTracker.Models
 {
     public class Projects
     {
+
         [Key]
         public int Id { get; set; }
 
@@ -23,6 +24,9 @@ namespace BugTracker.Models
 
         [Required]
         public string userId { get; set; }
+
+        [Required]
+        public virtual ICollection<Tickets> TicketList { get; set; }
 
     }
 }

@@ -7,6 +7,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using BugTracker.Models;
 using System.Runtime.InteropServices.WindowsRuntime;
+using BugTracker.Data;
+using Microsoft.EntityFrameworkCore;
+using System.Security.Claims;
 
 namespace BugTracker.Controllers
 {
@@ -14,15 +17,25 @@ namespace BugTracker.Controllers
     {
         private readonly ILogger<HomeController> _logger;
 
-        public HomeController(ILogger<HomeController> logger)
+        // Dependency injection
+        // Inject database contents into the controller
+        private readonly BugTrackerContext _context;
+
+        public HomeController(ILogger<HomeController> logger, BugTrackerContext context)
         {
             _logger = logger;
+            _context = context;
         }
 
         [Route("")]
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            ClaimsPrincipal currentUser = this.User;
+            var currentUserID = currentUser.FindFirst(ClaimTypes.NameIdentifier).Value;
+            ViewBag.userId = currentUserID;
+
+
+            return View(await _context.Projects.ToListAsync());
         }
 
         public IActionResult Privacy()
