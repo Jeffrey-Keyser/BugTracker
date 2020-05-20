@@ -31,8 +31,13 @@ namespace BugTracker.Controllers
         public async Task<IActionResult> Index()
         {
             ClaimsPrincipal currentUser = this.User;
-            var currentUserID = currentUser.FindFirst(ClaimTypes.NameIdentifier).Value;
-            ViewBag.userId = currentUserID;
+            if (currentUser.FindFirst(ClaimTypes.NameIdentifier) != null)
+            {
+                var currentUserID = currentUser.FindFirst(ClaimTypes.NameIdentifier).Value;
+                ViewBag.userId = currentUserID;
+            }
+            else
+                ViewBag.userId = 0;
 
 
             return View(await _context.Projects.ToListAsync());

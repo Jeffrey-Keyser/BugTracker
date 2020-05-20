@@ -20,6 +20,7 @@ namespace BugTracker.Models
         public string TicketDesc { get; set; }
 
         [Required]
+        [StringLength(100)]
         public string userId { get; set; }
 
         // Associate the tickets with a projects model

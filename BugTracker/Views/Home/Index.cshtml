@@ -66,6 +66,28 @@ else
         </div>
     </div>
 
+
+    // Test TicketList..
+    @if (Model.Count() > 0)
+    {
+        @foreach (var item in Model)
+        {
+            if (item.TicketList.Count() > 0)
+            {
+                foreach (var ticket in item.TicketList)
+                {
+                    <div>
+                        @Html.DisplayFor(modelItem => ticket.TicketName)
+                    </div>
+                    <div>
+                        @Html.DisplayFor(modelItem => ticket.TicketDesc)
+                    </div>
+                }
+            }
+        }
+    }
+
+
     <div class="my-3 p-3 bg-white rounded shadow-sm">
         <h6 class="border-bottom border-gray pb-2 mb-0">Recent Tickets</h6>
         <div class="media text-muted pt-3">

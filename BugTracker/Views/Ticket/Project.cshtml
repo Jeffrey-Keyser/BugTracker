@@ -3,27 +3,50 @@
     ViewData["Title"] = "Project";
 }
 
-@model BugTracker.Models.Projects;
+@model IEnumerable<BugTracker.Models.Tickets>;
 
-<h1>Project @Model.ProjectName</h1>
+<h1>Project </h1>
 
 <div>
-    @if (Model.TicketList != null)
+    @if (Model != null)
     {
-    @foreach (var item in Model.TicketList)
-    {
-        if (Model.userId == ViewBag.userId)
+    <table class="table table-striped border">
+        <tr class="table-secondary">
+            <td>
+                <p> Ticket Name </p>
+            </td>
+            <td>
+                <p> Ticket Description </p>
+            </td>
+            <td>
+            </td>
+        </tr>
+
+        @foreach (var item in Model)
         {
-            <p> One </p>
+            // TODO: Should switch this to use TicketList in Project Model
+            if (item.userId == ViewBag.userId && item.ProjectId == ViewBag.ProjectId)
+            {
+    <tr>
+        <td>
+            @Html.ActionLink(item.TicketName, "Ticket", new { id = item.TicketId })
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TicketDesc)
+        </td>
+    </tr>
+            }
         }
-    }
-    }
-    else
-    {
+
+    </table>
+        }
+        else
+        {
         <p> NULL </p>
-    }
-</div>
+        }
+
+    </div>
 
 <div>
-    @Html.ActionLink("Create New Ticket", "Create", new { id = Model.Id })
+    @Html.ActionLink("Create New Ticket", "Create", new { id = ViewBag.ProjectId })
 </div>
