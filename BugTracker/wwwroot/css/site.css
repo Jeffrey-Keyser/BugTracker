@@ -7,6 +7,10 @@ a.navbar-brand {
   word-break: break-all;
 }
 
+
+.devicon-git-plain {
+    max-width: 2em;
+}
 /* Provide sufficient contrast against white background */
 a {
   color: #0366d6;

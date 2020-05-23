@@ -10,6 +10,8 @@
     <Compile Remove="Migrations\20200516231003_Initial.Designer.cs" />
     <Compile Remove="Migrations\20200519002353_updateUserId.cs" />
     <Compile Remove="Migrations\20200519002353_updateUserId.Designer.cs" />
+    <Compile Remove="Migrations\20200522182122_Changes.cs" />
+    <Compile Remove="Migrations\20200522182122_Changes.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

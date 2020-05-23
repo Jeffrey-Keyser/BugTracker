@@ -40,6 +40,11 @@ namespace BugTracker.Controllers
                 ViewBag.userId = 0;
 
 
+            // Pass Tickets through ViewBag
+            // TODO: Convert to TicketList
+            ViewBag.Tickets = await _context.Tickets.ToListAsync();
+
+
             return View(await _context.Projects.ToListAsync());
         }
 

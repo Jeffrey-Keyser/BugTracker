@@ -4,14 +4,16 @@ using BugTracker.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace BugTracker.Migrations
 {
     [DbContext(typeof(BugTrackerContext))]
-    partial class BugTrackerContextModelSnapshot : ModelSnapshot
+    [Migration("20200522172720_DateTimePriority")]
+    partial class DateTimePriority
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -122,7 +124,8 @@ namespace BugTracker.Migrations
                     b.Property<bool>("Completed")
                         .HasColumnType("bit");
 
-                    b.Property<DateTime>("CreationDate")
+                    b.Property<DateTime?>("CreationDate")
+                        .IsRequired()
                         .HasColumnType("datetime2");
 
                     b.Property<int>("ProjectId")
@@ -140,9 +143,6 @@ namespace BugTracker.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("TicketPriority")
-                        .HasColumnType("int");
-
-                    b.Property<int>("TicketPriorityId")
                         .HasColumnType("int");
 
                     b.Property<string>("userId")

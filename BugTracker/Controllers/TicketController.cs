@@ -7,6 +7,7 @@ using System.Security.Claims;
 using BugTracker.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace BugTracker.Controllers
 {
@@ -81,6 +82,17 @@ namespace BugTracker.Controllers
             var currentUserID = currentUser.FindFirst(ClaimTypes.NameIdentifier).Value;
             ViewBag.userId = currentUserID;
             ViewBag.projectId = id;
+            ViewBag.creationDate = DateTime.Now;
+
+            // For Priority?
+         //   ViewBag.PriorityList = new SelectList(Enum.GetValues(typeof(Priority)), "TicketPriority", "Description", 0);
+
+
+           // @Html.DropDownList("TicketPriority",
+       //             new SelectList(Enum.GetValues(typeof(Priority))),
+        //            "Select Priority",
+        //            new { @class = "form-control" })
+
 
             // Pass in the project we wish to associate with the Ticket
             if (id == null)
@@ -104,12 +116,15 @@ namespace BugTracker.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(int ? id, [Bind("TicketId, TicketName, TicketDesc, userId, ProjectId")] Tickets Ticket)
         {
-           // ClaimsPrincipal currentUser = this.User;
-          //  var currentUserID = currentUser.FindFirst(ClaimTypes.NameIdentifier).Value;
+            // 0:dd/MMM/yyyy HH:mm:ss
+            // Get Current DateTime
+            ViewBag.creationDate = DateTime.Now; //.ToString("0:dd/MMM/yyyy HH:mm:ss");
+
+
             ViewBag.userId = Ticket.userId;
             ViewBag.projectId = Ticket.ProjectId;
 
-
+            Ticket.CreationDate = DateTime.Now; //DateTime.Now.ToString("0:dd/MMM/yyyy HH:mm:ss");
             // Add the ticket to the project's TicketList
             if (Ticket.ProjectId == 0)
             {
