@@ -152,10 +152,14 @@ namespace BugTracker.Controllers
             return View(Ticket);
         }
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Complete(int id)
+        /*
+        public async Task<IActionResult> Complete(int ? id)
         {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
             var ticket = await _context.Tickets.FirstOrDefaultAsync(m => m.TicketId == id);
 
             if (ticket == null)
@@ -163,18 +167,31 @@ namespace BugTracker.Controllers
                 return NotFound();
             }
 
-            if (!ticket.Completed)
+            return View(ticket);
+        }
+        */
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Complete(int id)
+        {
+            var Ticket = await _context.Tickets.FindAsync(id);
+            if (Ticket == null)
             {
-                ticket.Completed = true;
+                return NotFound();
+            }
+
+            if (!Ticket.Completed)
+            {
+                Ticket.Completed = true;
             }
             else
             {
-                ticket.Completed = false;
+                Ticket.Completed = false;
             }
 
-            _context.Update(ticket);
+            _context.Tickets.Update(Ticket);
             await _context.SaveChangesAsync();
-            return View(ticket);
+            return RedirectToAction("Project", new { id = Ticket.ProjectId });
         }
 
         /*

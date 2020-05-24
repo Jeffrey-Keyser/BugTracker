@@ -112,7 +112,7 @@ namespace BugTracker.Controllers
 
             return View(Project);
         }
-
+        /*
         public async Task<IActionResult> Delete(int? id )
         {
             if (id == null)
@@ -128,7 +128,7 @@ namespace BugTracker.Controllers
 
             return View(project);
         }
-
+        */
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
@@ -143,6 +143,7 @@ namespace BugTracker.Controllers
             await _context.SaveChangesAsync();
             return RedirectToAction("Index");
         }
-        
+
+
     }
 }
