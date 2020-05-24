@@ -112,23 +112,7 @@ namespace BugTracker.Controllers
 
             return View(Project);
         }
-        /*
-        public async Task<IActionResult> Delete(int? id )
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
 
-            var project = await _context.Projects.FirstOrDefaultAsync(m => m.Id == id);
-            if (project == null)
-            {
-                return NotFound();
-            }
-
-            return View(project);
-        }
-        */
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
@@ -144,6 +128,17 @@ namespace BugTracker.Controllers
             return RedirectToAction("Index");
         }
 
+
+        public async Task<IActionResult> Project(int id)
+        {
+            var Project = await _context.Projects.FindAsync(id);
+            if (Project == null)
+            {
+                return NotFound();
+            }
+
+            return View(Project);
+        }
 
     }
 }

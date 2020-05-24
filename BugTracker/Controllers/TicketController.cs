@@ -114,7 +114,7 @@ namespace BugTracker.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(int ? id, [Bind("TicketId, TicketName, TicketDesc, userId, ProjectId")] Tickets Ticket)
+        public async Task<IActionResult> Create(int ? id, [Bind("TicketId, TicketName, TicketDesc, userId, ProjectId, TicketPriority")] Tickets Ticket)
         {
             // 0:dd/MMM/yyyy HH:mm:ss
             // Get Current DateTime

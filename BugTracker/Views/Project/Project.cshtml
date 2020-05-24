@@ -1,0 +1,38 @@
+﻿@model BugTracker.Models.Projects;
+
+@{
+    ViewData["Title"] = "Project";
+}
+
+<h1>Project --- @Model.ProjectName</h1>
+
+
+<div>
+    Outstanding Tickets
+    <div>
+        <table class="table table-striped border">
+            <tr class="table-secondary">
+                <td>
+                    <p> Project Name </p>
+                </td>
+                <td>
+                    <p> Author </p>
+                </td>
+                <td>
+                </td>
+            </tr>
+            @foreach (var item in Model.TicketList)
+            {
+                <tr>
+                <td>
+                    @item.TicketName
+                </td>
+                <td>
+                    @item.TicketDesc
+                </td>
+                </tr>
+            }
+            </table>
+    </div>
+</div>
+
