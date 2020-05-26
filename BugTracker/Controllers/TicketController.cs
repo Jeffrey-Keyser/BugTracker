@@ -48,6 +48,23 @@ namespace BugTracker.Controllers
                 return NotFound();
             }
 
+            String alertColor;
+            switch((int)ticket.TicketPriority)
+              {
+                case 0:  alertColor = "alert-success";
+                break;
+                case 1:  alertColor = "alert-warning";
+                break;
+                case 2:  alertColor = "alert-danger";
+                break;
+                case 3:  alertColor = "alert-primary";
+                break;
+                default: alertColor = "alert-secondary";
+                break;
+            }
+
+            ViewBag.alertColor = alertColor;
+
             return View(ticket);
         }
 

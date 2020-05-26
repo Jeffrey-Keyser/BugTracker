@@ -5,11 +5,12 @@
 
 @model IEnumerable<BugTracker.Models.Tickets>;
 
-<h1>Project </h1>
+<h3>Project </h3>
 
+<br />
 
 <div>
-    Recently Completed
+    <h1> Recently Completed </h1>
     @if (Model != null)
     {
         int num_tickets = 0;
@@ -69,8 +70,9 @@
     }
 
 </div>
-
+<br />
 <div>
+    <h1> Pending Tickets </h1>
     @if (Model != null)
     {
     <table class="table table-striped border">
@@ -90,32 +92,34 @@
             // TODO: Should switch this to use TicketList in Project Model
             if (item.userId == ViewBag.userId && item.ProjectId == ViewBag.ProjectId && !item.Completed)
             {
+
     <tr>
-        <td>
-            @Html.ActionLink(item.TicketName, "Ticket", new { id = item.TicketId })
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.TicketDesc)
-        </td>
-        <td>
-            <form method="post" action="@Url.Action("Complete", "Ticket", new { id = item.TicketId } )">
-                <div>
-                @using (Html.BeginForm("Complete", "Ticket", new { id = item.TicketId }))
-                {
-                    @Html.AntiForgeryToken()
-                    if (!item.Completed)
-                    {
-                        <button type="submit" class="btn btn-danger" value="Complete"> Not Completed </button>
-                    }
-                    else
-                    {
-                        <button type="submit" class="btn btn-success" value="Complete"> Completed </button>
-                    }
-                }
+            <td>
+                @Html.ActionLink(item.TicketName, "Ticket", new { id = item.TicketId })
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TicketDesc)
+            </td>
+            <td>
+                <form method="post" action="@Url.Action("Complete", "Ticket", new { id = item.TicketId } )">
+                    <div>
+                        @using (Html.BeginForm("Complete", "Ticket", new { id = item.TicketId }))
+                        {
+                            @Html.AntiForgeryToken()
+                            if (!item.Completed)
+                            {
+                                <button type="submit" class="btn btn-danger" value="Complete"> Not Completed </button>
+                            }
+                            else
+                            {
+                                <button type="submit" class="btn btn-success" value="Complete"> Completed </button>
+                            }
+                        }
                     </div>
-            </form>
-        </td>
+                </form>
+            </td>
     </tr>
+
             }
         }
 

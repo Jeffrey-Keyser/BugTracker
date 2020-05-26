@@ -29,5 +29,25 @@ namespace BugTracker.Models
         // TODO: FIX
         public virtual ICollection<Tickets> TicketList { get; set; } = new Collection<Tickets>();
 
+        [Required]
+        [Display(Name = "Project Programming Language")]
+        public String projectLanguage { get; set; }
     }
+
+}
+
+
+public enum programmingLanguages{
+    [Display(Name = "C#")]
+    CSharp = 0,
+    C,
+    Java,
+    Go,
+    Python,
+    JavaScript, // 5
+    Ruby,
+    Swift,
+    PHP, 
+    TypeScript, 
+    SQL // 10
 }

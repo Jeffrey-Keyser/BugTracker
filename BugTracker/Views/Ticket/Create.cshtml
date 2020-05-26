@@ -24,7 +24,6 @@
             </div>
             <div>
                @Html.DropDownListFor(Model => Model.TicketPriority, new SelectList(Enum.GetValues(typeof(Priority))), "Select a Priority")
-
             </div>
             <div>
                 <input type="hidden" asp-for="ProjectId" value="@ViewBag.projectId" />

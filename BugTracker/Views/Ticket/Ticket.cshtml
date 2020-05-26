@@ -6,31 +6,39 @@
 
 <h1>Ticket -- @Model.TicketName</h1>
 
+
 <div class="col-12 border p-3 mt-3">
-    <form method="post">
 
         <div class="col-12 p-3 mt-3">
 
             <em> Ticket Status </em>
 
 
-            @using (Html.BeginForm("Complete", "Ticket", new { id = Model.TicketId }))
-            {
-                @Html.AntiForgeryToken()
-                if (!Model.Completed)
-                {
-                    <button type="submit" class="btn btn-success" value="Complete"> Completed </button>
-                }
-                else
-                {
-                    <button type="submit" class="btn btn-danger" value="Complete"> Not Completed </button>
-                }
-            }
+            <form method="post" action="@Url.Action("Complete", "Ticket", new { id = Model.TicketId } )">
+                <div>
+                    @using (Html.BeginForm("Complete", "Ticket", new { id = Model.TicketId }))
+                    {
+                        @Html.AntiForgeryToken()
+                        if (!Model.Completed)
+                        {
+                            <button type="submit" class="btn btn-danger" value="Complete"> Not Completed </button>
+                        }
+                        else
+                        {
+                            <button type="submit" class="btn btn-success" value="Complete"> Completed </button>
+                        }
+                    }
+                </div>
+            </form>
 
         </div>
 
-    </form>
-
+    <div>
+        <h6> Ticket Priority </h6>
+        <div class="alert @ViewBag.alertColor">
+           @Model.TicketPriority
+        </div>
+    </div>
 
     </div>
 

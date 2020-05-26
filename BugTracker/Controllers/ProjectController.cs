@@ -97,7 +97,7 @@ namespace BugTracker.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind ("Id, Author, ProjectName, userId")] Projects Project)
+        public async Task<IActionResult> Create([Bind ("Id, Author, ProjectName, userId, projectLanguage")] Projects Project)
         {
             ClaimsPrincipal currentUser = this.User;
             var currentUserID = currentUser.FindFirst(ClaimTypes.NameIdentifier).Value;

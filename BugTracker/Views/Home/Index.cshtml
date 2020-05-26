@@ -11,6 +11,7 @@
 @{
     ViewData["Title"] = "Home Page";
 }
+
 @if (!SignInManager.IsSignedIn(User))
 {
     <div class="text-center">
@@ -68,7 +69,8 @@ else
         </div>
     </div>
 
-
+    // Port Code to a method in HomeController
+    /*
     var ticket1 = new Tickets();
     var ticket2 = new Tickets();
     var ticket3 = new Tickets();
@@ -122,49 +124,40 @@ else
         ticket1 = ticket2;
         ticket2 = tempT1;
     }
-
+    */
 
     <div class="my-3 p-3 bg-white rounded shadow-sm">
-        <h6 class="border-bottom border-gray pb-2 mb-0">Recent Tickets - @index</h6>
+        <h6 class="border-bottom border-gray pb-2 mb-0">Recent Tickets</h6>
 
         <div class="media text-muted pt-3">
-            <svg class="devicon-git-plain colored mr-2 rounded" height="48" width="48" viewBox="0 0 128 128">
-                <path fill="#F34F29" d="M124.742,58.378L69.625,3.264c-3.172-3.174-8.32-3.174-11.497,0L46.685,14.71l14.518,14.518c3.375-1.139,7.243-0.375,9.932,2.314c2.703,2.706,3.462,6.607,2.293,9.993L87.42,55.529c3.385-1.167,7.292-0.413,9.994,2.295c3.78,3.777,3.78,9.9,0,13.679c-3.78,3.78-9.901,3.78-13.683,0c-2.842-2.844-3.545-7.019-2.105-10.521L68.578,47.933l-0.002,34.341c0.922,0.455,1.791,1.063,2.559,1.828c3.779,3.777,3.779,9.898,0,13.683c-3.779,3.777-9.904,3.777-13.679,0c-3.778-3.784-4.088-9.905-0.311-13.683C58.079,83.169,59,82.464,60,81.992V47.333c-1-0.472-1.92-1.172-2.856-2.111c-2.861-2.86-3.396-7.06-1.928-10.576L40.983,20.333L3.229,58.123c-3.175,3.177-3.155,8.325,0.02,11.5l55.126,55.114c3.173,3.174,8.325,3.174,11.503,0l54.86-54.858C127.913,66.703,127.916,61.552,124.742,58.378z" />
-            </svg>
+            @Html.Raw(ViewBag.ticket1Image)
 
             <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-                <strong class="d-block text-gray-dark">@ticket1.TicketName</strong>
-                @ticket1.TicketDesc
+                <strong class="d-block text-gray-dark">@ViewBag.ticket1.TicketName</strong>
+                @ViewBag.ticket1.TicketDesc
             </p>
         </div>
 
         <div class="media text-muted pt-3">
-            <svg class="devicon-csharp-plain colored mr-2 rounded" height="48" width="48" viewBox="0 0 128 128">
-                <path fill="#9B4F96" d="M115.4 30.7l-48.3-27.8c-.8-.5-1.9-.7-3.1-.7-1.2 0-2.3.3-3.1.7l-48 27.9c-1.7 1-2.9 3.5-2.9 5.4v55.7c0 1.1.2 2.4 1 3.5l106.8-62c-.6-1.2-1.5-2.1-2.4-2.7z"></path>
-                <path fill="#68217A" d="M10.7 95.3c.5.8 1.2 1.5 1.9 1.9l48.2 27.9c.8.5 1.9.7 3.1.7 1.2 0 2.3-.3 3.1-.7l48-27.9c1.7-1 2.9-3.5 2.9-5.4v-55.7c0-.9-.1-1.9-.6-2.8l-106.6 62z"></path>
-                <path fill="#fff" d="M85.3 76.1c-4.2 7.4-12.2 12.4-21.3 12.4-13.5 0-24.5-11-24.5-24.5s11-24.5 24.5-24.5c9.1 0 17.1 5 21.3 12.5l13-7.5c-6.8-11.9-19.6-20-34.3-20-21.8 0-39.5 17.7-39.5 39.5s17.7 39.5 39.5 39.5c14.6 0 27.4-8 34.2-19.8l-12.9-7.6zM97 66.2l.9-4.3h-4.2v-4.7h5.1l1.2-6.2h4.9l-1.2 6.1h3.8l1.2-6.1h4.8l-1.2 6.1h2.4v4.7h-3.3l-.9 4.3h4.2v4.7h-5.1l-1.2 6h-4.9l1.2-6h-3.8l-1.2 6h-4.8l1.2-6h-2.4v-4.7h3.3zm4.8 0h3.8l.9-4.3h-3.8l-.9 4.3z"></path>
-            </svg>
-            
+            @Html.Raw(ViewBag.ticket2Image)
+
             <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-                <strong class="d-block text-gray-dark">@ticket2.TicketName</strong>
-                @ticket2.TicketDesc
+                <strong class="d-block text-gray-dark">@ViewBag.ticket2.TicketName</strong>
+                @ViewBag.ticket2.TicketDesc
             </p>
         </div>
 
         <div class="media text-muted pt-3">
-            <svg class="devicon-csharp-plain colored mr-2 rounded" height="48" width="48" viewBox="0 0 128 128">
-                <path fill="#9B4F96" d="M115.4 30.7l-48.3-27.8c-.8-.5-1.9-.7-3.1-.7-1.2 0-2.3.3-3.1.7l-48 27.9c-1.7 1-2.9 3.5-2.9 5.4v55.7c0 1.1.2 2.4 1 3.5l106.8-62c-.6-1.2-1.5-2.1-2.4-2.7z"></path>
-                <path fill="#68217A" d="M10.7 95.3c.5.8 1.2 1.5 1.9 1.9l48.2 27.9c.8.5 1.9.7 3.1.7 1.2 0 2.3-.3 3.1-.7l48-27.9c1.7-1 2.9-3.5 2.9-5.4v-55.7c0-.9-.1-1.9-.6-2.8l-106.6 62z"></path>
-                <path fill="#fff" d="M85.3 76.1c-4.2 7.4-12.2 12.4-21.3 12.4-13.5 0-24.5-11-24.5-24.5s11-24.5 24.5-24.5c9.1 0 17.1 5 21.3 12.5l13-7.5c-6.8-11.9-19.6-20-34.3-20-21.8 0-39.5 17.7-39.5 39.5s17.7 39.5 39.5 39.5c14.6 0 27.4-8 34.2-19.8l-12.9-7.6zM97 66.2l.9-4.3h-4.2v-4.7h5.1l1.2-6.2h4.9l-1.2 6.1h3.8l1.2-6.1h4.8l-1.2 6.1h2.4v4.7h-3.3l-.9 4.3h4.2v4.7h-5.1l-1.2 6h-4.9l1.2-6h-3.8l-1.2 6h-4.8l1.2-6h-2.4v-4.7h3.3zm4.8 0h3.8l.9-4.3h-3.8l-.9 4.3z"></path>
-            </svg>
+            @Html.Raw(ViewBag.ticket3Image)
+
             <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-                <strong class="d-block text-gray-dark">@ticket3.TicketName</strong>
-                @ticket3.TicketDesc
+                <strong class="d-block text-gray-dark">@ViewBag.ticket3.TicketName</strong>
+                @ViewBag.ticket3.TicketDesc
             </p>
         </div>
 
         <small class="d-block text-right mt-3">
-            <a href="#">All Tickets</a>
+           <a href="https://localhost:44364/Ticket/Index">All Tickets</a>
         </small>
     </div>
 
