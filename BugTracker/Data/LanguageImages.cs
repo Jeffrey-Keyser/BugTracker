@@ -8,6 +8,9 @@ using System.Threading.Tasks;
 // Used to load images for programming languages using the Devicon repo
 // Found at https://github.com/konpa/devicon
 
+// TODO: Switch to Relative Path
+// See GetFullPath()
+
 namespace BugTracker.Data
 {
     public class LanguageImages

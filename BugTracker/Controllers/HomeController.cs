@@ -68,7 +68,7 @@ namespace BugTracker.Controllers
                         else if (i == 1) { ViewBag.ticket2Image = c1.getC();  }
                         else if (i == 2) { ViewBag.ticket3Image = c1.getC();  }
                         break;
-                    case "Csharp":
+                    case "CSharp":
                         if (i == 0) { ViewBag.ticket1Image = c1.getCsharp(); }
                         else if (i == 1) { ViewBag.ticket2Image = c1.getCsharp(); }
                         else if (i == 2) { ViewBag.ticket3Image = c1.getCsharp(); }
@@ -239,7 +239,6 @@ namespace BugTracker.Controllers
 
             return recentTickets;
         }
-
 
     }
 }

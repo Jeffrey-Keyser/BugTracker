@@ -28,43 +28,47 @@ else
     <div class="container col-mb-12">
         Recent Projects
         <div class="container col-mb-12">
-            <table class="table table-striped border">
-                <tr class="table-secondary">
-                    <td>
-                        <p> Project Name </p>
-                    </td>
-                    <td>
-                        <p> Author </p>
-                    </td>
-                    <td>
-                    </td>
-                </tr>
-                @if (Model.Count() > 0)
-                {
-                    var display_num = 3;
-                    @foreach (var item in Model)
+            <table id="proj_table" class="display" style="width:100%">
+                <thead>
+                    <tr>
+                        <th>Project Name</th>
+                        <th>Author</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model.Count() > 0)
                     {
-                        if (display_num > 0 && item.userId == ViewBag.userId)
+                        var display_num = 3;
+                        @foreach (var item in Model)
                         {
-                            <tr>
+                            if (display_num > 0 && item.userId == ViewBag.userId)
+                            {
+                                <tr>
 
-                                <td>
-                                    @Html.ActionLink(item.ProjectName, "Project", "Project", new { id = item.Id })
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.Author)
-                                </td>
-                            </tr>
-                            display_num--;
+                                    <td>
+                                        @Html.ActionLink(item.ProjectName, "Project", "Project", new { id = item.Id })
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Author)
+                                    </td>
+                                </tr>
+                                display_num--;
+                            }
                         }
                     }
-                }
-                else
-                {
-                    <img src="..." class="rounded col-mb-4" alt="...">
-                    <img src="..." class="rounded col-mb-4" alt="...">
-                    <img src="..." class="rounded col-mb-4" alt="...">
-                }
+                    else
+                    {
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <img src="..." class="rounded col-mb-4" alt="...">
+                            <img src="..." class="rounded col-mb-4" alt="...">
+                            <img src="..." class="rounded col-mb-4" alt="...">
+                        </tr>
+                    }
+                </tbody>
+                <tfoot>
+                </tfoot>
             </table>
         </div>
     </div>
@@ -157,8 +161,13 @@ else
         </div>
 
         <small class="d-block text-right mt-3">
-           <a href="https://localhost:44364/Ticket/Index">All Tickets</a>
+            <a href="https://localhost:44364/Ticket/Index">All Tickets</a>
         </small>
     </div>
 
+}
+
+
+@section Scripts{
+    <script src="~/js/DataTables.js"></script>
 }

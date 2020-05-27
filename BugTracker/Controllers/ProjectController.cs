@@ -117,6 +117,10 @@ namespace BugTracker.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
+            // Delete all associated tickets
+            // Do Before Project
+            await deleteTickets(id);
+
             var Project = await _context.Projects.FindAsync(id);
             if (Project == null)
             {
@@ -125,6 +129,7 @@ namespace BugTracker.Controllers
 
             _context.Projects.Remove(Project);
             await _context.SaveChangesAsync();
+
             return RedirectToAction("Index");
         }
 
@@ -138,6 +143,26 @@ namespace BugTracker.Controllers
             }
 
             return View(Project);
+        }
+
+        [HttpDelete] // Was POST
+        // BUG: Cannot Handle multiple tickets without error
+        // Delete all tickets associated with a project
+        public async Task deleteTickets(int projectId)
+        {
+           var ticketList = await _context.Tickets.ToListAsync();
+        
+           foreach(var item in ticketList)
+           {
+                if (item.ProjectId == projectId)
+                {
+                    _context.Tickets.Remove(item);
+                     await _context.SaveChangesAsync();
+                }
+           }
+
+            return;
+
         }
 
     }
