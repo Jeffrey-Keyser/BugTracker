@@ -73,3 +73,24 @@ body {
   white-space: nowrap;
   line-height: 60px; /* Vertically center the text there */
 }
+
+#parent_div_1, #parent_div_2, #parent_div_3 {
+    width: auto;
+    height: auto;
+    float: right;
+}
+
+.child_div_1 {
+    float: left;
+    margin-right: 5px;
+}
+
+.child_div_1 {
+    float: left;
+    margin-right: 5px;
+}
+
+.child_div_2 {
+    float: right;
+    margin-left: 50px;
+}

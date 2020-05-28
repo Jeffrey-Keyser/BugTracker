@@ -10,6 +10,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.CodeAnalysis;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.View;
+using Newtonsoft.Json;
+using static BugTracker.Models.TicketChart;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -62,8 +64,13 @@ namespace BugTracker.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id, Author, ProjectName, userId")] Projects Project)
+        public async Task<IActionResult> Edit(int id, [Bind("Id, Author, ProjectName, userId, projectLanguage")] Projects Project)
         {
+            ClaimsPrincipal currentUser = this.User;
+            var currentUserID = currentUser.FindFirst(ClaimTypes.NameIdentifier).Value;
+            ViewBag.userId = currentUserID;
+
+
             if (id != Project.Id)
             {
                 return NotFound();
@@ -136,11 +143,42 @@ namespace BugTracker.Controllers
 
         public async Task<IActionResult> Project(int id)
         {
+            List<DataPoint> dataPoints = new List<DataPoint>();
+
             var Project = await _context.Projects.FindAsync(id);
             if (Project == null)
             {
                 return NotFound();
             }
+
+            var ticketList = await _context.Tickets.ToListAsync();
+
+            int num_low = 0, num_med = 0, num_high = 0, num_crit = 0;
+            // Add all tickets that match the project to the graph
+            foreach (var item in ticketList)
+            {
+                if (item.ProjectId == Project.Id)
+                {
+                    switch(Enum.GetName(typeof(Priority), item.TicketPriority))
+                    { 
+                    case "Low": num_low++;
+                    break;
+                    case "Medium": num_med++;
+                    break;
+                    case "High": num_high++;
+                    break;
+                    case "Critical": num_crit++;
+                    break;
+                    }
+                }
+            }
+
+            dataPoints.Add(new DataPoint("Low", num_low));
+            dataPoints.Add(new DataPoint("Medium", num_med));
+            dataPoints.Add(new DataPoint("High", num_high));
+            dataPoints.Add(new DataPoint("Critical", num_crit));
+
+            ViewBag.DataPoints = JsonConvert.SerializeObject(dataPoints);
 
             return View(Project);
         }
@@ -164,6 +202,5 @@ namespace BugTracker.Controllers
             return;
 
         }
-
     }
 }

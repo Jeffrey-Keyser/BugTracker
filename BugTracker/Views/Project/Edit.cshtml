@@ -12,7 +12,7 @@
     <form asp-action="Edit">
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
         <input type="hidden" asp-for="Id" />
-        <input type="hidden" asp-for="userId" value="@ViewBag.userId"/>
+        <input type="hidden" asp-for="userId" value="@ViewBag.userId" />
         <div class="=form-group row">
             <div class="col-4">
                 <p> Author Name </p>
@@ -29,6 +29,15 @@
             <div class="col-6">
                 <input asp-for="ProjectName" class="form-control" />
                 <span asp-validation-for="ProjectName" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="=form-group row">
+            <div class="col-4">
+                <p> Project Language </p>
+            </div>
+            <div class="col-6">
+                @Html.DropDownListFor(Model => Model.projectLanguage, new SelectList(Enum.GetValues(typeof(programmingLanguages))), "Select a Programming Language")
+                <span asp-validation-for="projectLanguage" class="text-danger"></span>
             </div>
         </div>
         <div class="form-group">

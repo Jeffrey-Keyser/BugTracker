@@ -21,18 +21,24 @@
 }
 else
 {
+    <div class="col-lg-3 col-md-4 col-12 float-md-left pr-md-3 pr-xl-6">
+        <h3> Should be left</h3>
+    </div>
+
     <div class="text-center jumbotron">
         <h1 class="display-4">Welcome @User.Identity.Name!</h1>
     </div>
 
     <div class="container col-mb-12">
-        Recent Projects
+        <h1>Recent Projects</h1>
+        <br />
         <div class="container col-mb-12">
             <table id="proj_table" class="display" style="width:100%">
                 <thead>
                     <tr>
                         <th>Project Name</th>
                         <th>Author</th>
+                        <th>Programming Language</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -50,6 +56,9 @@ else
                                     </td>
                                     <td>
                                         @Html.DisplayFor(modelItem => item.Author)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.projectLanguage)
                                     </td>
                                 </tr>
                                 display_num--;
@@ -168,6 +177,3 @@ else
 }
 
 
-@section Scripts{
-    <script src="~/js/DataTables.js"></script>
-}
