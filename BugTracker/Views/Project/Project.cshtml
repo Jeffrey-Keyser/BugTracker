@@ -51,9 +51,10 @@ chart.render();
 <br />
 <br />
 
-<div>
-    Outstanding Tickets
-    <div>
+<div id="wrapper">
+
+    <div id="left">
+        <p> Outstanding Tickets </p>
         <table class="table table-striped border">
             <tr class="table-secondary">
                 <td>
@@ -61,8 +62,6 @@ chart.render();
                 </td>
                 <td>
                     <p> Author </p>
-                </td>
-                <td>
                 </td>
             </tr>
             @foreach (var item in Model.TicketList)
@@ -78,5 +77,23 @@ chart.render();
             }
         </table>
     </div>
+
+    <div id="right">
+        <p> Other Statistics </p>
+        <table class="table table-striped border">
+            <tr class="table-secondary">
+                <td>
+                    <p> Contributors </p>
+                </td>
+                <td>
+                    <p> Author </p>
+                </td>
+                <td>
+                    <p> </p>
+                </td>
+            </tr>
+        </table>
+    </div>
 </div>
+
 

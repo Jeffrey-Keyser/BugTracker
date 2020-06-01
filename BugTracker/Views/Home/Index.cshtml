@@ -36,9 +36,9 @@ else
             <table id="proj_table" class="display" style="width:100%">
                 <thead>
                     <tr>
-                        <th>Project Name</th>
-                        <th>Author</th>
-                        <th>Programming Language</th>
+                        <th style="font-size:22px">Project Name</th>
+                        <th style="font-size:22px">Author</th>
+                        <th style="font-size:22px">Programming Language</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -51,13 +51,13 @@ else
                             {
                                 <tr>
 
-                                    <td>
+                                    <td style="font-size:22px">
                                         @Html.ActionLink(item.ProjectName, "Project", "Project", new { id = item.Id })
                                     </td>
-                                    <td>
+                                    <td style="font-size:22px">
                                         @Html.DisplayFor(modelItem => item.Author)
                                     </td>
-                                    <td>
+                                    <td style="font-size:22px">
                                         @Html.DisplayFor(modelItem => item.projectLanguage)
                                     </td>
                                 </tr>
@@ -145,7 +145,7 @@ else
         <div class="media text-muted pt-3">
             @Html.Raw(ViewBag.ticket1Image)
 
-            <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+            <p style="font-size:22px" class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
                 <strong class="d-block text-gray-dark">@ViewBag.ticket1.TicketName</strong>
                 @ViewBag.ticket1.TicketDesc
             </p>
@@ -154,7 +154,7 @@ else
         <div class="media text-muted pt-3">
             @Html.Raw(ViewBag.ticket2Image)
 
-            <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+            <p style="font-size:22px" class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
                 <strong class="d-block text-gray-dark">@ViewBag.ticket2.TicketName</strong>
                 @ViewBag.ticket2.TicketDesc
             </p>
@@ -163,7 +163,7 @@ else
         <div class="media text-muted pt-3">
             @Html.Raw(ViewBag.ticket3Image)
 
-            <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+            <p style="font-size:22px" class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
                 <strong class="d-block text-gray-dark">@ViewBag.ticket3.TicketName</strong>
                 @ViewBag.ticket3.TicketDesc
             </p>

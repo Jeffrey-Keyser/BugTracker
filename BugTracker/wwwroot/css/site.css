@@ -85,12 +85,24 @@ body {
     margin-right: 5px;
 }
 
-.child_div_1 {
-    float: left;
-    margin-right: 5px;
-}
-
 .child_div_2 {
     float: right;
     margin-left: 50px;
+}
+
+.child_div_3 {
+    float: right;
+    margin-right: 5px;
+}
+
+#wrapper {
+    display: flex;
+}
+
+#left {
+    flex: 0 0 50%;
+}
+
+#right {
+    flex: 1;
 }
