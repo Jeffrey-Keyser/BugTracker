@@ -32,6 +32,9 @@ namespace BugTracker.Models
         [Required]
         [Display(Name = "Project Programming Language")]
         public String projectLanguage { get; set; }
+
+        public UserModel userCreatedProject { get; set; }
+        public UserModel userAssignedProject { get; set; }
     }
 
 }

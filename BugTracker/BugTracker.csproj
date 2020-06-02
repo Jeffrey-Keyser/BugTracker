@@ -12,6 +12,12 @@
     <Compile Remove="Migrations\20200519002353_updateUserId.Designer.cs" />
     <Compile Remove="Migrations\20200522182122_Changes.cs" />
     <Compile Remove="Migrations\20200522182122_Changes.Designer.cs" />
+    <Compile Remove="Migrations\20200601200512_UserModel.cs" />
+    <Compile Remove="Migrations\20200601200512_UserModel.Designer.cs" />
+    <Compile Remove="Migrations\20200601201502_userModel.cs" />
+    <Compile Remove="Migrations\20200601201502_userModel.Designer.cs" />
+    <Compile Remove="Migrations\20200601201829_userModel.cs" />
+    <Compile Remove="Migrations\20200601201829_userModel.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

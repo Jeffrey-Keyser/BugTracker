@@ -106,3 +106,13 @@ body {
 #right {
     flex: 1;
 }
+
+.profilecorner {
+    position: absolute;
+    top: 60px;
+    left: 40px;
+    right: 1500px;
+    bottom: 700px;
+    background: green;
+}
+
