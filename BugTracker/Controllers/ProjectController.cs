@@ -183,7 +183,7 @@ namespace BugTracker.Controllers
 
             ViewBag.BarDataPoints = JsonConvert.SerializeObject(barDataPoints);
 
-            DateTime currTime = DateTime.Now;
+            DateTime currTime = DateTime.Now.Date.AddDays(1);
 
             int today = 0, oneDayBack = 0, twoDaysBack = 0, threeDaysBack = 0, fourDaysBack = 0,
             fiveDaysBack = 0, sixDaysBack = 0, sevenDaysBack = 0;
@@ -193,7 +193,7 @@ namespace BugTracker.Controllers
             {
                 if (item.ProjectId == Project.Id)
                 {
-                    switch((currTime - item.CreationDate).Days + 1)
+                    switch( (currTime - item.CreationDate).Days )
                     {
                         case 0: today++; break; // today
                         case 1: oneDayBack++; break;
