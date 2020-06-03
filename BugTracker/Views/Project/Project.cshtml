@@ -10,36 +10,58 @@
 <html>
 <head>
     <script>
-window.onload = function () {
+    window.onload = function () {
 
-    CanvasJS.addColorSet("ticketShades",
-        [//colorSet Array
-            "#d4edda",
-            "#fff3cd",
-            "#f8d7da",
-            "#cce5ff",
-        ]);
+        CanvasJS.addColorSet("ticketShades",
+            [//colorSet Array
+                "#d4edda",
+                "#fff3cd",
+                "#f8d7da",
+                "#cce5ff",
+            ]);
 
-var chart = new CanvasJS.Chart("chartContainer", {
-	animationEnabled: true,
-	//theme: "light2", // "light1", "light2", "dark1", "dark2"
+    var chart = new CanvasJS.Chart("chartContainer", {
+	    animationEnabled: true,
+	    //theme: "light2", // "light1", "light2", "dark1", "dark2"
 
-    colorSet: "ticketShades",
+        colorSet: "ticketShades",
 
-	title: {
-		text: "Outstanding Tickets by Priority"
-	},
-	axisY: {
-		title: "Number of Tickets"
-	},
-	data: [{
-		type: "column",
-		dataPoints: @Html.Raw(ViewBag.DataPoints)
-	}]
-});
-chart.render();
+	    title: {
+		    text: "Outstanding Tickets by Priority"
+	    },
+	    axisY: {
+		    title: "Number of Tickets"
+	    },
+	    data: [{
+		    type: "column",
+		    dataPoints: @Html.Raw(ViewBag.BarDataPoints)
+	    }]
+    });
+    chart.render();
 
-}
+
+    var chart2 = new CanvasJS.Chart("chartContainer2", {
+        animationEnabled: true,
+        theme: "light2",
+        title: {
+            text: "Tickets Created in Last Week"
+        },
+        axisY: {
+            includeZero: false
+        },
+        data: [{
+            type: "line",
+            name: "Tickets",
+            showInLegend: true,
+            indexLabelFontSize: 16,
+            dataPoints: @Html.Raw(ViewBag.LineDataPoints)
+        }]
+    });
+    chart2.render();
+
+
+
+    }
     </script>
 </head>
 <body>
@@ -79,21 +101,9 @@ chart.render();
     </div>
 
     <div id="right">
-        <p> Other Statistics </p>
-        <table class="table table-striped border">
-            <tr class="table-secondary">
-                <td>
-                    <p> Contributors </p>
-                </td>
-                <td>
-                    <p> Author </p>
-                </td>
-                <td>
-                    <p> </p>
-                </td>
-            </tr>
-        </table>
+
+        <p> Weekly Statistics </p>
+
+        <div id="chartContainer2" style="height: 370px; width: 100%;"></div>
     </div>
 </div>
-
-
