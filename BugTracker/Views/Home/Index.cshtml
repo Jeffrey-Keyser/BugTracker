@@ -27,6 +27,10 @@ else
 
     <div class="text-center jumbotron">
         <h1 class="display-4">Welcome @User.Identity.Name!</h1>
+        <p class="lead"> This is a simple bug tracking implementation created by a guy named Jeff</p>
+        <hr class="my-4" />
+        <p class="lead"> If you wish to know more about me or how I implemented it, follow the link below</p>
+        <a class="btn btn-primary btn-lg" href="@Url.Action("Index", "Index")" role="button"> Learn more</a>
     </div>
 
     <div class="container col-mb-12">
@@ -144,9 +148,8 @@ else
 
         <div class="media text-muted pt-3">
             @Html.Raw(ViewBag.ticket1Image)
-
             <p style="font-size:18px" class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-                <strong class="d-block text-gray-dark">@ViewBag.ticket1.TicketName</strong>
+                <strong class="d-block text-gray-dark">@Html.ActionLink((string)ViewBag.ticket1.TicketName, "Ticket", "Ticket", new { id = ViewBag.ticket1.TicketId })</strong>
                 @ViewBag.ticket1.TicketDesc
             </p>
         </div>
@@ -155,7 +158,7 @@ else
             @Html.Raw(ViewBag.ticket2Image)
 
             <p style="font-size:18px" class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-                <strong class="d-block text-gray-dark">@ViewBag.ticket2.TicketName</strong>
+                <strong class="d-block text-gray-dark">@Html.ActionLink((string)ViewBag.ticket2.TicketName, "Ticket", "Ticket", new { id = ViewBag.ticket2.TicketId })</strong>
                 @ViewBag.ticket2.TicketDesc
             </p>
         </div>
@@ -164,7 +167,7 @@ else
             @Html.Raw(ViewBag.ticket3Image)
 
             <p style="font-size:18px" class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-                <strong class="d-block text-gray-dark">@ViewBag.ticket3.TicketName</strong>
+                <strong class="d-block text-gray-dark">@Html.ActionLink((string)ViewBag.ticket3.TicketName, "Ticket", "Ticket", new { id = ViewBag.ticket3.TicketId })</strong>
                 @ViewBag.ticket3.TicketDesc
             </p>
         </div>

@@ -90,7 +90,7 @@
             {
                 <tr>
                     <td>
-                        @item.TicketName
+                        @Html.ActionLink(item.TicketName, "Ticket", "Ticket", new { id = item.TicketId })
                     </td>
                     <td>
                         @item.TicketDesc

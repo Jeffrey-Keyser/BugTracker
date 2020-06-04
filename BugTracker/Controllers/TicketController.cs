@@ -8,6 +8,7 @@ using BugTracker.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using System.Text;
 
 namespace BugTracker.Controllers
 {
@@ -48,6 +49,8 @@ namespace BugTracker.Controllers
                 return NotFound();
             }
 
+
+            // Set color based on the ticket's priority
             String alertColor;
             switch((int)ticket.TicketPriority)
               {
@@ -64,6 +67,59 @@ namespace BugTracker.Controllers
             }
 
             ViewBag.alertColor = alertColor;
+
+            // Display card with project associated with the ticket
+            var project = await _context.Projects.FindAsync(ticket.ProjectId);
+
+            if (project == null)
+            {
+                return NotFound();
+            }
+
+            ViewBag.projectName = project.ProjectName;
+
+            LanguageImages c1 = new LanguageImages();
+
+            // TEMPORARY SOLUTION. CONVERT LATER
+            switch (project.projectLanguage)
+            {
+                case "C":
+                    ViewBag.ProjectImage = c1.getC();
+                    break;
+                case "CSharp":
+                    ViewBag.ProjectImage = c1.getCsharp();
+                    break;
+                case "Go":
+                    ViewBag.ProjectImage = c1.getGo();
+                    break;
+                case "Java":
+                    ViewBag.ProjectImage = c1.getJava();
+                    break;
+                case "JavaScipt":
+                    ViewBag.ProjectImage = c1.getJavaScript();
+                    break;
+                case "PHP":
+                    ViewBag.ProjectImage = c1.getPHP();
+                    break;
+                case "Python":
+                    ViewBag.ProjectImage = c1.getPython();
+                    break;
+                case "Ruby":
+                    ViewBag.ProjectImage = c1.getRuby();
+                    break;
+                case "SQL":
+                    ViewBag.ProjectImage = c1.getSQL();
+                    break;
+                case "Swift":
+                    ViewBag.ProjectImage = c1.getSwift();
+                    break;
+                case "TypeScript":
+                    ViewBag.ProjectImage = c1.getTypeScript();
+                    break;
+                default:
+                    break;
+            }
+
 
             return View(ticket);
         }
@@ -211,9 +267,11 @@ namespace BugTracker.Controllers
             return RedirectToAction("Project", new { id = Ticket.ProjectId });
         }
 
-        /*
-        public async Task<IActionResult> Complete(int ? id)
+
+        public async Task<IActionResult> Edit(int id)
         {
+
+            // Pass in the project we wish to associate with the Ticket
             if (id == null)
             {
                 return NotFound();
@@ -225,9 +283,37 @@ namespace BugTracker.Controllers
                 return NotFound();
             }
 
-            return View(ticket);
+            ViewBag.Ticket = ticket;
+
+            return View();
         }
-        */
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(int id, [Bind("TicketId, TicketName, TicketDesc, userId, ProjectId, TicketPriority")] Tickets Ticket)
+        {
+
+            if (id != Ticket.TicketId)
+            {
+                return NotFound();
+            }
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    _context.Update(Ticket);
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    throw;
+                }
+                return RedirectToAction("Index");
+            }
+            return View(Ticket);
+        }
 
     }
 }

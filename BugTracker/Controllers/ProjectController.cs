@@ -181,7 +181,9 @@ namespace BugTracker.Controllers
             barDataPoints.Add(new DataPoint("High", num_high));
             barDataPoints.Add(new DataPoint("Critical", num_crit));
 
+
             ViewBag.BarDataPoints = JsonConvert.SerializeObject(barDataPoints);
+
 
             DateTime currTime = DateTime.Now.Date.AddDays(1);
 
@@ -208,7 +210,7 @@ namespace BugTracker.Controllers
                 }
             }
 
-            DayOfWeek day = currTime.DayOfWeek;
+            DayOfWeek day = DateTime.Now.DayOfWeek;
 
             lineDataPoints.Add(new DataPoint(Enum.GetName(typeof(DayOfWeek), day), sevenDaysBack));
 
