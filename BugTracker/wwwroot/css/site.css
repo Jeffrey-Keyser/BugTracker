@@ -116,12 +116,14 @@ body {
     background: lightslategray;
 }
 
-.leftpanel {
-    
-
+.loginSquare {
+    width: 48%;
+    height: 200px;
+    margin: 4px;
+    border: 1px solid black;
+    float: left
 }
 
-
 tab1 {
-    padding-left: 12em;
+    padding-left: 8em;
 }

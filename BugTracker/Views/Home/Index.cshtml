@@ -19,11 +19,48 @@
         <h1 class="display-3">Please sign-in to continue</h1>
         <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
     </div>
+
+    <div id="container" style="width: 750px; margin:0 auto;">
+        <a asp-area="Identity" asp-page="/Account/Login">
+        <div class="loginSquare" id="regularUser" style="background: khaki;">
+            <div style="text-align: center; width:75%; margin:50px auto;">
+                <svg class="bi bi-person" width="3em" height="3em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" d="M13 14s1 0 1-1-1-4-6-4-6 3-6 4 1 1 1 1h10zm-9.995-.944v-.002.002zM3.022 13h9.956a.274.274 0 0 0 .014-.002l.008-.002c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664a1.05 1.05 0 0 0 .022.004zm9.974.056v-.002.002zM8 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4zm3-2a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
+                </svg>
+                <h2> Regular User </h2>
+            </div>
+        </div>
+        </a>
+        <div class="loginSquare" id="admin" style="background: lightcoral;">
+            <div style="text-align: center; width:75%; margin:50px auto;">
+                <svg class="bi bi-person" width="3em" height="3em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" d="M13 14s1 0 1-1-1-4-6-4-6 3-6 4 1 1 1 1h10zm-9.995-.944v-.002.002zM3.022 13h9.956a.274.274 0 0 0 .014-.002l.008-.002c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664a1.05 1.05 0 0 0 .022.004zm9.974.056v-.002.002zM8 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4zm3-2a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
+                </svg>
+                <h2> Admin </h2>
+            </div>
+        </div>
+        <div style="clear:both"></div>
+        <div class="loginSquare" id="recruiter" style="background: lightgreen;">
+            <div style="text-align: center; width:75%; margin:50px auto;">
+                <svg class="bi bi-person" width="3em" height="3em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" d="M13 14s1 0 1-1-1-4-6-4-6 3-6 4 1 1 1 1h10zm-9.995-.944v-.002.002zM3.022 13h9.956a.274.274 0 0 0 .014-.002l.008-.002c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664a1.05 1.05 0 0 0 .022.004zm9.974.056v-.002.002zM8 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4zm3-2a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
+                </svg>
+                <h2> Recruiter </h2>
+            </div>
+        </div>
+        <div class="loginSquare" id="exampleUser" style="background: lightskyblue;">
+            <div style="text-align: center; width:75%; margin:50px auto;">
+                <svg class="bi bi-person" width="3em" height="3em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" d="M13 14s1 0 1-1-1-4-6-4-6 3-6 4 1 1 1 1h10zm-9.995-.944v-.002.002zM3.022 13h9.956a.274.274 0 0 0 .014-.002l.008-.002c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664a1.05 1.05 0 0 0 .022.004zm9.974.056v-.002.002zM8 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4zm3-2a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
+                </svg>
+                <h2> Example User </h2>
+            </div>
+        </div>
+    </div>
 }
 else
 {
     <div class="profilecorner"> ADD USER INFORMATION </div>
-
 
     <div class="text-center jumbotron">
         <h1 class="display-4">Welcome @User.Identity.Name!</h1>
@@ -37,7 +74,7 @@ else
         <h1>Recent Projects</h1>
         <br />
         <div class="container col-mb-12">
-            <table id="proj_table" class="display" style="width:100%">
+            <table id="proj_table" class="display" style="width: 100%">
                 <thead>
                     <tr>
                         <th style="font-size:22px">Project Name</th>
@@ -49,9 +86,10 @@ else
                     @if (Model.Count() > 0)
                     {
                         var display_num = 3;
+                        var i = 0;
                         @foreach (var item in Model)
                         {
-                            if (display_num > 0 && item.userId == ViewBag.userId)
+                            if (((Model.Count() - display_num) <= i) && item.userId == ViewBag.userId)
                             {
                                 <tr>
 
@@ -65,8 +103,8 @@ else
                                         @Html.DisplayFor(modelItem => item.projectLanguage)
                                     </td>
                                 </tr>
-                                display_num--;
                             }
+                            i++;
                         }
                     }
                     else
