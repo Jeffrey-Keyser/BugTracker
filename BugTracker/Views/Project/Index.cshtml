@@ -14,18 +14,19 @@
 
     <div class="col-12 border p-3 mt-3">
         <form method="post">
+            <h2 class="text-info"> Created Projects </h2>
             @if (Model.Count() > 0)
             {
-            <table id="proj_table" class="display" style="width:100%">
-                <thead>
-                    <tr>
-                        <th>Project Name</th>
-                        <th>Author</th>
-                        <th>Programming Language</th>
-                    </tr>
-                </thead>
-                <tbody>
-                       
+                <table id="proj_table" class="display" style="width:100%">
+                    <thead>
+                        <tr>
+                            <th>Project Name</th>
+                            <th>Author</th>
+                            <th>Programming Language</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
                         @foreach (var item in Model)
                         {
                             if (item.userId == ViewBag.userId)
@@ -55,24 +56,25 @@
                                         </div>
                                     </td>
 
-                                  
 
-                                    
+
+
 
                                 </tr>
                             }
                         }
 
-                </tbody>
-                <tfoot>
-                </tfoot>
-            </table>
+                    </tbody>
+                    <tfoot>
+                    </tfoot>
+                </table>
             }
             else
             {
                 <p> No Projects to Display! </p>
             }
         </form>
+        <h2 class="text-info"> Assigned Projects </h2>
     </div>
 </div>
 

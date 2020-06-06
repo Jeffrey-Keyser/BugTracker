@@ -27,9 +27,9 @@ namespace BugTracker.Extensions
 			var identity = (ClaimsIdentity)principal.Identity;
 
 			var claims = new List<Claim>();
-			if (user.FirstName != null)
+			if (user.Name != null)
 			{
-				claims.Add(new Claim(JwtClaimTypes.Role, user.FirstName));
+				claims.Add(new Claim(JwtClaimTypes.Role, user.Name));
 			}
 
 			identity.AddClaims(claims);

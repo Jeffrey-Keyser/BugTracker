@@ -267,7 +267,7 @@ namespace BugTracker.Controllers
             return RedirectToAction("Project", new { id = Ticket.ProjectId });
         }
 
-
+        
         public async Task<IActionResult> Edit(int id)
         {
 
@@ -287,8 +287,8 @@ namespace BugTracker.Controllers
 
             return View();
         }
-
-
+        
+        
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("TicketId, TicketName, TicketDesc, userId, ProjectId, TicketPriority")] Tickets Ticket)

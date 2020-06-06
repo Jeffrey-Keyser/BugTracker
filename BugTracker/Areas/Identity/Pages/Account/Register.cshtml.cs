@@ -49,8 +49,8 @@ namespace BugTracker.Areas.Identity.Pages.Account
         {
             [Required]
             [DataType(DataType.Text)]
-            [Display(Name = "First Name")]
-            public string FirstName { get; set; }
+            [Display(Name = "Full Name")]
+            public string Name { get; set; }
 
             [Required]
             [EmailAddress]
@@ -81,7 +81,7 @@ namespace BugTracker.Areas.Identity.Pages.Account
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             if (ModelState.IsValid)
             {
-                var user = new BugTrackerUser { FirstName = Input.FirstName, UserName = Input.Email, Email = Input.Email };
+                var user = new BugTrackerUser { Name = Input.Name, UserName = Input.Email, Email = Input.Email };
                 var result = await _userManager.CreateAsync(user, Input.Password);
                 if (result.Succeeded)
                 {

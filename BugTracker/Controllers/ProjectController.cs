@@ -160,7 +160,7 @@ namespace BugTracker.Controllers
             // For the bar graph
             foreach (var item in ticketList)
             {
-                if (item.ProjectId == Project.Id)
+                if (item.ProjectId == Project.Id && !item.Completed)
                 {
                     switch(Enum.GetName(typeof(Priority), item.TicketPriority))
                     { 

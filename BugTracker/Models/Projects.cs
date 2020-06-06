@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BugTracker.Areas.Identity.Data;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
@@ -33,8 +34,8 @@ namespace BugTracker.Models
         [Display(Name = "Project Programming Language")]
         public String projectLanguage { get; set; }
 
-        public UserModel userCreatedProject { get; set; }
-        public UserModel userAssignedProject { get; set; }
+        public BugTrackerUser userCreatedProject { get; set; }
+        public BugTrackerUser userAssignedProject { get; set; }
     }
 
 }

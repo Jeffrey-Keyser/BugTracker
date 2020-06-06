@@ -88,6 +88,8 @@
             </tr>
             @foreach (var item in Model.TicketList)
             {
+                if (!item.Completed)
+                {
                 <tr>
                     <td>
                         @Html.ActionLink(item.TicketName, "Ticket", "Ticket", new { id = item.TicketId })
@@ -96,6 +98,7 @@
                         @item.TicketDesc
                     </td>
                 </tr>
+                }
             }
         </table>
     </div>

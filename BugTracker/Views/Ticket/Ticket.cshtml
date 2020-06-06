@@ -24,6 +24,7 @@
         <h2> Ticket Information </h2>
 
         <form action="@Url.Action("Edit", "Ticket", new { id = Model.TicketId } )">
+            @Html.AntiForgeryToken()
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="TicketId" value="@Model.TicketId" />
             <input type="hidden" asp-for="userId" value="@Model.userId" />

@@ -33,9 +33,9 @@ namespace BugTracker.Areas.Identity.Pages.Account.Manage
 
         public class InputModel
         {
+            [Display(Name = "Full Name")]
             [DataType(DataType.Text)]
-            [Display(Name = "First Name")]
-            public string FirstName { get; set; }
+            public string Name { get; set; }
 
             [Phone]
             [Display(Name = "Phone number")]
@@ -51,7 +51,7 @@ namespace BugTracker.Areas.Identity.Pages.Account.Manage
 
             Input = new InputModel
             {
-                FirstName = user.FirstName,
+                Name = user.Name,
                 PhoneNumber = phoneNumber
             };
         }
@@ -93,9 +93,9 @@ namespace BugTracker.Areas.Identity.Pages.Account.Manage
                 }
             }
 
-            if (Input.FirstName != user.FirstName)
+            if (Input.Name != user.Name)
             {
-                user.FirstName = Input.FirstName;
+                user.Name = Input.Name;
             }
 
             await _userManager.UpdateAsync(user);

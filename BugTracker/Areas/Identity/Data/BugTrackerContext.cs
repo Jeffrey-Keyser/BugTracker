@@ -36,7 +36,5 @@ namespace BugTracker.Data
 
         public DbSet<Projects> Projects { get; set; }
         public DbSet<Tickets> Tickets { get; set; }
-
-        public DbSet<UserModel> Users { get; set; }
     }
 }

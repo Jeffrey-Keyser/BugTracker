@@ -1,7 +1,14 @@
-﻿
+﻿@using Microsoft.AspNetCore.Identity
+@using BugTracker.Areas.Identity.Data
+@using Microsoft.AspNetCore.Authorization
+
+@inject SignInManager<BugTrackerUser> SignInManager
+@inject UserManager<BugTrackerUser> UserManager
+
 @{
-    ViewData["Title"] = "My Profile";
+    ViewData["Title"] = "Index";
 }
 
-<h1>User Page</h1>
+<h1>Index</h1>
 
+@UserManager.GetUserAsync(User).Result.Name
