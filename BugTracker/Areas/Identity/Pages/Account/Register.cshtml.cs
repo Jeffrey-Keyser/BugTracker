@@ -15,6 +15,8 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
 using BugTracker.Extensions;
+using BugTracker.Models;
+using BugTracker.Data;
 
 namespace BugTracker.Areas.Identity.Pages.Account
 {
@@ -25,17 +27,20 @@ namespace BugTracker.Areas.Identity.Pages.Account
         private readonly UserManager<BugTrackerUser> _userManager;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
+        private readonly BugTrackerContext _context;
 
         public RegisterModel(
             UserManager<BugTrackerUser> userManager,
             SignInManager<BugTrackerUser> signInManager,
             ILogger<RegisterModel> logger,
-            IEmailSender emailSender)
+            IEmailSender emailSender,
+            BugTrackerContext context)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _logger = logger;
             _emailSender = emailSender;
+            _context = context;
         }
 
         [BindProperty]
@@ -86,6 +91,14 @@ namespace BugTracker.Areas.Identity.Pages.Account
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User created a new account with password.");
+
+                    // Add a new userModel
+                    // Doing this instead of extending Identity Model
+                    UserModel newUser = new UserModel();
+                    newUser.userId = user.Id;
+                    _context.UserModels.Add(newUser);
+                    await _context.SaveChangesAsync();
+
 
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                     code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));

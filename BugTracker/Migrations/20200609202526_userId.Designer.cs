@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BugTracker.Migrations
 {
     [DbContext(typeof(BugTrackerContext))]
-    [Migration("20200609194450_idk")]
-    partial class idk
+    [Migration("20200609202526_userId")]
+    partial class userId
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -109,21 +109,11 @@ namespace BugTracker.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("userAssignedProjectUserModelId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("userCreatedProjectUserModelId")
-                        .HasColumnType("int");
-
                     b.Property<string>("userId")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("userAssignedProjectUserModelId");
-
-                    b.HasIndex("userCreatedProjectUserModelId");
 
                     b.ToTable("Projects");
                 });
@@ -158,9 +148,6 @@ namespace BugTracker.Migrations
                     b.Property<int>("TicketPriority")
                         .HasColumnType("int");
 
-                    b.Property<int?>("UserModelId")
-                        .HasColumnType("int");
-
                     b.Property<string>("userId")
                         .IsRequired()
                         .HasColumnType("nvarchar(100)")
@@ -170,35 +157,16 @@ namespace BugTracker.Migrations
 
                     b.HasIndex("ProjectsId");
 
-                    b.HasIndex("UserModelId");
-
                     b.ToTable("Tickets");
                 });
 
             modelBuilder.Entity("BugTracker.Models.UserModel", b =>
                 {
-                    b.Property<int?>("UserModelId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<DateTime>("CreationDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Name")
+                    b.Property<string>("userId")
                         .IsRequired()
-                        .HasColumnType("nvarchar(50)")
-                        .HasMaxLength(50);
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("numCompletedProjects")
-                        .HasColumnType("int");
-
-                    b.Property<int>("numCompletedTickets")
-                        .HasColumnType("int");
-
-                    b.HasKey("UserModelId");
-
-                    b.ToTable("Users");
+                    b.ToTable("UserModels");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -332,26 +300,11 @@ namespace BugTracker.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("BugTracker.Models.Projects", b =>
-                {
-                    b.HasOne("BugTracker.Models.UserModel", "userAssignedProject")
-                        .WithMany("AssignedProjects")
-                        .HasForeignKey("userAssignedProjectUserModelId");
-
-                    b.HasOne("BugTracker.Models.UserModel", "userCreatedProject")
-                        .WithMany("AuthoredProjects")
-                        .HasForeignKey("userCreatedProjectUserModelId");
-                });
-
             modelBuilder.Entity("BugTracker.Models.Tickets", b =>
                 {
                     b.HasOne("BugTracker.Models.Projects", null)
                         .WithMany("TicketList")
                         .HasForeignKey("ProjectsId");
-
-                    b.HasOne("BugTracker.Models.UserModel", null)
-                        .WithMany("CompletedTickets")
-                        .HasForeignKey("UserModelId");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

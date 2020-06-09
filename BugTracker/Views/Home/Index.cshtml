@@ -185,30 +185,37 @@ else
         <h6 class="border-bottom border-gray pb-2 mb-0">Recent Tickets</h6>
 
         <div class="media text-muted pt-3">
+            @if (ViewBag.ticket1.TicketName != null)
+            {
             @Html.Raw(ViewBag.ticket1Image)
             <p style="font-size:18px" class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
                 <strong class="d-block text-gray-dark">@Html.ActionLink((string)ViewBag.ticket1.TicketName, "Ticket", "Ticket", new { id = ViewBag.ticket1.TicketId })</strong>
                 @ViewBag.ticket1.TicketDesc
             </p>
+            }
         </div>
 
         <div class="media text-muted pt-3">
-            @Html.Raw(ViewBag.ticket2Image)
-
-            <p style="font-size:18px" class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-                <strong class="d-block text-gray-dark">@Html.ActionLink((string)ViewBag.ticket2.TicketName, "Ticket", "Ticket", new { id = ViewBag.ticket2.TicketId })</strong>
-                @ViewBag.ticket2.TicketDesc
-            </p>
-        </div>
+            @if (ViewBag.ticket2.TicketName != null)
+            {
+                @Html.Raw(ViewBag.ticket2Image)
+                <p style="font-size:18px" class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+                    <strong class="d-block text-gray-dark">@Html.ActionLink((string)ViewBag.ticket2.TicketName, "Ticket", "Ticket", new { id = ViewBag.ticket2.TicketId })</strong>
+                    @ViewBag.ticket2.TicketDesc
+                </p>
+            }
+            </div>
 
         <div class="media text-muted pt-3">
-            @Html.Raw(ViewBag.ticket3Image)
-
-            <p style="font-size:18px" class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-                <strong class="d-block text-gray-dark">@Html.ActionLink((string)ViewBag.ticket3.TicketName, "Ticket", "Ticket", new { id = ViewBag.ticket3.TicketId })</strong>
-                @ViewBag.ticket3.TicketDesc
-            </p>
-        </div>
+            @if (ViewBag.ticket3.TicketName != null)
+            {
+                @Html.Raw(ViewBag.ticket3Image)
+                <p style="font-size:18px" class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+                    <strong class="d-block text-gray-dark">@Html.ActionLink((string)ViewBag.ticket3.TicketName, "Ticket", "Ticket", new { id = ViewBag.ticket3.TicketId })</strong>
+                    @ViewBag.ticket3.TicketDesc
+                </p>
+            }
+            </div>
 
         <small class="d-block text-right mt-3">
             <a href="https://localhost:44364/Ticket/Index">All Tickets</a>

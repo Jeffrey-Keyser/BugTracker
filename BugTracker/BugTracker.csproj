@@ -12,6 +12,16 @@
     <Compile Remove="Migrations\20200519002353_updateUserId.Designer.cs" />
     <Compile Remove="Migrations\20200522182122_Changes.cs" />
     <Compile Remove="Migrations\20200522182122_Changes.Designer.cs" />
+    <Compile Remove="Migrations\20200609194450_idk.cs" />
+    <Compile Remove="Migrations\20200609194450_idk.Designer.cs" />
+    <Compile Remove="Migrations\20200609200935_userId.cs" />
+    <Compile Remove="Migrations\20200609200935_userId.Designer.cs" />
+    <Compile Remove="Migrations\20200609201216_userId.cs" />
+    <Compile Remove="Migrations\20200609201216_userId.Designer.cs" />
+    <Compile Remove="Migrations\20200609202426_userId.cs" />
+    <Compile Remove="Migrations\20200609202426_userId.Designer.cs" />
+    <Compile Remove="Migrations\20200609202912_add-migraion key2.cs" />
+    <Compile Remove="Migrations\20200609202912_add-migraion key2.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
