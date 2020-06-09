@@ -15,25 +15,66 @@
 @if (!SignInManager.IsSignedIn(User))
 {
     <div class="text-center">
-        <h1 class="display-4">Welcome</h1>
+        <h1 class="display-4">Welcome to the BugTracker!</h1>
+        <h1 class="display-3">Please sign-in to continue</h1>
         <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    </div>
+
+    <div id="container" style="width: 750px; margin:0 auto;">
+        <a asp-area="Identity" asp-page="/Account/Login" style="color: inherit;">
+            <div class="loginSquare" id="regularUser" style="background: khaki;">
+                <div style="text-align: center; width:75%; margin:50px auto;">
+                    <svg class="bi bi-person" width="3em" height="3em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" d="M13 14s1 0 1-1-1-4-6-4-6 3-6 4 1 1 1 1h10zm-9.995-.944v-.002.002zM3.022 13h9.956a.274.274 0 0 0 .014-.002l.008-.002c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664a1.05 1.05 0 0 0 .022.004zm9.974.056v-.002.002zM8 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4zm3-2a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
+                    </svg>
+                    <h2> Regular User </h2>
+                </div>
+            </div>
+        </a>
+        <div class="loginSquare" id="admin" style="background: lightcoral;">
+            <div style="text-align: center; width:75%; margin:50px auto;">
+                <svg class="bi bi-person" width="3em" height="3em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" d="M13 14s1 0 1-1-1-4-6-4-6 3-6 4 1 1 1 1h10zm-9.995-.944v-.002.002zM3.022 13h9.956a.274.274 0 0 0 .014-.002l.008-.002c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664a1.05 1.05 0 0 0 .022.004zm9.974.056v-.002.002zM8 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4zm3-2a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
+                </svg>
+                <h2> Admin </h2>
+            </div>
+        </div>
+        <div style="clear:both"></div>
+        <div class="loginSquare" id="recruiter" style="background: lightgreen;">
+            <div style="text-align: center; width:75%; margin:50px auto;">
+                <svg class="bi bi-person" width="3em" height="3em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" d="M13 14s1 0 1-1-1-4-6-4-6 3-6 4 1 1 1 1h10zm-9.995-.944v-.002.002zM3.022 13h9.956a.274.274 0 0 0 .014-.002l.008-.002c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664a1.05 1.05 0 0 0 .022.004zm9.974.056v-.002.002zM8 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4zm3-2a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
+                </svg>
+                <h2> Recruiter </h2>
+            </div>
+        </div>
+        <div class="loginSquare" id="exampleUser" style="background: lightskyblue;">
+            <div style="text-align: center; width:75%; margin:50px auto;">
+                <svg class="bi bi-person" width="3em" height="3em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" d="M13 14s1 0 1-1-1-4-6-4-6 3-6 4 1 1 1 1h10zm-9.995-.944v-.002.002zM3.022 13h9.956a.274.274 0 0 0 .014-.002l.008-.002c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664a1.05 1.05 0 0 0 .022.004zm9.974.056v-.002.002zM8 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4zm3-2a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
+                </svg>
+                <h2> Example User </h2>
+            </div>
+        </div>
     </div>
 }
 else
 {
-    <div class="col-lg-3 col-md-4 col-12 float-md-left pr-md-3 pr-xl-6">
-        <h3> Should be left</h3>
-    </div>
+    <div class="profilecorner"> ADD USER INFORMATION </div>
 
     <div class="text-center jumbotron">
         <h1 class="display-4">Welcome @User.Identity.Name!</h1>
+        <p class="lead"> This is a simple bug tracking implementation created by a guy named Jeff</p>
+        <hr class="my-4" />
+        <p class="lead"> If you wish to know more about me or how I implemented it, follow the link below</p>
+        <a class="btn btn-primary btn-lg" href="@Url.Action("Index", "Index")" role="button"> Learn more</a>
     </div>
 
     <div class="container col-mb-12">
         <h1>Recent Projects</h1>
         <br />
         <div class="container col-mb-12">
-            <table id="proj_table" class="display" style="width:100%">
+            <table id="proj_table" class="display" style="width: 100%">
                 <thead>
                     <tr>
                         <th style="font-size:22px">Project Name</th>
@@ -45,9 +86,10 @@ else
                     @if (Model.Count() > 0)
                     {
                         var display_num = 3;
+                        var i = 0;
                         @foreach (var item in Model)
                         {
-                            if (display_num > 0 && item.userId == ViewBag.userId)
+                            if (((Model.Count() - display_num) <= i) && item.userId == ViewBag.userId)
                             {
                                 <tr>
 
@@ -61,8 +103,8 @@ else
                                         @Html.DisplayFor(modelItem => item.projectLanguage)
                                     </td>
                                 </tr>
-                                display_num--;
                             }
+                            i++;
                         }
                     }
                     else
@@ -144,9 +186,8 @@ else
 
         <div class="media text-muted pt-3">
             @Html.Raw(ViewBag.ticket1Image)
-
-            <p style="font-size:22px" class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-                <strong class="d-block text-gray-dark">@ViewBag.ticket1.TicketName</strong>
+            <p style="font-size:18px" class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+                <strong class="d-block text-gray-dark">@Html.ActionLink((string)ViewBag.ticket1.TicketName, "Ticket", "Ticket", new { id = ViewBag.ticket1.TicketId })</strong>
                 @ViewBag.ticket1.TicketDesc
             </p>
         </div>
@@ -154,8 +195,8 @@ else
         <div class="media text-muted pt-3">
             @Html.Raw(ViewBag.ticket2Image)
 
-            <p style="font-size:22px" class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-                <strong class="d-block text-gray-dark">@ViewBag.ticket2.TicketName</strong>
+            <p style="font-size:18px" class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+                <strong class="d-block text-gray-dark">@Html.ActionLink((string)ViewBag.ticket2.TicketName, "Ticket", "Ticket", new { id = ViewBag.ticket2.TicketId })</strong>
                 @ViewBag.ticket2.TicketDesc
             </p>
         </div>
@@ -163,8 +204,8 @@ else
         <div class="media text-muted pt-3">
             @Html.Raw(ViewBag.ticket3Image)
 
-            <p style="font-size:22px" class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-                <strong class="d-block text-gray-dark">@ViewBag.ticket3.TicketName</strong>
+            <p style="font-size:18px" class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+                <strong class="d-block text-gray-dark">@Html.ActionLink((string)ViewBag.ticket3.TicketName, "Ticket", "Ticket", new { id = ViewBag.ticket3.TicketId })</strong>
                 @ViewBag.ticket3.TicketDesc
             </p>
         </div>
@@ -175,5 +216,4 @@ else
     </div>
 
 }
-
 

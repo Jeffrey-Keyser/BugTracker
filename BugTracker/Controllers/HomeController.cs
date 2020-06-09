@@ -40,8 +40,8 @@ namespace BugTracker.Controllers
             else
                 ViewBag.userId = "0";
 
-           LanguageImages c1 = new LanguageImages();
-           ViewBag.projectImage = c1.getJava();
+            LanguageImages c1 = new LanguageImages();
+            ViewBag.projectImage = c1.getJava();
 
             // Pass Tickets through ViewBag
             // TODO: Convert to TicketList or something better....
@@ -60,65 +60,65 @@ namespace BugTracker.Controllers
                     // Do nothing?
 
 
-                // TEMPORARY SOLUTION. CONVERT LATER
-                switch(Project.projectLanguage)
-                {
-                    case "C":
-                        if (i == 0) { ViewBag.ticket1Image = c1.getC(); }
-                        else if (i == 1) { ViewBag.ticket2Image = c1.getC();  }
-                        else if (i == 2) { ViewBag.ticket3Image = c1.getC();  }
-                        break;
-                    case "CSharp":
-                        if (i == 0) { ViewBag.ticket1Image = c1.getCsharp(); }
-                        else if (i == 1) { ViewBag.ticket2Image = c1.getCsharp(); }
-                        else if (i == 2) { ViewBag.ticket3Image = c1.getCsharp(); }
-                        break;
-                    case "Go":
-                        if (i == 0) { ViewBag.ticket1Image = c1.getGo(); }
-                        else if (i == 1) { ViewBag.ticket2Image = c1.getGo(); }
-                        else if (i == 2) { ViewBag.ticket3Image = c1.getGo(); }
-                        break;
-                    case "Java":
-                        if (i == 0) { ViewBag.ticket1Image = c1.getJava(); }
-                        else if (i == 1) { ViewBag.ticket2Image = c1.getJava(); }
-                        else if (i == 2) { ViewBag.ticket3Image = c1.getJava(); }
-                        break;
-                    case "JavaScipt":
-                        if (i == 0) { ViewBag.ticket1Image = c1.getJavaScript(); }
-                        else if (i == 1) { ViewBag.ticket2Image = c1.getJavaScript(); }
-                        else if (i == 2) { ViewBag.ticket3Image = c1.getJavaScript(); }
-                        break;
-                    case "PHP":
-                        if (i == 0) { ViewBag.ticket1Image = c1.getPHP(); }
-                        else if (i == 1) { ViewBag.ticket2Image = c1.getPHP(); }
-                        else if (i == 2) { ViewBag.ticket3Image = c1.getPHP(); }
-                        break;
-                    case "Python":
-                        if (i == 0) { ViewBag.ticket1Image = c1.getPython(); }
-                        else if (i == 1) { ViewBag.ticket2Image = c1.getPython(); }
-                        else if (i == 2) { ViewBag.ticket3Image = c1.getPython(); }
-                        break;
-                    case "Ruby":
-                        if (i == 0) { ViewBag.ticket1Image = c1.getRuby(); }
-                        else if (i == 1) { ViewBag.ticket2Image = c1.getRuby(); }
-                        else if (i == 2) { ViewBag.ticket3Image = c1.getRuby(); }
-                        break;
-                    case "SQL":
-                        if (i == 0) { ViewBag.ticket1Image = c1.getSQL(); }
-                        else if (i == 1) { ViewBag.ticket2Image = c1.getSQL(); }
-                        else if (i == 2) { ViewBag.ticket3Image = c1.getSQL(); }
-                        break;
-                    case "Swift":
-                        if (i == 0) { ViewBag.ticket1Image = c1.getSwift(); }
-                        else if (i == 1) { ViewBag.ticket2Image = c1.getSwift(); }
-                        else if (i == 2) { ViewBag.ticket3Image = c1.getSwift(); }
-                        break;
-                    case "TypeScript":
-                        if (i == 0) { ViewBag.ticket1Image = c1.getTypeScript(); }
-                        else if (i == 1) { ViewBag.ticket2Image = c1.getTypeScript(); }
-                        else if (i == 2) { ViewBag.ticket3Image = c1.getTypeScript(); }
-                        break;
-                }
+                    // TEMPORARY SOLUTION. CONVERT LATER
+                    switch (Project.projectLanguage)
+                    {
+                        case "C":
+                            if (i == 0) { ViewBag.ticket1Image = c1.getC(); }
+                            else if (i == 1) { ViewBag.ticket2Image = c1.getC(); }
+                            else if (i == 2) { ViewBag.ticket3Image = c1.getC(); }
+                            break;
+                        case "CSharp":
+                            if (i == 0) { ViewBag.ticket1Image = c1.getCsharp(); }
+                            else if (i == 1) { ViewBag.ticket2Image = c1.getCsharp(); }
+                            else if (i == 2) { ViewBag.ticket3Image = c1.getCsharp(); }
+                            break;
+                        case "Go":
+                            if (i == 0) { ViewBag.ticket1Image = c1.getGo(); }
+                            else if (i == 1) { ViewBag.ticket2Image = c1.getGo(); }
+                            else if (i == 2) { ViewBag.ticket3Image = c1.getGo(); }
+                            break;
+                        case "Java":
+                            if (i == 0) { ViewBag.ticket1Image = c1.getJava(); }
+                            else if (i == 1) { ViewBag.ticket2Image = c1.getJava(); }
+                            else if (i == 2) { ViewBag.ticket3Image = c1.getJava(); }
+                            break;
+                        case "JavaScipt":
+                            if (i == 0) { ViewBag.ticket1Image = c1.getJavaScript(); }
+                            else if (i == 1) { ViewBag.ticket2Image = c1.getJavaScript(); }
+                            else if (i == 2) { ViewBag.ticket3Image = c1.getJavaScript(); }
+                            break;
+                        case "PHP":
+                            if (i == 0) { ViewBag.ticket1Image = c1.getPHP(); }
+                            else if (i == 1) { ViewBag.ticket2Image = c1.getPHP(); }
+                            else if (i == 2) { ViewBag.ticket3Image = c1.getPHP(); }
+                            break;
+                        case "Python":
+                            if (i == 0) { ViewBag.ticket1Image = c1.getPython(); }
+                            else if (i == 1) { ViewBag.ticket2Image = c1.getPython(); }
+                            else if (i == 2) { ViewBag.ticket3Image = c1.getPython(); }
+                            break;
+                        case "Ruby":
+                            if (i == 0) { ViewBag.ticket1Image = c1.getRuby(); }
+                            else if (i == 1) { ViewBag.ticket2Image = c1.getRuby(); }
+                            else if (i == 2) { ViewBag.ticket3Image = c1.getRuby(); }
+                            break;
+                        case "SQL":
+                            if (i == 0) { ViewBag.ticket1Image = c1.getSQL(); }
+                            else if (i == 1) { ViewBag.ticket2Image = c1.getSQL(); }
+                            else if (i == 2) { ViewBag.ticket3Image = c1.getSQL(); }
+                            break;
+                        case "Swift":
+                            if (i == 0) { ViewBag.ticket1Image = c1.getSwift(); }
+                            else if (i == 1) { ViewBag.ticket2Image = c1.getSwift(); }
+                            else if (i == 2) { ViewBag.ticket3Image = c1.getSwift(); }
+                            break;
+                        case "TypeScript":
+                            if (i == 0) { ViewBag.ticket1Image = c1.getTypeScript(); }
+                            else if (i == 1) { ViewBag.ticket2Image = c1.getTypeScript(); }
+                            else if (i == 2) { ViewBag.ticket3Image = c1.getTypeScript(); }
+                            break;
+                    }
                 }
 
                 if (i == 0)

@@ -8,6 +8,7 @@ using BugTracker.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using System.Text;
 
 namespace BugTracker.Controllers
 {
@@ -33,8 +34,8 @@ namespace BugTracker.Controllers
             return View(await _context.Projects.ToListAsync());
         }
 
-        public async Task<IActionResult> Ticket(int ? id)
-        {            
+        public async Task<IActionResult> Ticket(int? id)
+        {
             // Find the correct ticket
             if (id == null)
             {
@@ -48,27 +49,87 @@ namespace BugTracker.Controllers
                 return NotFound();
             }
 
+
+            // Set color based on the ticket's priority
             String alertColor;
-            switch((int)ticket.TicketPriority)
-              {
-                case 0:  alertColor = "alert-success";
-                break;
-                case 1:  alertColor = "alert-warning";
-                break;
-                case 2:  alertColor = "alert-danger";
-                break;
-                case 3:  alertColor = "alert-primary";
-                break;
-                default: alertColor = "alert-secondary";
-                break;
+            switch ((int)ticket.TicketPriority)
+            {
+                case 0:
+                    alertColor = "alert-success";
+                    break;
+                case 1:
+                    alertColor = "alert-warning";
+                    break;
+                case 2:
+                    alertColor = "alert-danger";
+                    break;
+                case 3:
+                    alertColor = "alert-primary";
+                    break;
+                default:
+                    alertColor = "alert-secondary";
+                    break;
             }
 
             ViewBag.alertColor = alertColor;
 
+            // Display card with project associated with the ticket
+            var project = await _context.Projects.FindAsync(ticket.ProjectId);
+
+            if (project == null)
+            {
+                return NotFound();
+            }
+
+            ViewBag.projectName = project.ProjectName;
+
+            LanguageImages c1 = new LanguageImages();
+
+            // TEMPORARY SOLUTION. CONVERT LATER
+            switch (project.projectLanguage)
+            {
+                case "C":
+                    ViewBag.ProjectImage = c1.getC();
+                    break;
+                case "CSharp":
+                    ViewBag.ProjectImage = c1.getCsharp();
+                    break;
+                case "Go":
+                    ViewBag.ProjectImage = c1.getGo();
+                    break;
+                case "Java":
+                    ViewBag.ProjectImage = c1.getJava();
+                    break;
+                case "JavaScipt":
+                    ViewBag.ProjectImage = c1.getJavaScript();
+                    break;
+                case "PHP":
+                    ViewBag.ProjectImage = c1.getPHP();
+                    break;
+                case "Python":
+                    ViewBag.ProjectImage = c1.getPython();
+                    break;
+                case "Ruby":
+                    ViewBag.ProjectImage = c1.getRuby();
+                    break;
+                case "SQL":
+                    ViewBag.ProjectImage = c1.getSQL();
+                    break;
+                case "Swift":
+                    ViewBag.ProjectImage = c1.getSwift();
+                    break;
+                case "TypeScript":
+                    ViewBag.ProjectImage = c1.getTypeScript();
+                    break;
+                default:
+                    break;
+            }
+
+
             return View(ticket);
         }
 
-        public async Task<IActionResult> Project(int ? id)
+        public async Task<IActionResult> Project(int? id)
         {
             ClaimsPrincipal currentUser = this.User;
             var currentUserID = currentUser.FindFirst(ClaimTypes.NameIdentifier).Value;
@@ -93,7 +154,7 @@ namespace BugTracker.Controllers
             return View(await _context.Tickets.ToListAsync());
         }
 
-        public async Task<IActionResult> Create(int ? id)
+        public async Task<IActionResult> Create(int? id)
         {
             ClaimsPrincipal currentUser = this.User;
             var currentUserID = currentUser.FindFirst(ClaimTypes.NameIdentifier).Value;
@@ -102,13 +163,13 @@ namespace BugTracker.Controllers
             ViewBag.creationDate = DateTime.Now;
 
             // For Priority?
-         //   ViewBag.PriorityList = new SelectList(Enum.GetValues(typeof(Priority)), "TicketPriority", "Description", 0);
+            //   ViewBag.PriorityList = new SelectList(Enum.GetValues(typeof(Priority)), "TicketPriority", "Description", 0);
 
 
-           // @Html.DropDownList("TicketPriority",
-       //             new SelectList(Enum.GetValues(typeof(Priority))),
-        //            "Select Priority",
-        //            new { @class = "form-control" })
+            // @Html.DropDownList("TicketPriority",
+            //             new SelectList(Enum.GetValues(typeof(Priority))),
+            //            "Select Priority",
+            //            new { @class = "form-control" })
 
 
             // Pass in the project we wish to associate with the Ticket
@@ -131,7 +192,7 @@ namespace BugTracker.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(int ? id, [Bind("TicketId, TicketName, TicketDesc, userId, ProjectId, TicketPriority")] Tickets Ticket)
+        public async Task<IActionResult> Create(int? id, [Bind("TicketId, TicketName, TicketDesc, userId, ProjectId, TicketPriority")] Tickets Ticket)
         {
             // 0:dd/MMM/yyyy HH:mm:ss
             // Get Current DateTime
@@ -211,9 +272,11 @@ namespace BugTracker.Controllers
             return RedirectToAction("Project", new { id = Ticket.ProjectId });
         }
 
-        /*
-        public async Task<IActionResult> Complete(int ? id)
+
+        public async Task<IActionResult> Edit(int id)
         {
+
+            // Pass in the project we wish to associate with the Ticket
             if (id == null)
             {
                 return NotFound();
@@ -225,9 +288,37 @@ namespace BugTracker.Controllers
                 return NotFound();
             }
 
-            return View(ticket);
+            ViewBag.Ticket = ticket;
+
+            return View();
         }
-        */
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(int id, [Bind("TicketId, TicketName, TicketDesc, userId, ProjectId, TicketPriority")] Tickets Ticket)
+        {
+
+            if (id != Ticket.TicketId)
+            {
+                return NotFound();
+            }
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    _context.Update(Ticket);
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    throw;
+                }
+                return RedirectToAction("Index");
+            }
+            return View(Ticket);
+        }
 
     }
 }

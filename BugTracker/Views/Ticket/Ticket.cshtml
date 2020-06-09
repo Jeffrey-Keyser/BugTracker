@@ -4,16 +4,67 @@
     ViewData["Title"] = "Ticket";
 }
 
-<h1>Ticket -- @Model.TicketName</h1>
+<div class="card profilecorner" style="width: 18rem;">
+    <div class="card-img-top">@Html.Raw(ViewBag.projectImage)</div>
+    <div class="card-body">
+        <h5 class="card-title">@ViewBag.ProjectName</h5>
+        <p class="card-text">Project Description</p>
+        <a href="@Url.Action("Project", "Project", new { id = Model.ProjectId } )" class="btn btn-primary">Go to Project</a>
+    </div>
+</div>
 
+<div class="alert @ViewBag.alertColor">
+    <h1>@Model.TicketName -- @Model.TicketPriority <tab1> @Model.CreationDate</tab1></h1>
+</div>
 
 <div class="col-12 border p-3 mt-3">
 
-        <div class="col-12 p-3 mt-3">
+    <div class="col-12 p-3 mt-3">
 
-            <em> Ticket Status </em>
+        <h2> Ticket Information </h2>
 
+        <form action="@Url.Action("Edit", "Ticket", new { id = Model.TicketId } )">
+            @Html.AntiForgeryToken()
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="TicketId" value="@Model.TicketId" />
+            <input type="hidden" asp-for="userId" value="@Model.userId" />
+            <input type="hidden" asp-for="ProjectId" value="@Model.ProjectId" />
+            <div class="=form-group row">
+                <div class="col-4">
+                    <p> Ticket Name </p>
+                </div>
+                <div class="col-6">
+                    <input asp-for="TicketName" class="form-control" />
+                    <span asp-validation-for="TicketName" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="=form-group row">
+                <div class="col-4">
+                    <p> Project Name </p>
+                </div>
+                <div class="col-6">
+                    <input asp-for="TicketDesc" class="form-control" />
+                    <span asp-validation-for="TicketDesc" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="=form-group row">
+                <div class="col-4">
+                    <p> Project Language </p>
+                </div>
+                <div class="col-6">
+                    @Html.DropDownListFor(Model => Model.TicketPriority, new SelectList(Enum.GetValues(typeof(Priority))), "Select a Ticket Priority")
+                    <span asp-validation-for="TicketPriority" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
 
+        <br />
+        <br />
+
+        <div class="col-8">
             <form method="post" action="@Url.Action("Complete", "Ticket", new { id = Model.TicketId } )">
                 <div>
                     @using (Html.BeginForm("Complete", "Ticket", new { id = Model.TicketId }))
@@ -30,15 +81,8 @@
                     }
                 </div>
             </form>
-
         </div>
-
-    <div>
-        <h6> Ticket Priority </h6>
-        <div class="alert @ViewBag.alertColor">
-           @Model.TicketPriority
-        </div>
-    </div>
 
     </div>
 
+</div>

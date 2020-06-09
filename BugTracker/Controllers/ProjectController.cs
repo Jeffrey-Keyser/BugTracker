@@ -83,7 +83,7 @@ namespace BugTracker.Controllers
                     _context.Update(Project);
                     await _context.SaveChangesAsync();
                 }
-                catch(DbUpdateConcurrencyException)
+                catch (DbUpdateConcurrencyException)
                 {
                     throw;
                 }
@@ -104,7 +104,7 @@ namespace BugTracker.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind ("Id, Author, ProjectName, userId, projectLanguage")] Projects Project)
+        public async Task<IActionResult> Create([Bind("Id, Author, ProjectName, userId, projectLanguage")] Projects Project)
         {
             ClaimsPrincipal currentUser = this.User;
             var currentUserID = currentUser.FindFirst(ClaimTypes.NameIdentifier).Value;
@@ -143,7 +143,8 @@ namespace BugTracker.Controllers
 
         public async Task<IActionResult> Project(int id)
         {
-            List<DataPoint> dataPoints = new List<DataPoint>();
+            List<DataPoint> barDataPoints = new List<DataPoint>();
+            List<DataPoint> lineDataPoints = new List<DataPoint>();
 
             var Project = await _context.Projects.FindAsync(id);
             if (Project == null)
@@ -154,31 +155,123 @@ namespace BugTracker.Controllers
             var ticketList = await _context.Tickets.ToListAsync();
 
             int num_low = 0, num_med = 0, num_high = 0, num_crit = 0;
+
             // Add all tickets that match the project to the graph
+            // For the bar graph
             foreach (var item in ticketList)
             {
-                if (item.ProjectId == Project.Id)
+                if (item.ProjectId == Project.Id && !item.Completed)
                 {
-                    switch(Enum.GetName(typeof(Priority), item.TicketPriority))
-                    { 
-                    case "Low": num_low++;
-                    break;
-                    case "Medium": num_med++;
-                    break;
-                    case "High": num_high++;
-                    break;
-                    case "Critical": num_crit++;
-                    break;
+                    switch (Enum.GetName(typeof(Priority), item.TicketPriority))
+                    {
+                        case "Low":
+                            num_low++;
+                            break;
+                        case "Medium":
+                            num_med++;
+                            break;
+                        case "High":
+                            num_high++;
+                            break;
+                        case "Critical":
+                            num_crit++;
+                            break;
                     }
                 }
             }
 
-            dataPoints.Add(new DataPoint("Low", num_low));
-            dataPoints.Add(new DataPoint("Medium", num_med));
-            dataPoints.Add(new DataPoint("High", num_high));
-            dataPoints.Add(new DataPoint("Critical", num_crit));
+            barDataPoints.Add(new DataPoint("Low", num_low));
+            barDataPoints.Add(new DataPoint("Medium", num_med));
+            barDataPoints.Add(new DataPoint("High", num_high));
+            barDataPoints.Add(new DataPoint("Critical", num_crit));
 
-            ViewBag.DataPoints = JsonConvert.SerializeObject(dataPoints);
+
+            ViewBag.BarDataPoints = JsonConvert.SerializeObject(barDataPoints);
+
+
+            DateTime currTime = DateTime.Now.Date.AddDays(1);
+
+            int today = 0, oneDayBack = 0, twoDaysBack = 0, threeDaysBack = 0, fourDaysBack = 0,
+            fiveDaysBack = 0, sixDaysBack = 0, sevenDaysBack = 0;
+
+            // For the Line Graph
+            foreach (var item in ticketList)
+            {
+                if (item.ProjectId == Project.Id)
+                {
+                    switch ((currTime - item.CreationDate).Days)
+                    {
+                        case 0: today++; break; // today
+                        case 1: oneDayBack++; break;
+                        case 2: twoDaysBack++; break;
+                        case 3: threeDaysBack++; break;
+                        case 4: fourDaysBack++; break;
+                        case 5: fiveDaysBack++; break;
+                        case 6: sixDaysBack++; break;
+                        case 7: sevenDaysBack++; break; // a week ago
+                        default: break;
+                    }
+                }
+            }
+
+            DayOfWeek day = DateTime.Now.DayOfWeek;
+
+            lineDataPoints.Add(new DataPoint(Enum.GetName(typeof(DayOfWeek), day), sevenDaysBack));
+
+            if (((int)day) == 6)
+                day = 0;
+            else
+                day++;
+
+            lineDataPoints.Add(new DataPoint(Enum.GetName(typeof(DayOfWeek), day), sixDaysBack));
+
+
+            if (((int)day) == 6)
+                day = 0;
+            else
+                day++;
+
+            lineDataPoints.Add(new DataPoint(Enum.GetName(typeof(DayOfWeek), day), fiveDaysBack));
+
+            if (((int)day) == 6)
+                day = 0;
+            else
+                day++;
+
+            lineDataPoints.Add(new DataPoint(Enum.GetName(typeof(DayOfWeek), day), fourDaysBack));
+
+            if (((int)day) == 6)
+                day = 0;
+            else
+                day++;
+
+            lineDataPoints.Add(new DataPoint(Enum.GetName(typeof(DayOfWeek), day), threeDaysBack));
+
+
+            if (((int)day) == 6)
+                day = 0;
+            else
+                day++;
+
+            lineDataPoints.Add(new DataPoint(Enum.GetName(typeof(DayOfWeek), day), twoDaysBack));
+
+
+            if (((int)day) == 6)
+                day = 0;
+            else
+                day++;
+
+            lineDataPoints.Add(new DataPoint(Enum.GetName(typeof(DayOfWeek), day), oneDayBack));
+
+
+            if (((int)day) == 6)
+                day = 0;
+            else
+                day++;
+
+            lineDataPoints.Add(new DataPoint("Today", today));
+
+            ViewBag.LineDataPoints = JsonConvert.SerializeObject(lineDataPoints);
 
             return View(Project);
         }
@@ -188,16 +281,16 @@ namespace BugTracker.Controllers
         // Delete all tickets associated with a project
         public async Task deleteTickets(int projectId)
         {
-           var ticketList = await _context.Tickets.ToListAsync();
-        
-           foreach(var item in ticketList)
-           {
+            var ticketList = await _context.Tickets.ToListAsync();
+
+            foreach (var item in ticketList)
+            {
                 if (item.ProjectId == projectId)
                 {
                     _context.Tickets.Remove(item);
-                     await _context.SaveChangesAsync();
+                    await _context.SaveChangesAsync();
                 }
-           }
+            }
 
             return;
 
