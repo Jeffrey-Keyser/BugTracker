@@ -8,11 +8,10 @@ namespace BugTracker.Models
 {
     public class UserModel
     {
+        // Will be same as userIdentity ID
         [Key]
-        public int key { get; set; }
+        public string key { get; set; }
 
-        // Will be same as the identity key
-        [Required]
-        public string userId { get; set; }
+
     }
 }

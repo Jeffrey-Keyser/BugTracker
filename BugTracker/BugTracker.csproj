@@ -22,6 +22,8 @@
     <Compile Remove="Migrations\20200609202426_userId.Designer.cs" />
     <Compile Remove="Migrations\20200609202912_add-migraion key2.cs" />
     <Compile Remove="Migrations\20200609202912_add-migraion key2.Designer.cs" />
+    <Compile Remove="Migrations\20200609205912_newKey.cs" />
+    <Compile Remove="Migrations\20200609205912_newKey.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

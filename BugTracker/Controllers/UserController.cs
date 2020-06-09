@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using BugTracker.Data;
+using Microsoft.AspNet.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BugTracker.Controllers
@@ -21,9 +22,11 @@ namespace BugTracker.Controllers
         }
 
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            var myUser = await _context.UserModels.FindAsync(User.Identity.GetUserId());
+
+            return View(myUser);
         }
     }
 }

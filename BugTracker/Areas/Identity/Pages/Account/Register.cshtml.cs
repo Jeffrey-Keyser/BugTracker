@@ -95,7 +95,8 @@ namespace BugTracker.Areas.Identity.Pages.Account
                     // Add a new userModel
                     // Doing this instead of extending Identity Model
                     UserModel newUser = new UserModel();
-                    newUser.userId = user.Id;
+                    newUser.key = user.Id;
+
                     _context.UserModels.Add(newUser);
                     await _context.SaveChangesAsync();
 
