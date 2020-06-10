@@ -17,6 +17,7 @@ using Microsoft.Extensions.Logging;
 using BugTracker.Extensions;
 using BugTracker.Models;
 using BugTracker.Data;
+using System.Collections;
 
 namespace BugTracker.Areas.Identity.Pages.Account
 {
@@ -96,8 +97,9 @@ namespace BugTracker.Areas.Identity.Pages.Account
                     // Doing this instead of extending Identity Model
                     UserModel newUser = new UserModel();
                     newUser.key = user.Id;
+                    newUser.AuthoredProjects = null;
 
-                    _context.UserModels.Add(newUser);
+                    await _context.UserModels.AddAsync(newUser);
                     await _context.SaveChangesAsync();
 
 

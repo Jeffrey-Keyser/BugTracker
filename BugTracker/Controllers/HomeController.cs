@@ -127,6 +127,7 @@ namespace BugTracker.Controllers
                     if (item != null)
                     {
                         ViewBag.ticket1 = item;
+                        ViewBag.ticket1Color = getTicketColor(item);
                     }
                     else
                     {
@@ -138,6 +139,7 @@ namespace BugTracker.Controllers
                     if (item != null)
                     {
                         ViewBag.ticket2 = item;
+                        ViewBag.ticket2Color = getTicketColor(item);
                     }
                     else
                     {
@@ -149,6 +151,7 @@ namespace BugTracker.Controllers
                     if (item != null)
                     {
                         ViewBag.ticket3 = item;
+                        ViewBag.ticket3Color = getTicketColor(item);
                     }
                     else
                     {
@@ -159,7 +162,10 @@ namespace BugTracker.Controllers
             }
 
 
-            return View(await _context.Projects.ToListAsync());
+            List<Projects> fullProjectList = await _context.Projects.ToListAsync();
+            IEnumerable<Projects> userProjects = fullProjectList.Where(x => x.userId == ViewBag.userId);
+
+            return View(userProjects);
         }
 
         public IActionResult Privacy()
@@ -241,5 +247,37 @@ namespace BugTracker.Controllers
             return recentTickets;
         }
 
+        /* COLORS
+   "#d4edda"
+   "#fff3cd"
+   "#f8d7da"
+   "#cce5ff"
+*/
+
+        public String getTicketColor(Tickets Ticket)
+        {
+            // Set color based on the ticket's priority
+            String alertColor;
+            switch ((int)Ticket.TicketPriority)
+            {
+                case 0:
+                    alertColor = "#d4edda";
+                    break;
+                case 1:
+                    alertColor = "#fff3cd";
+                    break;
+                case 2:
+                    alertColor = "#f8d7da";
+                    break;
+                case 3:
+                    alertColor = "#cce5ff";
+                    break;
+                default:
+                    alertColor = "alert-secondary";
+                    break;
+            }
+
+            return alertColor;
+        }
     }
 }

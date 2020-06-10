@@ -1,5 +1,8 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Drawing;
 using System.Linq;
 using System.Net;
 using System.Security.Claims;
@@ -9,6 +12,7 @@ using BugTracker.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.CodeAnalysis;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.VisualBasic;
 using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.View;
 using Newtonsoft.Json;
 using static BugTracker.Models.TicketChart;
@@ -110,10 +114,20 @@ namespace BugTracker.Controllers
             var currentUserID = currentUser.FindFirst(ClaimTypes.NameIdentifier).Value;
             ViewBag.userId = currentUserID;
 
+            var currUser = await _context.UserModels.FirstOrDefaultAsync(m => m.key == currentUserID);
+
+            currUser.AuthoredProjects.Add(Project);
+
             if (ModelState.IsValid)
             {
+
                 _context.Add(Project);
+
+
+
                 await _context.SaveChangesAsync();
+
+
                 return RedirectToAction("Index");
             }
 
@@ -143,6 +157,8 @@ namespace BugTracker.Controllers
 
         public async Task<IActionResult> Project(int id)
         {
+
+
             List<DataPoint> barDataPoints = new List<DataPoint>();
             List<DataPoint> lineDataPoints = new List<DataPoint>();
 
@@ -158,7 +174,7 @@ namespace BugTracker.Controllers
 
             // Add all tickets that match the project to the graph
             // For the bar graph
-            foreach (var item in ticketList)
+            foreach (var item in Project.TicketList)
             {
                 if (item.ProjectId == Project.Id && !item.Completed)
                 {
@@ -180,6 +196,17 @@ namespace BugTracker.Controllers
                 }
             }
 
+            // Return color for the highest priority
+            ICollection<Color> colors = getProjectCornerColors(num_low, num_med, num_high, num_crit);
+            if (colors.Count() == 1)
+            {
+                IEnumerator en = colors.GetEnumerator();
+                en.MoveNext();
+                ViewBag.projectCornerColorPrimary = ColorTranslator.ToHtml((Color)en.Current);
+                ViewBag.projectCornerColorSecond = "#A7ADB7";
+            }
+
+
             barDataPoints.Add(new DataPoint("Low", num_low));
             barDataPoints.Add(new DataPoint("Medium", num_med));
             barDataPoints.Add(new DataPoint("High", num_high));
@@ -195,7 +222,7 @@ namespace BugTracker.Controllers
             fiveDaysBack = 0, sixDaysBack = 0, sevenDaysBack = 0;
 
             // For the Line Graph
-            foreach (var item in ticketList)
+            foreach (var item in Project.TicketList)
             {
                 if (item.ProjectId == Project.Id)
                 {
@@ -294,6 +321,48 @@ namespace BugTracker.Controllers
 
             return;
 
+        }
+
+
+         /* COLORS
+            "#d4edda"
+            "#fff3cd"
+            "#f8d7da"
+            "#cce5ff"
+         */
+        public ICollection<Color> getProjectCornerColors(int num_low, int num_med, int num_high, int num_crit)
+        {
+            ICollection<Color> chosenColors = new Collection<Color>();
+
+            Color low = ColorTranslator.FromHtml("#d4edda");
+            Color med = ColorTranslator.FromHtml("#fff3cd");
+            Color high = ColorTranslator.FromHtml("#f8d7da");
+            Color crit = ColorTranslator.FromHtml("#cce5ff");
+            Color defaultcolor = ColorTranslator.FromHtml("#A7ADB7");
+
+            // Strictly higher, just choose one color
+            if (num_low > num_med & num_low > num_high & num_low > num_crit)
+            {
+                chosenColors.Add(low);
+            }
+            else if (num_med > num_low & num_med > num_high & num_med > num_crit)
+            {
+                chosenColors.Add(med);
+            }
+            else if (num_high > num_low & num_high > num_med & num_high > num_crit)
+            {
+                chosenColors.Add(high);
+            }
+            else if(num_crit > num_low & num_crit > num_med & num_crit > num_high)
+            {
+                chosenColors.Add(crit);
+            }
+            else
+            {
+                chosenColors.Add(defaultcolor);
+            }
+
+            return chosenColors;
         }
     }
 }

@@ -4,7 +4,11 @@
     ViewData["Title"] = "Project";
 }
 
-<h1>Project --- @Model.ProjectName</h1>
+<div class="projectcorner" style="background-image: linear-gradient( @Html.Raw(ViewBag.projectCornerColorPrimary) , @Html.Raw(ViewBag.projectCornerColorSecond)">
+    <div>
+        <h2>@Model.ProjectName </h2>
+    </div>
+</div>
 
 <!DOCTYPE HTML>
 <html>

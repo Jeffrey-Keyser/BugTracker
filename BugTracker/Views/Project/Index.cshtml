@@ -19,6 +19,7 @@
             <table id="proj_table" class="display" style="width:100%">
                 <thead>
                     <tr>
+                        <th></th>
                         <th>Project Name</th>
                         <th>Author</th>
                         <th>Programming Language</th>
@@ -31,7 +32,9 @@
                             if (item.userId == ViewBag.userId)
                             {
                                 <tr>
+                                    <td>
 
+                                    </td>
                                     <td>
                                         @Html.ActionLink(item.ProjectName, "Project", "Project", new { id = item.Id })
                                     </td>

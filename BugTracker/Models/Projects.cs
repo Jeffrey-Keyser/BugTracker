@@ -26,12 +26,12 @@ namespace BugTracker.Models
         [Required]
         public string userId { get; set; }
 
-        // TODO: FIX
         public virtual ICollection<Tickets> TicketList { get; set; } = new Collection<Tickets>();
 
         [Required]
         [Display(Name = "Project Programming Language")]
         public String projectLanguage { get; set; }
+
     }
 
 }

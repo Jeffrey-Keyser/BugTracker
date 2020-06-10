@@ -203,7 +203,8 @@ namespace BugTracker.Controllers
             ViewBag.projectId = Ticket.ProjectId;
 
             Ticket.CreationDate = DateTime.Now; //DateTime.Now.ToString("0:dd/MMM/yyyy HH:mm:ss");
-            // Add the ticket to the project's TicketList
+            // Add the ticket to the project's 
+
             if (Ticket.ProjectId == 0)
             {
                 return NotFound();

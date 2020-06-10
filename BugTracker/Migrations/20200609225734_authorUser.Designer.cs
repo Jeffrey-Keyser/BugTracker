@@ -4,14 +4,16 @@ using BugTracker.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace BugTracker.Migrations
 {
     [DbContext(typeof(BugTrackerContext))]
-    partial class BugTrackerContextModelSnapshot : ModelSnapshot
+    [Migration("20200609225734_authorUser")]
+    partial class authorUser
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -103,7 +105,7 @@ namespace BugTracker.Migrations
                         .HasColumnType("nvarchar(60)")
                         .HasMaxLength(60);
 
-                    b.Property<string>("UserModelkey")
+                    b.Property<string>("authorUserkey")
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("projectLanguage")
@@ -116,7 +118,7 @@ namespace BugTracker.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("UserModelkey");
+                    b.HasIndex("authorUserkey");
 
                     b.ToTable("Projects");
                 });
@@ -306,9 +308,9 @@ namespace BugTracker.Migrations
 
             modelBuilder.Entity("BugTracker.Models.Projects", b =>
                 {
-                    b.HasOne("BugTracker.Models.UserModel", null)
+                    b.HasOne("BugTracker.Models.UserModel", "authorUser")
                         .WithMany("AuthoredProjects")
-                        .HasForeignKey("UserModelkey");
+                        .HasForeignKey("authorUserkey");
                 });
 
             modelBuilder.Entity("BugTracker.Models.Tickets", b =>

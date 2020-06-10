@@ -24,6 +24,12 @@
     <Compile Remove="Migrations\20200609202912_add-migraion key2.Designer.cs" />
     <Compile Remove="Migrations\20200609205912_newKey.cs" />
     <Compile Remove="Migrations\20200609205912_newKey.Designer.cs" />
+    <Compile Remove="Migrations\20200609212611_authoredProjects.cs" />
+    <Compile Remove="Migrations\20200609212611_authoredProjects.Designer.cs" />
+    <Compile Remove="Migrations\20200609212658_authoredProjects.cs" />
+    <Compile Remove="Migrations\20200609212658_authoredProjects.Designer.cs" />
+    <Compile Remove="Migrations\20200609214152_virtualAuthoredProjects.cs" />
+    <Compile Remove="Migrations\20200609214152_virtualAuthoredProjects.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -41,6 +47,14 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.3" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.3" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Content\Images\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\lib\images\LinkedIn.jpg" />
   </ItemGroup>
 
 </Project>
