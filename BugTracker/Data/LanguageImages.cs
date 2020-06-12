@@ -8,9 +8,6 @@ using System.Threading.Tasks;
 // Used to load images for programming languages using the Devicon repo
 // Found at https://github.com/konpa/devicon
 
-// TODO: Switch to Relative Path
-// See GetFullPath()
-
 namespace BugTracker.Data
 {
     public class LanguageImages
@@ -18,79 +15,79 @@ namespace BugTracker.Data
 
         public String getC()
         {
-            StreamReader sr = new StreamReader("C:/Users/Jeffrey/source/repos/BugTracker/BugTracker/Data/DeviconLinks/C.txt");
-            string strText = sr.ReadToEnd();
-            return strText;
+            string filepath = Path.GetFullPath("Data/DeviconLinks/C.txt");
+            StreamReader sr = new StreamReader(filepath);
+            return sr.ReadToEnd();
         }
 
         public String getCsharp()
         {
-            StreamReader sr = new StreamReader("C:/Users/Jeffrey/source/repos/BugTracker/BugTracker/Data/DeviconLinks/Csharp.txt");
-            string strText = sr.ReadToEnd();
-            return strText;
+            string filepath = Path.GetFullPath("Data/DeviconLinks/CSharp.txt");
+            StreamReader sr = new StreamReader(filepath);
+            return sr.ReadToEnd();
         }
 
         public String getGo()
         {
-            StreamReader sr = new StreamReader("C:/Users/Jeffrey/source/repos/BugTracker/BugTracker/Data/DeviconLinks/Go.txt");
-            string strText = sr.ReadToEnd();
-            return strText;
+            string filepath = Path.GetFullPath("Data/DeviconLinks/Go.txt");
+            StreamReader sr = new StreamReader(filepath);
+            return sr.ReadToEnd();
         }
 
         public String getJava()
         {
-            StreamReader sr = new StreamReader("C:/Users/Jeffrey/source/repos/BugTracker/BugTracker/Data/DeviconLinks/Java.txt");
-            string strText = sr.ReadToEnd();
-            return strText;
+            string filepath = Path.GetFullPath("Data/DeviconLinks/Java.txt");
+            StreamReader sr = new StreamReader(filepath);
+            return sr.ReadToEnd();
         }
     
         public String getJavaScript()
         {
-            StreamReader sr = new StreamReader("C:/Users/Jeffrey/source/repos/BugTracker/BugTracker/Data/DeviconLinks/JavaScript.txt");
-            string strText = sr.ReadToEnd();
-            return strText;
+            string filepath = Path.GetFullPath("Data/DeviconLinks/JavaScript.txt");
+            StreamReader sr = new StreamReader(filepath);
+            return sr.ReadToEnd();
         }
 
         public String getPHP()
         {
-            StreamReader sr = new StreamReader("C:/Users/Jeffrey/source/repos/BugTracker/BugTracker/Data/DeviconLinks/PHP.txt");
-            string strText = sr.ReadToEnd();
-            return strText;
+            string filepath = Path.GetFullPath("Data/DeviconLinks/PHP.txt");
+            StreamReader sr = new StreamReader(filepath);
+            return sr.ReadToEnd();
         }
 
         public String getPython()
         {
-            StreamReader sr = new StreamReader("C:/Users/Jeffrey/source/repos/BugTracker/BugTracker/Data/DeviconLinks/Python.txt");
-            string strText = sr.ReadToEnd();
-            return strText;
+            string filepath = Path.GetFullPath("Data/DeviconLinks/Python.txt");
+            StreamReader sr = new StreamReader(filepath);
+            return sr.ReadToEnd();
         }
 
         public String getRuby()
         {
-            StreamReader sr = new StreamReader("C:/Users/Jeffrey/source/repos/BugTracker/BugTracker/Data/DeviconLinks/Ruby.txt");
-            string strText = sr.ReadToEnd();
-            return strText;
+            string filepath = Path.GetFullPath("Data/DeviconLinks/Ruby.txt");
+            StreamReader sr = new StreamReader(filepath);
+            return sr.ReadToEnd();
         }
 
         public String getSQL()
         {
-            StreamReader sr = new StreamReader("C:/Users/Jeffrey/source/repos/BugTracker/BugTracker/Data/DeviconLinks/SQL.txt");
-            string strText = sr.ReadToEnd();
-            return strText;
+            string filepath = Path.GetFullPath("Data/DeviconLinks/SQL.txt");
+            StreamReader sr = new StreamReader(filepath);
+            return sr.ReadToEnd();
         }
 
         public String getSwift()
         {
-            StreamReader sr = new StreamReader("C:/Users/Jeffrey/source/repos/BugTracker/BugTracker/Data/DeviconLinks/Swift.txt");
-            string strText = sr.ReadToEnd();
-            return strText;
+            string filepath = Path.GetFullPath("Data/DeviconLinks/Swift.txt");
+            StreamReader sr = new StreamReader(filepath);
+            return sr.ReadToEnd();
         }
 
         public String getTypeScript()
         {
-            StreamReader sr = new StreamReader("C:/Users/Jeffrey/source/repos/BugTracker/BugTracker/Data/DeviconLinks/TypeScript.txt");
-            string strText = sr.ReadToEnd();
-            return strText;
+            string filepath = Path.GetFullPath("Data/DeviconLinks/TypeScript.txt");
+            StreamReader sr = new StreamReader(filepath);
+            return sr.ReadToEnd();
         }
 
     }

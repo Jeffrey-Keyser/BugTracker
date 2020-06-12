@@ -14,8 +14,5 @@ namespace BugTracker.Models
         [Key]
         public string key { get; set; }
 
-        // Collection of projects created by this user
-        public virtual ICollection<Projects> AuthoredProjects { get; set; } = new Collection<Projects>();
-
     }
 }

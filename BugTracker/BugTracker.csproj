@@ -30,6 +30,8 @@
     <Compile Remove="Migrations\20200609212658_authoredProjects.Designer.cs" />
     <Compile Remove="Migrations\20200609214152_virtualAuthoredProjects.cs" />
     <Compile Remove="Migrations\20200609214152_virtualAuthoredProjects.Designer.cs" />
+    <Compile Remove="Migrations\20200612230426_now.cs" />
+    <Compile Remove="Migrations\20200612230426_now.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

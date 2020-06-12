@@ -116,8 +116,6 @@ namespace BugTracker.Controllers
 
             var currUser = await _context.UserModels.FirstOrDefaultAsync(m => m.key == currentUserID);
 
-            currUser.AuthoredProjects.Add(Project);
-
             if (ModelState.IsValid)
             {
 

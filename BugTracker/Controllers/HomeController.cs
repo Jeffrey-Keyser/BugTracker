@@ -60,7 +60,6 @@ namespace BugTracker.Controllers
                 {
                     // Do nothing?
 
-
                     // TEMPORARY SOLUTION. CONVERT LATER
                     switch (Project.projectLanguage)
                     {
@@ -118,6 +117,8 @@ namespace BugTracker.Controllers
                             if (i == 0) { ViewBag.ticket1Image = c1.getTypeScript(); }
                             else if (i == 1) { ViewBag.ticket2Image = c1.getTypeScript(); }
                             else if (i == 2) { ViewBag.ticket3Image = c1.getTypeScript(); }
+                            break;
+                        default:
                             break;
                     }
                 }
