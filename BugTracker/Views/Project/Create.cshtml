@@ -1,8 +1,8 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
+﻿@using Microsoft.AspNetCore.Identity
+@using BugTracker.Areas.Identity.Data
+
+@inject SignInManager<BugTrackerUser> SignInManager
+@inject UserManager<BugTrackerUser> UserManager
 
 @model BugTracker.Models.Projects;
 
@@ -17,7 +17,7 @@
                 <p> Author Name </p>
             </div>
             <div class="col-6">
-                <input asp-for="Author" class="form-control" />
+                <input asp-for="Author" class="form-control" value="@User.Identity.Name" readonly />
                 <span asp-validation-for="Author" class="text-danger"></span>
             </div>
         </div>

@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace BugTracker.Controllers
 {
+    [Microsoft.AspNetCore.Authorization.Authorize]
     [Route("[controller]/[action]")]
     public class UserController : Controller
     {

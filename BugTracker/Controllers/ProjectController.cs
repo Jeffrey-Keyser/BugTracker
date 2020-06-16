@@ -21,6 +21,7 @@ using static BugTracker.Models.TicketChart;
 
 namespace BugTracker.Controllers
 {
+    [Microsoft.AspNetCore.Authorization.Authorize]
     [Route("[controller]/[action]")]
     public class ProjectController : Controller
     {

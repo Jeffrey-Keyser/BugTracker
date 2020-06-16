@@ -12,6 +12,7 @@ using System.Text;
 
 namespace BugTracker.Controllers
 {
+    [Microsoft.AspNetCore.Authorization.Authorize]
     [Route("[controller]/[action]")]
     public class TicketController : Controller
     {

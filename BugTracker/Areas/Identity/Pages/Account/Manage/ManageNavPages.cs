@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.NetworkInformation;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
@@ -8,6 +9,8 @@ namespace BugTracker.Areas.Identity.Pages.Account.Manage
 {
     public static class ManageNavPages
     {
+        public static string ProfileStats => "ProfileStats";
+
         public static string Index => "Index";
 
         public static string Email => "Email";
@@ -19,6 +22,8 @@ namespace BugTracker.Areas.Identity.Pages.Account.Manage
         public static string PersonalData => "PersonalData";
 
         public static string TwoFactorAuthentication => "TwoFactorAuthentication";
+
+        public static string ProfileStatsNavClass(ViewContext viewContext) => PageNavClass(viewContext, ProfileStats);
 
         public static string IndexNavClass(ViewContext viewContext) => PageNavClass(viewContext, Index);
 
