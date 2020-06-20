@@ -13,26 +13,33 @@
     <h1> Recently Completed </h1>
     @if (Model != null)
     {
-        int num_tickets = 0;
-        <table class="table table-striped border">
-            <tr class="table-secondary">
-                <td>
-                    <p> Ticket Name </p>
-                </td>
-                <td>
-                    <p> Ticket Description </p>
-                </td>
-                <td>
-                </td>
+        int display_four_low = 0;
+        int display_four_med = 0;
+        int display_four_high = 0;
+        int display_four_crit = 0;
+
+    <div class="containerTickets">
+    <div>
+        <table class="table lowTable">
+            <tr>
+                <th>
+                    <p> Name </p>
+                </th>
+                <th>
+                    <p> Description </p>
+                </th>
+                <th>
+
+                </th>
             </tr>
 
             @foreach (var item in Model)
             {
 
                 // TODO: Should switch this to use TicketList in Project Model
-                if (item.userId == ViewBag.userId && item.ProjectId == ViewBag.ProjectId && item.Completed && num_tickets < 4)
+                if (item.userId == ViewBag.userId && item.ProjectId == ViewBag.ProjectId && item.Completed && item.TicketPriority == Priority.Low && display_four_low < 4)
                 {
-                    num_tickets++;
+                    display_four_low++;
                     <tr>
                         <td>
                             @Html.ActionLink(item.TicketName, "Ticket", new { id = item.TicketId })
@@ -60,9 +67,199 @@
                         </td>
                     </tr>
                 }
+                else if (item.userId == ViewBag.userId && item.ProjectId == ViewBag.ProjectId && item.Completed && item.TicketPriority == Priority.Low && display_four_low >= 4)
+                {
+                    display_four_low++;
+                }
             }
 
         </table>
+
+        @if (display_four_low > 4)
+        {
+            <a> Click to see more </a>
+        }
+    </div>
+    <div>
+        <table class="table medTable">
+            <tr>
+                <th>
+                    <p> Name </p>
+                </th>
+                <th>
+                    <p> Description </p>
+                </th>
+                <th>
+
+                </th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+
+                // TODO: Should switch this to use TicketList in Project Model
+                if (item.userId == ViewBag.userId && item.ProjectId == ViewBag.ProjectId && item.Completed && item.TicketPriority == Priority.Medium && display_four_med < 4)
+                {
+                    display_four_med++;
+                    <tr>
+                        <td>
+                            @Html.ActionLink(item.TicketName, "Ticket", new { id = item.TicketId })
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.TicketDesc)
+                        </td>
+                        <td>
+                            <form method="post" action="@Url.Action("Complete", "Ticket", new { id = item.TicketId } )">
+                                <div>
+                                    @using (Html.BeginForm("Complete", "Ticket", new { id = item.TicketId }))
+                                    {
+                                        @Html.AntiForgeryToken()
+                                        if (!item.Completed)
+                                        {
+                                            <button type="submit" class="btn btn-danger" value="Complete"> Not Completed </button>
+                                        }
+                                        else
+                                        {
+                                            <button type="submit" class="btn btn-success" value="Complete"> Completed </button>
+                                        }
+                                    }
+                                </div>
+                            </form>
+                        </td>
+                    </tr>
+                }
+                else if (item.userId == ViewBag.userId && item.ProjectId == ViewBag.ProjectId && item.Completed && item.TicketPriority == Priority.Medium && display_four_med >= 4)
+                {
+                    display_four_med++;
+                }
+            }
+        </table>
+
+        @if (display_four_med > 4)
+        {
+            <a> Click to see more </a>
+        }
+    </div>
+    <div>
+        <table class="table highTable">
+            <tr>
+                <th>
+                    <p> Name </p>
+                </th>
+                <th>
+                    <p> Description </p>
+                </th>
+                <th>
+
+                </th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+
+                // TODO: Should switch this to use TicketList in Project Model
+                if (item.userId == ViewBag.userId && item.ProjectId == ViewBag.ProjectId && item.Completed && item.TicketPriority == Priority.High && display_four_high < 4)
+                {
+                    display_four_high++;
+                    <tr>
+                        <td>
+                            @Html.ActionLink(item.TicketName, "Ticket", new { id = item.TicketId })
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.TicketDesc)
+                        </td>
+                        <td>
+                            <form method="post" action="@Url.Action("Complete", "Ticket", new { id = item.TicketId } )">
+                                <div>
+                                    @using (Html.BeginForm("Complete", "Ticket", new { id = item.TicketId }))
+                                    {
+                                        @Html.AntiForgeryToken()
+                                        if (!item.Completed)
+                                        {
+                                            <button type="submit" class="btn btn-danger" value="Complete"> Not Completed </button>
+                                        }
+                                        else
+                                        {
+                                            <button type="submit" class="btn btn-success" value="Complete"> Completed </button>
+                                        }
+                                    }
+                                </div>
+                            </form>
+                        </td>
+                    </tr>
+                }
+                else if (item.userId == ViewBag.userId && item.ProjectId == ViewBag.ProjectId && item.Completed && item.TicketPriority == Priority.High && display_four_high >= 4)
+                {
+                    display_four_high++;
+                }
+            }
+
+        </table>
+        @if (display_four_high > 4)
+        {
+            <a> Click to see more </a>
+        }
+    </div>
+    <div>
+        <table class="table critTable">
+            <tr>
+                <th>
+                    <p> Name </p>
+                </th>
+                <th>
+                    <p> Description </p>
+                </th>
+                <th>
+
+                </th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+
+                // TODO: Should switch this to use TicketList in Project Model
+                if (item.userId == ViewBag.userId && item.ProjectId == ViewBag.ProjectId && item.Completed && item.TicketPriority == Priority.Critical && display_four_crit < 4)
+                {
+                    display_four_crit++;
+                    <tr>
+                        <td>
+                            @Html.ActionLink(item.TicketName, "Ticket", new { id = item.TicketId })
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.TicketDesc)
+                        </td>
+                        <td>
+                            <form method="post" action="@Url.Action("Complete", "Ticket", new { id = item.TicketId } )">
+                                <div>
+                                    @using (Html.BeginForm("Complete", "Ticket", new { id = item.TicketId }))
+                                    {
+                                        @Html.AntiForgeryToken()
+                                        if (!item.Completed)
+                                        {
+                                            <button type="submit" class="btn btn-danger" value="Complete"> Not Completed </button>
+                                        }
+                                        else
+                                        {
+                                            <button type="submit" class="btn btn-success" value="Complete"> Completed </button>
+                                        }
+                                    }
+                                </div>
+                            </form>
+                        </td>
+                    </tr>
+                }
+                else if (item.userId == ViewBag.userId && item.ProjectId == ViewBag.ProjectId && item.Completed && item.TicketPriority == Priority.Critical && display_four_crit >= 4)
+                {
+                    display_four_crit++;
+                }
+            }
+        </table>
+        @if (display_four_crit > 4)
+        {
+            <a> Click to see more </a>
+        }
+    </div>
+    </div>
     }
     else
     {

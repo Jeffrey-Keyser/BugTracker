@@ -140,3 +140,101 @@ tab1 {
     bottom: 750px;
     padding: 20px;
 }
+
+/* For the Tickets */
+.containerTickets {
+    display: flex;
+}
+.container1 > div {
+    flex: 1; /*grow*/
+}
+
+/* Tables for priority 
+ COLORS
+            "#d4edda"
+            "#fff3cd"
+            "#f8d7da"
+            "#cce5ff"
+         */
+
+.lowTable{
+}
+
+.lowTable th {
+    border-bottom: 1px solid black;
+    background: #d6d8db
+}
+
+.lowTable td {
+    background: #d4edda
+}
+
+.lowTable tr:nth-child(even) {
+    background: #d4eda1
+}
+
+.lowTable tr:nth-child(odd) {
+    background: #d4eda1
+}
+
+.medTable {
+}
+
+.medTable th {
+    border-bottom: 1px solid black;
+    background: #d6d8db
+}
+
+.medTable td {
+    background: #fff3cd
+}
+
+.medTable tr:nth-child(even) {
+    background: #fff3cd
+}
+
+.medTable tr:nth-child(odd) {
+    background: #fff3cd
+}
+
+
+.highTable {
+}
+
+.highTable th {
+    border-bottom: 1px solid black;
+    background: #d6d8db
+}
+
+.highTable td {
+    background: #f8d7da
+}
+
+.highTable tr:nth-child(even) {
+    background: #f8d7da
+}
+
+.highTable tr:nth-child(odd) {
+    background: #f8d7da
+}
+
+
+.critTable {
+}
+
+.critTable th {
+    border-bottom: 1px solid black;
+    background: #d6d8db
+}
+
+.critTable td {
+    background: #cce5ff
+}
+
+.critTable tr:nth-child(even) {
+    background: #cce5ff
+}
+
+.critTable tr:nth-child(odd) {
+    background: #cce5ff
+}
