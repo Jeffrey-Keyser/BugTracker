@@ -134,13 +134,13 @@ namespace BugTracker.Controllers
         }
 
         [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
+  //      [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             // Delete all associated tickets
             // Do Before Project
             await deleteTickets(id);
-
+            
             var Project = await _context.Projects.FindAsync(id);
             if (Project == null)
             {
