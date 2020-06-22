@@ -4,6 +4,9 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 using BugTracker.Areas.Identity.Data;
+using BugTracker.Data;
+using BugTracker.Migrations;
+using BugTracker.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -15,27 +18,38 @@ namespace BugTracker.Areas.Identity.Pages.Account.Manage
         private readonly UserManager<BugTrackerUser> _userManager;
         private readonly SignInManager<BugTrackerUser> _signInManager;
 
+        // Dependency injection
+        // Inject database contents into the controller
+        private readonly BugTrackerContext _context;
+
         public ProfileStatsModel(
             UserManager<BugTrackerUser> userManager,
-            SignInManager<BugTrackerUser> signInManager)
+            SignInManager<BugTrackerUser> signInManager,
+            BugTrackerContext context)
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            _context = context;
         }
+
+        public string myUserId { get; set; }
 
         public class InputModel
         {
 
         }
 
-        private async Task LoadAsync(BugTrackerUser user)
+        private async Task LoadAsync(UserModel user)
         {
+            var myUserId = user.key;
 
         }
 
         public async Task<IActionResult> OnGetAsync()
         {
-            var user = await _userManager.GetUserAsync(User);
+            var identityUser = await _userManager.GetUserAsync(User);
+            var user = await _context.UserModels.FindAsync(identityUser.Id);
+
             if (user == null)
             {
                 return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
@@ -55,7 +69,6 @@ namespace BugTracker.Areas.Identity.Pages.Account.Manage
 
             if (!ModelState.IsValid)
             {
-                await LoadAsync(user);
                 return Page();
             }
 
