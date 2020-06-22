@@ -322,5 +322,23 @@ namespace BugTracker.Controllers
             return View(Ticket);
         }
 
+
+        [HttpPost, ActionName("Delete")]
+        //      [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmed(int id)
+        {
+
+            var Ticket = await _context.Tickets.FindAsync(id);
+            if (Ticket == null)
+            {
+                return NotFound();
+            }
+
+            _context.Tickets.Remove(Ticket);
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction("Index");
+        }
+
     }
 }

@@ -64,9 +64,9 @@
         <br />
         <br />
 
-        <div class="col-8">
+        <div class="containerTickets">
             <form method="post" action="@Url.Action("Complete", "Ticket", new { id = Model.TicketId } )">
-                <div>
+                <div class="col-4">
                     @using (Html.BeginForm("Complete", "Ticket", new { id = Model.TicketId }))
                     {
                         @Html.AntiForgeryToken()
@@ -81,8 +81,28 @@
                     }
                 </div>
             </form>
+            
+            <div class="col-8 align-baseline">
+                @using (Html.BeginForm("Delete", "Ticket", new { id = Model.TicketId }))
+                {
+                    @Html.AntiForgeryToken()
+
+                    <a style="color:whitesmoke" class="btn btn-danger delete"
+                       data-id="@Model.TicketId"
+                       data-controller="Ticket"
+                       data-action="Delete"
+                       data-body-message="Are you sure you wish to delete?"
+                       data-redirect-url="/Ticket/Project?id=@Model.ProjectId"> Delete </a>
+
+                }
+            </div>
         </div>
 
     </div>
 
 </div>
+
+
+@section Scripts{
+    <script src="~/js/delete.js"></script>
+}
