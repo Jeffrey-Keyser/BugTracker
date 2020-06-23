@@ -12,7 +12,8 @@ namespace BugTracker.Models
     {
 
         [Key]
-        public int Id { get; set; }
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public string projectId { get; set; }
 
         [Required]
         [Display(Name = "Project Name")]

@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -12,7 +13,8 @@ namespace BugTracker.Models
     {
 
         [Key]
-        public int TicketId { get; set; }
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public string TicketId { get; set; }
 
         [Required]
         [DisplayName("Ticket Name")]
@@ -28,7 +30,7 @@ namespace BugTracker.Models
 
         // Associate the tickets with a projects model
         [Required]
-        public int ProjectId { get; set; }
+        public string ProjectId { get; set; }
 
         [Required]
         public bool Completed { get; set; } = false;

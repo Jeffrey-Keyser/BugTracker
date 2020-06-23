@@ -69,14 +69,14 @@ namespace BugTracker.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id, Author, ProjectName, userId, projectLanguage")] Projects Project)
+        public async Task<IActionResult> Edit(string id, [Bind("projectId, Author, ProjectName, userId, projectLanguage")] Projects Project)
         {
             ClaimsPrincipal currentUser = this.User;
             var currentUserID = currentUser.FindFirst(ClaimTypes.NameIdentifier).Value;
             ViewBag.userId = currentUserID;
 
 
-            if (id != Project.Id)
+            if (id != Project.projectId)
             {
                 return NotFound();
             }
@@ -109,7 +109,7 @@ namespace BugTracker.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id, Author, ProjectName, userId, projectLanguage")] Projects Project)
+        public async Task<IActionResult> Create([Bind("projectId, Author, ProjectName, userId, projectLanguage")] Projects Project)
         {
             ClaimsPrincipal currentUser = this.User;
             var currentUserID = currentUser.FindFirst(ClaimTypes.NameIdentifier).Value;
@@ -135,7 +135,7 @@ namespace BugTracker.Controllers
 
         [HttpPost, ActionName("Delete")]
   //      [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public async Task<IActionResult> DeleteConfirmed(string id)
         {
             // Delete all associated tickets
             // Do Before Project
@@ -154,7 +154,7 @@ namespace BugTracker.Controllers
         }
 
 
-        public async Task<IActionResult> Project(int id)
+        public async Task<IActionResult> Project(string id)
         {
 
 
@@ -175,7 +175,7 @@ namespace BugTracker.Controllers
             // For the bar graph
             foreach (var item in Project.TicketList)
             {
-                if (item.ProjectId == Project.Id && !item.Completed)
+                if (item.ProjectId == Project.projectId && !item.Completed)
                 {
                     switch (Enum.GetName(typeof(Priority), item.TicketPriority))
                     {
@@ -223,7 +223,7 @@ namespace BugTracker.Controllers
             // For the Line Graph
             foreach (var item in Project.TicketList)
             {
-                if (item.ProjectId == Project.Id)
+                if (item.ProjectId == Project.projectId)
                 {
                     switch ((currTime - item.CreationDate).Days)
                     {
@@ -305,7 +305,7 @@ namespace BugTracker.Controllers
         [HttpDelete] // Was POST
         // BUG: Cannot Handle multiple tickets without error
         // Delete all tickets associated with a project
-        public async Task deleteTickets(int projectId)
+        public async Task deleteTickets(string projectId)
         {
             var ticketList = await _context.Tickets.ToListAsync();
 

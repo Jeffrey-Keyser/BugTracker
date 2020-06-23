@@ -3,11 +3,11 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace BugTracker.Migrations
 {
-    public partial class Reset : Migration
+    public partial class resetStringKeys : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-       /*     migrationBuilder.CreateTable(
+            migrationBuilder.CreateTable(
                 name: "AspNetRoles",
                 columns: table => new
                 {
@@ -51,15 +51,26 @@ namespace BugTracker.Migrations
                 name: "Projects",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    projectId = table.Column<string>(nullable: false),
                     ProjectName = table.Column<string>(maxLength: 60, nullable: false),
                     Author = table.Column<string>(nullable: false),
-                    userId = table.Column<string>(nullable: false)
+                    userId = table.Column<string>(nullable: false),
+                    projectLanguage = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Projects", x => x.Id);
+                    table.PrimaryKey("PK_Projects", x => x.projectId);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "UserModels",
+                columns: table => new
+                {
+                    key = table.Column<string>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_UserModels", x => x.key);
                 });
 
             migrationBuilder.CreateTable(
@@ -172,23 +183,24 @@ namespace BugTracker.Migrations
                 name: "Tickets",
                 columns: table => new
                 {
-                    TicketId = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    TicketId = table.Column<string>(nullable: false),
                     TicketName = table.Column<string>(nullable: false),
                     TicketDesc = table.Column<string>(nullable: false),
-                    userId = table.Column<string>(nullable: false),
-                    ProjectId = table.Column<int>(nullable: false),
+                    userId = table.Column<string>(maxLength: 100, nullable: false),
+                    ProjectId = table.Column<string>(nullable: false),
                     Completed = table.Column<bool>(nullable: false),
-                    ProjectsId = table.Column<int>(nullable: true)
+                    CreationDate = table.Column<DateTime>(nullable: false),
+                    TicketPriority = table.Column<int>(nullable: false),
+                    ProjectsprojectId = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Tickets", x => x.TicketId);
                     table.ForeignKey(
-                        name: "FK_Tickets_Projects_ProjectsId",
-                        column: x => x.ProjectsId,
+                        name: "FK_Tickets_Projects_ProjectsprojectId",
+                        column: x => x.ProjectsprojectId,
                         principalTable: "Projects",
-                        principalColumn: "Id",
+                        principalColumn: "projectId",
                         onDelete: ReferentialAction.Restrict);
                 });
 
@@ -232,9 +244,9 @@ namespace BugTracker.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Tickets_ProjectsId",
+                name: "IX_Tickets_ProjectsprojectId",
                 table: "Tickets",
-                column: "ProjectsId"); */
+                column: "ProjectsprojectId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -256,6 +268,9 @@ namespace BugTracker.Migrations
 
             migrationBuilder.DropTable(
                 name: "Tickets");
+
+            migrationBuilder.DropTable(
+                name: "UserModels");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");

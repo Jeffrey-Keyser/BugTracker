@@ -5,7 +5,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using BugTracker.Areas.Identity.Data;
 using BugTracker.Data;
-using BugTracker.Migrations;
 using BugTracker.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;

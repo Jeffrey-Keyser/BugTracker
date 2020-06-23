@@ -115,7 +115,7 @@ else
                                     <tr>
 
                                         <td style="font-size:22px">
-                                            @Html.ActionLink(item.ProjectName, "Project", "Project", new { id = item.Id })
+                                            @Html.ActionLink(item.ProjectName, "Project", "Project", new { id = item.projectId })
                                         </td>
                                         <td style="font-size:22px">
                                             @Html.DisplayFor(modelItem => item.Author)

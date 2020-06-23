@@ -6,35 +6,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Migrations\20200516231003_Initial.cs" />
-    <Compile Remove="Migrations\20200516231003_Initial.Designer.cs" />
-    <Compile Remove="Migrations\20200519002353_updateUserId.cs" />
-    <Compile Remove="Migrations\20200519002353_updateUserId.Designer.cs" />
-    <Compile Remove="Migrations\20200522182122_Changes.cs" />
-    <Compile Remove="Migrations\20200522182122_Changes.Designer.cs" />
-    <Compile Remove="Migrations\20200609194450_idk.cs" />
-    <Compile Remove="Migrations\20200609194450_idk.Designer.cs" />
-    <Compile Remove="Migrations\20200609200935_userId.cs" />
-    <Compile Remove="Migrations\20200609200935_userId.Designer.cs" />
-    <Compile Remove="Migrations\20200609201216_userId.cs" />
-    <Compile Remove="Migrations\20200609201216_userId.Designer.cs" />
-    <Compile Remove="Migrations\20200609202426_userId.cs" />
-    <Compile Remove="Migrations\20200609202426_userId.Designer.cs" />
-    <Compile Remove="Migrations\20200609202912_add-migraion key2.cs" />
-    <Compile Remove="Migrations\20200609202912_add-migraion key2.Designer.cs" />
-    <Compile Remove="Migrations\20200609205912_newKey.cs" />
-    <Compile Remove="Migrations\20200609205912_newKey.Designer.cs" />
-    <Compile Remove="Migrations\20200609212611_authoredProjects.cs" />
-    <Compile Remove="Migrations\20200609212611_authoredProjects.Designer.cs" />
-    <Compile Remove="Migrations\20200609212658_authoredProjects.cs" />
-    <Compile Remove="Migrations\20200609212658_authoredProjects.Designer.cs" />
-    <Compile Remove="Migrations\20200609214152_virtualAuthoredProjects.cs" />
-    <Compile Remove="Migrations\20200609214152_virtualAuthoredProjects.Designer.cs" />
-    <Compile Remove="Migrations\20200612230426_now.cs" />
-    <Compile Remove="Migrations\20200612230426_now.Designer.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="IdentityModel" Version="4.2.0" />
     <PackageReference Include="Microsoft.AspNet.Identity.Core" Version="2.2.3" />
     <PackageReference Include="Microsoft.AspNet.Mvc" Version="5.2.7" />

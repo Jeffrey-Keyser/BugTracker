@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BugTracker.Migrations
 {
     [DbContext(typeof(BugTrackerContext))]
-    [Migration("20200523211036_update")]
-    partial class update
+    [Migration("20200623184803_resetStringKeys")]
+    partial class resetStringKeys
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -91,10 +91,8 @@ namespace BugTracker.Migrations
 
             modelBuilder.Entity("BugTracker.Models.Projects", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                    b.Property<string>("projectId")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Author")
                         .IsRequired()
@@ -105,21 +103,23 @@ namespace BugTracker.Migrations
                         .HasColumnType("nvarchar(60)")
                         .HasMaxLength(60);
 
+                    b.Property<string>("projectLanguage")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("userId")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Id");
+                    b.HasKey("projectId");
 
                     b.ToTable("Projects");
                 });
 
             modelBuilder.Entity("BugTracker.Models.Tickets", b =>
                 {
-                    b.Property<int>("TicketId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                    b.Property<string>("TicketId")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<bool>("Completed")
                         .HasColumnType("bit");
@@ -127,11 +127,12 @@ namespace BugTracker.Migrations
                     b.Property<DateTime>("CreationDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("ProjectId")
-                        .HasColumnType("int");
+                    b.Property<string>("ProjectId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("ProjectsId")
-                        .HasColumnType("int");
+                    b.Property<string>("ProjectsprojectId")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("TicketDesc")
                         .IsRequired()
@@ -151,9 +152,19 @@ namespace BugTracker.Migrations
 
                     b.HasKey("TicketId");
 
-                    b.HasIndex("ProjectsId");
+                    b.HasIndex("ProjectsprojectId");
 
                     b.ToTable("Tickets");
+                });
+
+            modelBuilder.Entity("BugTracker.Models.UserModel", b =>
+                {
+                    b.Property<string>("key")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("key");
+
+                    b.ToTable("UserModels");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -291,7 +302,7 @@ namespace BugTracker.Migrations
                 {
                     b.HasOne("BugTracker.Models.Projects", null)
                         .WithMany("TicketList")
-                        .HasForeignKey("ProjectsId");
+                        .HasForeignKey("ProjectsprojectId");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

@@ -35,7 +35,7 @@ namespace BugTracker.Controllers
             return View(await _context.Projects.ToListAsync());
         }
 
-        public async Task<IActionResult> Ticket(int? id)
+        public async Task<IActionResult> Ticket(string ? id)
         {
             // Find the correct ticket
             if (id == null)
@@ -130,7 +130,7 @@ namespace BugTracker.Controllers
             return View(ticket);
         }
 
-        public async Task<IActionResult> Project(int? id)
+        public async Task<IActionResult> Project(string? id)
         {
             ClaimsPrincipal currentUser = this.User;
             var currentUserID = currentUser.FindFirst(ClaimTypes.NameIdentifier).Value;
@@ -143,19 +143,19 @@ namespace BugTracker.Controllers
                 return NotFound();
             }
 
-            var project = await _context.Projects.FirstOrDefaultAsync(m => m.Id == id);
+            var project = await _context.Projects.FirstOrDefaultAsync(m => m.projectId == id);
             if (project == null)
             {
                 return NotFound();
             }
 
-            ViewBag.ProjectId = project.Id;
+            ViewBag.ProjectId = project.projectId;
 
 
             return View(await _context.Tickets.ToListAsync());
         }
 
-        public async Task<IActionResult> Create(int? id)
+        public async Task<IActionResult> Create(string? id)
         {
             ClaimsPrincipal currentUser = this.User;
             var currentUserID = currentUser.FindFirst(ClaimTypes.NameIdentifier).Value;
@@ -179,7 +179,7 @@ namespace BugTracker.Controllers
                 return NotFound();
             }
 
-            var project = await _context.Projects.FirstOrDefaultAsync(m => m.Id == id);
+            var project = await _context.Projects.FirstOrDefaultAsync(m => m.projectId == id);
             if (project == null)
             {
                 return NotFound();
@@ -193,7 +193,7 @@ namespace BugTracker.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(int? id, [Bind("TicketId, TicketName, TicketDesc, userId, ProjectId, TicketPriority")] Tickets Ticket)
+        public async Task<IActionResult> Create(string? id, [Bind("TicketId, TicketName, TicketDesc, userId, ProjectId, TicketPriority")] Tickets Ticket)
         {
             // 0:dd/MMM/yyyy HH:mm:ss
             // Get Current DateTime
@@ -206,12 +206,12 @@ namespace BugTracker.Controllers
             Ticket.CreationDate = DateTime.Now; //DateTime.Now.ToString("0:dd/MMM/yyyy HH:mm:ss");
             // Add the ticket to the project's 
 
-            if (Ticket.ProjectId == 0)
+            if (Ticket.ProjectId == null)
             {
                 return NotFound();
             }
 
-            var project = await _context.Projects.FirstOrDefaultAsync(m => m.Id == Ticket.ProjectId);
+            var project = await _context.Projects.FirstOrDefaultAsync(m => m.projectId == Ticket.ProjectId);
             if (project != null)
             {
                 project.TicketList.Add(Ticket);
@@ -252,7 +252,7 @@ namespace BugTracker.Controllers
         */
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Complete(int id)
+        public async Task<IActionResult> Complete(string id)
         {
             var Ticket = await _context.Tickets.FindAsync(id);
             if (Ticket == null)
@@ -275,7 +275,7 @@ namespace BugTracker.Controllers
         }
 
 
-        public async Task<IActionResult> Edit(int id)
+        public async Task<IActionResult> Edit(string id)
         {
 
             // Pass in the project we wish to associate with the Ticket
@@ -298,7 +298,7 @@ namespace BugTracker.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("TicketId, TicketName, TicketDesc, userId, ProjectId, TicketPriority")] Tickets Ticket)
+        public async Task<IActionResult> Edit(string id, [Bind("TicketId, TicketName, TicketDesc, userId, ProjectId, TicketPriority")] Tickets Ticket)
         {
 
             if (id != Ticket.TicketId)
@@ -325,7 +325,7 @@ namespace BugTracker.Controllers
 
         [HttpPost, ActionName("Delete")]
         //      [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public async Task<IActionResult> DeleteConfirmed(string id)
         {
 
             var Ticket = await _context.Tickets.FindAsync(id);
