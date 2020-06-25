@@ -29,6 +29,9 @@ namespace BugTracker.Models
 
         public virtual ICollection<Tickets> TicketList { get; set; } = new Collection<Tickets>();
 
+
+        public virtual ICollection<UserProject> UserProjects { get; set; } = new Collection<UserProject>();
+
         [Required]
         [Display(Name = "Project Programming Language")]
         public String projectLanguage { get; set; }

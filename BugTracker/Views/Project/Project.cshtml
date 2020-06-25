@@ -7,6 +7,15 @@
 <div class="projectcorner" style="background-image: linear-gradient( @Html.Raw(ViewBag.projectCornerColorPrimary) , @Html.Raw(ViewBag.projectCornerColorSecond)">
     <div>
         <h2>@Model.ProjectName </h2>
+        @using (Html.BeginForm("Project", "Project", FormMethod.Post))
+        {
+         <div>
+            <p> Enter user to add to project </p>
+            @Html.TextBox("Friend")
+             <input name="Id" type="hidden" value="@Model.projectId" />
+            <input type="submit" value="submit" />
+        </div>
+        }
     </div>
 </div>
 

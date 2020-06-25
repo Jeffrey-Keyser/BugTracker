@@ -7,8 +7,10 @@ using System.Linq;
 using System.Net;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using BugTracker.Areas.Identity.Data;
 using BugTracker.Data;
 using BugTracker.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.CodeAnalysis;
 using Microsoft.EntityFrameworkCore;
@@ -29,10 +31,16 @@ namespace BugTracker.Controllers
         // Dependency injection
         // Inject database contents into the controller
         private readonly BugTrackerContext _context;
+        private readonly UserManager<BugTrackerUser> _userManager;
+        private readonly SignInManager<BugTrackerUser> _signInManager;
 
-        public ProjectController(BugTrackerContext context)
+        public ProjectController(BugTrackerContext context,
+            SignInManager<BugTrackerUser> signInManager,
+            UserManager<BugTrackerUser> userManager)
         {
             _context = context;
+            _userManager = userManager;
+            _signInManager = signInManager;
         }
 
         //public Projects Project { get; set; }
@@ -115,16 +123,25 @@ namespace BugTracker.Controllers
             var currentUserID = currentUser.FindFirst(ClaimTypes.NameIdentifier).Value;
             ViewBag.userId = currentUserID;
 
-            var currUser = await _context.UserModels.FirstOrDefaultAsync(m => m.key == currentUserID);
-
             if (ModelState.IsValid)
             {
 
-                _context.Add(Project);
+                _context.Projects.Add(Project);
+                var result = await _context.SaveChangesAsync();
 
 
+                var user = await _userManager.GetUserAsync(User);
+                var userproject = new UserProject { BugTrackerUser = user, Project = Project, Id = user.Id, projectId = Project.projectId };
 
-                await _context.SaveChangesAsync();
+                user.UserProjects.Add(userproject);
+                Project.UserProjects.Add(userproject);
+
+
+                _context.Users.Update(user);
+                _context.Projects.Update(Project);
+
+
+                var result1 = await _context.SaveChangesAsync();
 
 
                 return RedirectToAction("Index");
@@ -154,9 +171,42 @@ namespace BugTracker.Controllers
         }
 
 
+        [HttpPost]
+        public async Task<IActionResult> Project(Microsoft.AspNetCore.Http.IFormCollection form)
+        {
+            //var Project = await _context.Projects.FindAsync(id);
+
+            // Add friend to collaborate on project
+            string friendUserName = form["Friend"];
+            string id = form["Id"];
+
+            var Project = await _context.Projects.FindAsync(id);
+
+            if (friendUserName != null)
+            {
+                foreach (var item in _context.Users)
+                {
+                    if (friendUserName == item.UserName)
+                    {
+                        var newUserProject = new UserProject { BugTrackerUser = item, Id = item.Id, Project = Project, projectId = Project.projectId };
+
+                        _context.UserProjects.Add(newUserProject);
+                        // TODO: Check for duplicates
+
+                        // TODO: Add functionality so that users / project collections are useful
+                        break;
+                    }
+                }
+            }
+
+
+            await _context.SaveChangesAsync();
+
+            return View(Project);
+        }
+
         public async Task<IActionResult> Project(string id)
         {
-
 
             List<DataPoint> barDataPoints = new List<DataPoint>();
             List<DataPoint> lineDataPoints = new List<DataPoint>();

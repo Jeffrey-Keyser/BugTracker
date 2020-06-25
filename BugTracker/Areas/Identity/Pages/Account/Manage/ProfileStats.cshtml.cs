@@ -33,21 +33,50 @@ namespace BugTracker.Areas.Identity.Pages.Account.Manage
 
         public string myUserId { get; set; }
 
+        public virtual ICollection<UserProject> myUserProjects { get; set; } = new List<UserProject>();
+
+        public ICollection<BugTrackerUser> friendsList { get; set; } = new System.Collections.ObjectModel.Collection<BugTrackerUser>();
+
+        [BindProperty]
+        public InputModel Input { get; set; }
+
         public class InputModel
         {
-
+            [DataType(DataType.Text)]
+            [Display(Name = "Enter Friend's Email")]
+            public string FriendUserName { get; set; }
         }
 
-        private async Task LoadAsync(UserModel user)
+        private async Task LoadAsync(BugTrackerUser user)
         {
-            var myUserId = user.key;
+            myUserId = user.Id;
+            friendsList = user.FriendsList;
+
+            // Currently searching through entire Project list, not effecient at all
+            // TODO: user.UserProjects is empty, so need to update correctly
+             foreach (var item in _context.Projects)
+             {
+                var userProject = _context.UserProjects.Find(item.projectId, user.Id);
+                 myUserProjects.Add(userProject);
+             } 
+
+             /*
+            foreach (var item in user.UserProjects)
+            {
+                myUserProjects.Add(item);
+            }
+            */
+
+            Input = new InputModel()
+            {
+                FriendUserName = ""
+            };
 
         }
 
         public async Task<IActionResult> OnGetAsync()
         {
-            var identityUser = await _userManager.GetUserAsync(User);
-            var user = await _context.UserModels.FindAsync(identityUser.Id);
+            var user = await _userManager.GetUserAsync(User);
 
             if (user == null)
             {
@@ -71,7 +100,19 @@ namespace BugTracker.Areas.Identity.Pages.Account.Manage
                 return Page();
             }
 
-           
+            if (Input.FriendUserName != "")
+            {
+                foreach (var item in _context.Users)
+                {
+                    if (Input.FriendUserName == item.UserName)
+                    {
+                        user.FriendsList.Add(item);
+                        var result = await _context.SaveChangesAsync();
+                        break;
+                    }
+                }
+            }
+
 
             await _userManager.UpdateAsync(user);
 

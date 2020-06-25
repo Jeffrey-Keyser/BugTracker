@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using BugTracker.Models;
 //using Microsoft.AspNet.Identity;
 using Microsoft.AspNetCore.Identity;
 
@@ -20,6 +22,10 @@ namespace BugTracker.Areas.Identity.Data
         } */
 
         public string FirstName { get; set; }
+
+        public virtual ICollection<UserProject> UserProjects { get; set; } = new Collection<UserProject>();
+
+        public ICollection<BugTrackerUser> FriendsList { get; set; } = new Collection<BugTrackerUser>();
 
         public static implicit operator BugTrackerUser(string v)
         {

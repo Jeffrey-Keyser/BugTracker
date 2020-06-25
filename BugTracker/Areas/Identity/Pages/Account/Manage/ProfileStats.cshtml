@@ -14,6 +14,43 @@
     <input asp-for="myUserId" class="form-control" disabled />
 </div>
 
+@if (Model.myUserProjects != null)
+{
+    @foreach (var item in Model.myUserProjects)
+    {
+        if (item != null)
+        {
+        <div>
+            Project --
+            @item.projectId
+            @item.Id
+            @item.Project.projectLanguage
+            <br />
+        </div>
+        <br />
+            }
+        }
+    }
+
+
+<form id="friend-form" method="post">
+    <div asp-validation-summary="All" class="text-danger"></div>
+    <div class="form-group">
+        <label asp-for="Input.FriendUserName"></label>
+        <input asp-for="Input.FriendUserName" class="form-control" />
+        <span asp-validation-for="Input.FriendUserName" class="text-danger"></span>
+    </div>
+    <button id="update-friend-button" type="submit" class="btn btn-primary">Submit</button>
+</form>
+
+@foreach (var item in Model.friendsList)
+{
+    <div>
+        @item.UserName
+        @item.Id
+        <br />
+    </div>
+}
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
