@@ -4,20 +4,36 @@
     ViewData["Title"] = "Project";
 }
 
-<div class="projectcorner" style="background-image: linear-gradient( @Html.Raw(ViewBag.projectCornerColorPrimary) , @Html.Raw(ViewBag.projectCornerColorSecond)">
-    <div>
-        <h2>@Model.ProjectName </h2>
-        @using (Html.BeginForm("Project", "Project", FormMethod.Post))
-        {
-         <div>
-            <p> Enter user to add to project </p>
-            @Html.TextBox("Friend")
-             <input name="Id" type="hidden" value="@Model.projectId" />
-            <input type="submit" value="submit" />
+    <div class="projectcorner" style="background-image: linear-gradient( @Html.Raw(ViewBag.projectCornerColorPrimary) , @Html.Raw(ViewBag.projectCornerColorSecond)">
+        <div>
+            <h2>@Model.ProjectName </h2>
+            @using (Html.BeginForm("Project", "Project", FormMethod.Post))
+            {
+                <div>
+                    <p> Enter user to add to project </p>
+                    @Html.TextBox("Friend")
+                    <input name="Id" type="hidden" value="@Model.projectId" />
+                    <input type="submit" value="submit" />
+                </div>
+            }
         </div>
-        }
+        <br />
+        <form method="post" action="@Url.Action("Complete", "Project", new { id = Model.projectId } )">
+            <div class="col-6" style="align-content: center">
+                @using (Html.BeginForm("Complete", "Project", new { id = Model.projectId }))
+                {
+                    if (!Model.completed)
+                    {
+                        <button type="submit" class="btn btn-danger" value="Complete"> Not Completed </button>
+                    }
+                    else
+                    {
+                        <button type="submit" class="btn btn-success" value="Complete"> Completed </button>
+                    }
+                }
+            </div>
+        </form>
     </div>
-</div>
 
 <!DOCTYPE HTML>
 <html>
@@ -112,6 +128,30 @@
                         </td>
                     </tr>
                 }
+            }
+        </table>
+        <br />
+        <br />
+        <p> Users Assigned </p>
+        <table class="table table-striped border">
+            <tr class="table-secondary">
+                <td>
+                    <p> Username </p>
+                </td>
+                <td>
+                    <p> Id </p>
+                </td>
+            </tr>
+            @foreach (var item in Model.UserProjects)
+            {
+                <tr>
+                    <td>
+                        @item.BugTrackerUser.UserName
+                    </td>
+                    <td>
+                        @item.Id
+                    </td>
+                </tr>
             }
         </table>
     </div>

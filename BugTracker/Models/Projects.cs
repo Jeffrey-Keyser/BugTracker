@@ -20,7 +20,6 @@ namespace BugTracker.Models
         [StringLength(60, MinimumLength = 3)]
         public string ProjectName { get; set; }
 
-
         [Required]
         public string Author { get; set; }
 
@@ -35,6 +34,8 @@ namespace BugTracker.Models
         [Required]
         [Display(Name = "Project Programming Language")]
         public String projectLanguage { get; set; }
+
+        public bool completed { get; set; } = false;
 
     }
 

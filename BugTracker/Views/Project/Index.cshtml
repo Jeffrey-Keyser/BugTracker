@@ -1,5 +1,5 @@
 ﻿
-@model IEnumerable<BugTracker.Models.Projects>;
+@model IEnumerable<BugTracker.Models.UserProject>;
 @{
     ViewData["Title"] = "Project Details";
 }
@@ -20,11 +20,11 @@
            aria-selected="true">My Projects</a>
     </li>
     <li class="nav-item">
-        <a class="nav-link" id="assigned-projects-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile"
+        <a class="nav-link" id="assigned-projects-tab" data-toggle="tab" href="#assigned" role="tab" aria-controls="assigned"
            aria-selected="false">Assigned Projects</a>
     </li>
     <li class="nav-item">
-        <a class="nav-link" id="completed-projects-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact"
+        <a class="nav-link" id="completed-projects-tab" data-toggle="tab" href="#completed" role="tab" aria-controls="completed"
            aria-selected="false">Completed Projects</a>
     </li>
 </ul>
@@ -47,19 +47,19 @@
 
                             @foreach (var item in Model)
                             {
-                                if (item.userId == ViewBag.userId)
+                                if (item.Project.userId == ViewBag.userId && !item.Project.completed)
                                 {
                                     <tr>
                                         <td>
                                         </td>
                                         <td>
-                                            @Html.ActionLink(item.ProjectName, "Project", "Project", new { id = item.projectId })
+                                            @Html.ActionLink(item.Project.ProjectName, "Project", "Project", new { id = item.projectId })
                                         </td>
                                         <td>
-                                            @Html.DisplayFor(modelItem => item.Author)
+                                            @Html.DisplayFor(modelItem => item.Project.Author)
                                         </td>
                                         <td>
-                                            @Html.DisplayFor(modelItem => item.projectLanguage)
+                                            @Html.DisplayFor(modelItem => item.Project.projectLanguage)
                                             <div id="parent_div_1">
                                                 <div class="child_div_2">
 
@@ -99,13 +99,158 @@
             </form>
         </div>
     </div>
-    <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="assigned-projects-tab">...</div>
-    <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="completed-projects-tab">...</div>
+    <div class="tab-pane fade" id="assigned" role="tabpanel" aria-labelledby="assigned-projects-tab">
+
+        <div class="col-12 border p-3 mt-3">
+            <form method="post">
+                @if (Model.Count() > 0)
+                {
+                    <table id="proj_table2" class="display" style="width:100%">
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th>Project Name</th>
+                                <th>Author</th>
+                                <th>Programming Language</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            @foreach (var item in Model)
+                            {
+                                if (item.Id == ViewBag.userId && item.Project.userId != ViewBag.userId && !item.Project.completed)
+                                {
+                                    <tr>
+                                        <td>
+                                        </td>
+                                        <td>
+                                            @Html.ActionLink(item.Project.ProjectName, "Project", "Project", new { id = item.projectId })
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Project.Author)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Project.projectLanguage)
+                                            <div id="parent_div_1">
+                                                <div class="child_div_2">
+
+
+                                                    @using (Html.BeginForm("Delete", "Project", new { id = item.projectId }))
+                                                    {
+                                                        @Html.AntiForgeryToken()
+
+                                                        <a style="color:whitesmoke" class="btn btn-danger delete"
+                                                           data-id="@item.projectId"
+                                                           data-controller="Project"
+                                                           data-action="Delete"
+                                                           data-body-message="Are you sure you wish to delete?"
+                                                           data-redirect-url="/Project/Index"> Delete </a>
+
+                                                    }
+                                                </div>
+                                                <div class="child_div_2">
+                                                    @Html.ActionLink("Edit", "Edit", new { id = item.projectId })
+                                                </div>
+                                            </div>
+                                        </td>
+
+                                    </tr>
+                                }
+                            }
+
+                        </tbody>
+                        <tfoot>
+                        </tfoot>
+                    </table>
+                }
+                else
+                {
+                    <p> No Projects to Display! </p>
+                }
+            </form>
+        </div>
+
+    </div>
+    <div class="tab-pane fade" id="completed" role="tabpanel" aria-labelledby="completed-projects-tab">
+
+        <div class="col-12 border p-3 mt-3">
+            <form method="post">
+                @if (Model.Count() > 0)
+                {
+                    <table id="proj_table1" class="display" style="width:100%">
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th>Project Name</th>
+                                <th>Author</th>
+                                <th>Programming Language</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            @foreach (var item in Model)
+                            {
+                                if (item.Project.userId == ViewBag.userId && item.Project.completed)
+                                {
+                                    <tr>
+                                        <td>
+                                        </td>
+                                        <td>
+                                            @Html.ActionLink(item.Project.ProjectName, "Project", "Project", new { id = item.projectId })
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Project.Author)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Project.projectLanguage)
+                                            <div id="parent_div_1">
+                                                <div class="child_div_2">
+
+
+                                                    @using (Html.BeginForm("Delete", "Project", new { id = item.projectId }))
+                                                    {
+                                                        @Html.AntiForgeryToken()
+
+                                                        <a style="color:whitesmoke" class="btn btn-danger delete"
+                                                           data-id="@item.projectId"
+                                                           data-controller="Project"
+                                                           data-action="Delete"
+                                                           data-body-message="Are you sure you wish to delete?"
+                                                           data-redirect-url="/Project/Index"> Delete </a>
+
+                                                    }
+                                                </div>
+                                                <div class="child_div_2">
+                                                    @Html.ActionLink("Edit", "Edit", new { id = item.projectId })
+                                                </div>
+                                            </div>
+                                        </td>
+
+                                    </tr>
+                                }
+                            }
+
+                        </tbody>
+                        <tfoot>
+                        </tfoot>
+                    </table>
+                }
+                else
+                {
+                    <p> No Projects to Display! </p>
+                }
+            </form>
+        </div>
+
+
+    </div>
 </div>
 
 
 
 @section Scripts{
-    <script src="~/js/DataTables.js"></script>
+    <script src="~/js/DataTables/DataTable1.js"></script>
+    <script src="~/js/DataTables/DataTable2.js"></script>
+    <script src="~/js/DataTables/DataTable3.js"></script>
     <script src="~/js/delete.js"></script>
 }

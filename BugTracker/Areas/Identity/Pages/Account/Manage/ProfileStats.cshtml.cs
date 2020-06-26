@@ -9,6 +9,7 @@ using BugTracker.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.EntityFrameworkCore;
 
 namespace BugTracker.Areas.Identity.Pages.Account.Manage
 {
@@ -50,22 +51,12 @@ namespace BugTracker.Areas.Identity.Pages.Account.Manage
         private async Task LoadAsync(BugTrackerUser user)
         {
             myUserId = user.Id;
+
+            // Load the FriendsList
+            var result = await _context.Users
+                        .Include(c => c.FriendsList).ToListAsync();
+
             friendsList = user.FriendsList;
-
-            // Currently searching through entire Project list, not effecient at all
-            // TODO: user.UserProjects is empty, so need to update correctly
-             foreach (var item in _context.Projects)
-             {
-                var userProject = _context.UserProjects.Find(item.projectId, user.Id);
-                 myUserProjects.Add(userProject);
-             } 
-
-             /*
-            foreach (var item in user.UserProjects)
-            {
-                myUserProjects.Add(item);
-            }
-            */
 
             Input = new InputModel()
             {
@@ -107,12 +98,13 @@ namespace BugTracker.Areas.Identity.Pages.Account.Manage
                     if (Input.FriendUserName == item.UserName)
                     {
                         user.FriendsList.Add(item);
-                        var result = await _context.SaveChangesAsync();
+
                         break;
                     }
                 }
             }
 
+            var result = await _context.SaveChangesAsync();
 
             await _userManager.UpdateAsync(user);
 

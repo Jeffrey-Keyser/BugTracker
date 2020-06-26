@@ -224,7 +224,7 @@ namespace BugTracker.Controllers
 
             if (ModelState.IsValid)
             {
-                _context.Add(Ticket);
+                _context.Tickets.Add(Ticket);
                 await _context.SaveChangesAsync();
                 return RedirectToAction("Project", new { id = Ticket.ProjectId });
             }

@@ -52,7 +52,10 @@ namespace BugTracker.Controllers
             var currentUserID = currentUser.FindFirst(ClaimTypes.NameIdentifier).Value;
             ViewBag.userId = currentUserID;
 
-            return View(await _context.Projects.ToListAsync());
+            return View(await _context.UserProjects
+                .Where(b => b.Id == currentUserID)
+                .Include(b => b.Project)
+                .ToListAsync());
         }
 
         // First Lookup on Edit
@@ -133,9 +136,13 @@ namespace BugTracker.Controllers
                 var user = await _userManager.GetUserAsync(User);
                 var userproject = new UserProject { BugTrackerUser = user, Project = Project, Id = user.Id, projectId = Project.projectId };
 
-                user.UserProjects.Add(userproject);
+                _context.Projects.Attach(Project);
+
                 Project.UserProjects.Add(userproject);
 
+                user.UserProjects.Add(userproject);
+
+                _context.UserProjects.Add(userproject);
 
                 _context.Users.Update(user);
                 _context.Projects.Update(Project);
@@ -170,6 +177,30 @@ namespace BugTracker.Controllers
             return RedirectToAction("Index");
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Complete(string id)
+        {
+            var Project = await _context.Projects.FindAsync(id);
+            if (Project == null)
+            {
+                return NotFound();
+            }
+
+            if (!Project.completed)
+            {
+                Project.completed = true;
+            }
+            else
+            {
+                Project.completed = false;
+            }
+
+            _context.Projects.Update(Project);
+            await _context.SaveChangesAsync();
+            return RedirectToAction("Project", new { id = Project.projectId });
+        }
+
 
         [HttpPost]
         public async Task<IActionResult> Project(Microsoft.AspNetCore.Http.IFormCollection form)
@@ -191,6 +222,8 @@ namespace BugTracker.Controllers
                         var newUserProject = new UserProject { BugTrackerUser = item, Id = item.Id, Project = Project, projectId = Project.projectId };
 
                         _context.UserProjects.Add(newUserProject);
+                        Project.UserProjects.Add(newUserProject);
+                        item.UserProjects.Add(newUserProject);
                         // TODO: Check for duplicates
 
                         // TODO: Add functionality so that users / project collections are useful
@@ -200,10 +233,12 @@ namespace BugTracker.Controllers
             }
 
 
-            await _context.SaveChangesAsync();
+            var result = await _context.SaveChangesAsync();
 
             return View(Project);
         }
+
+
 
         public async Task<IActionResult> Project(string id)
         {
@@ -244,6 +279,13 @@ namespace BugTracker.Controllers
                     }
                 }
             }
+
+            // Explicitly load the UserProjects List
+            var result = await _context.UserProjects
+                            .Where(n => n.projectId == Project.projectId)
+                            .Include(x => x.BugTrackerUser)
+                            .ToListAsync();
+                                    
 
             // Return color for the highest priority
             ICollection<Color> colors = getProjectCornerColors(num_low, num_med, num_high, num_crit);

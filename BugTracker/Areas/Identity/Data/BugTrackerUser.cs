@@ -21,11 +21,17 @@ namespace BugTracker.Areas.Identity.Data
             return userIdentity;
         } */
 
+        public BugTrackerUser()
+        {
+            UserProjects = new Collection<UserProject>();
+            FriendsList = new Collection<BugTrackerUser>();
+        }
+
         public string FirstName { get; set; }
 
-        public virtual ICollection<UserProject> UserProjects { get; set; } = new Collection<UserProject>();
+        public virtual ICollection<UserProject> UserProjects { get; set; }
 
-        public ICollection<BugTrackerUser> FriendsList { get; set; } = new Collection<BugTrackerUser>();
+        public ICollection<BugTrackerUser> FriendsList { get; set; }
 
         public static implicit operator BugTrackerUser(string v)
         {
