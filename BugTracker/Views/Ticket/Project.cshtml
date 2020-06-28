@@ -5,12 +5,8 @@
 
 @model IEnumerable<BugTracker.Models.Tickets>;
 
-<h3>Project </h3>
-
-<br />
-
 <div>
-    <h1> Recently Completed </h1>
+    <h1 class="text-info"> Recently Completed </h1>
     @if (Model != null)
     {
         int display_four_low = 0;

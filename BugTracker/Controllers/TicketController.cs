@@ -274,7 +274,7 @@ namespace BugTracker.Controllers
             return RedirectToAction("Project", new { id = Ticket.ProjectId });
         }
 
-
+        /*
         public async Task<IActionResult> Edit(string id)
         {
 
@@ -293,7 +293,7 @@ namespace BugTracker.Controllers
             ViewBag.Ticket = ticket;
 
             return View();
-        }
+        } */
 
 
         [HttpPost]
@@ -301,10 +301,10 @@ namespace BugTracker.Controllers
         public async Task<IActionResult> Edit(string id, [Bind("TicketId, TicketName, TicketDesc, userId, ProjectId, TicketPriority")] Tickets Ticket)
         {
 
-            if (id != Ticket.TicketId)
+        /*    if (id != Ticket.TicketId)
             {
                 return NotFound();
-            }
+            } */
 
             if (ModelState.IsValid)
             {
@@ -317,7 +317,7 @@ namespace BugTracker.Controllers
                 {
                     throw;
                 }
-                return RedirectToAction("Index");
+                return RedirectToAction("Project" , new { id = Ticket.ProjectId } );
             }
             return View(Ticket);
         }

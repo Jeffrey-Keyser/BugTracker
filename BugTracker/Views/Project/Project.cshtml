@@ -4,36 +4,36 @@
     ViewData["Title"] = "Project";
 }
 
-    <div class="projectcorner" style="background-image: linear-gradient( @Html.Raw(ViewBag.projectCornerColorPrimary) , @Html.Raw(ViewBag.projectCornerColorSecond)">
-        <div>
-            <h2>@Model.ProjectName </h2>
-            @using (Html.BeginForm("Project", "Project", FormMethod.Post))
+<div class="projectcorner" style="background-image: linear-gradient( @Html.Raw(ViewBag.projectCornerColorPrimary) , @Html.Raw(ViewBag.projectCornerColorSecond)">
+    <div>
+        <h2>@Model.ProjectName </h2>
+        @using (Html.BeginForm("Project", "Project", FormMethod.Post))
+        {
+            <div>
+                <p> Enter user to add to project </p>
+                @Html.TextBox("Friend")
+                <input name="Id" type="hidden" value="@Model.projectId" />
+                <input type="submit" value="submit" />
+            </div>
+        }
+    </div>
+    <br />
+    <form method="post" action="@Url.Action("Complete", "Project", new { id = Model.projectId } )">
+        <div class="col-6" style="align-content: center">
+            @using (Html.BeginForm("Complete", "Project", new { id = Model.projectId }))
             {
-                <div>
-                    <p> Enter user to add to project </p>
-                    @Html.TextBox("Friend")
-                    <input name="Id" type="hidden" value="@Model.projectId" />
-                    <input type="submit" value="submit" />
-                </div>
+                if (!Model.completed)
+                {
+                    <button type="submit" class="btn btn-danger" value="Complete"> Not Completed </button>
+                }
+                else
+                {
+                    <button type="submit" class="btn btn-success" value="Complete"> Completed </button>
+                }
             }
         </div>
-        <br />
-        <form method="post" action="@Url.Action("Complete", "Project", new { id = Model.projectId } )">
-            <div class="col-6" style="align-content: center">
-                @using (Html.BeginForm("Complete", "Project", new { id = Model.projectId }))
-                {
-                    if (!Model.completed)
-                    {
-                        <button type="submit" class="btn btn-danger" value="Complete"> Not Completed </button>
-                    }
-                    else
-                    {
-                        <button type="submit" class="btn btn-success" value="Complete"> Completed </button>
-                    }
-                }
-            </div>
-        </form>
-    </div>
+    </form>
+</div>
 
 <!DOCTYPE HTML>
 <html>
@@ -163,3 +163,9 @@
         <div id="chartContainer2" style="height: 370px; width: 100%;"></div>
     </div>
 </div>
+
+
+@section Scripts{
+    <script src="~/js/complete.js"></script>
+}
+

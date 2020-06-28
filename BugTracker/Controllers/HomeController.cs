@@ -36,7 +36,6 @@ namespace BugTracker.Controllers
             {
                 var currentUserID = currentUser.FindFirst(ClaimTypes.NameIdentifier).Value;
                 ViewBag.userId = currentUserID;
-
             }
             else
                 ViewBag.userId = "0";

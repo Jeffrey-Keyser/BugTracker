@@ -21,9 +21,9 @@
 
     <div class="col-12 p-3 mt-3">
 
-        <h2> Ticket Information </h2>
+        <h2 class="text-info"> Ticket Information </h2>
 
-        <form action="@Url.Action("Edit", "Ticket", new { id = Model.TicketId } )">
+        <form asp-action="Edit">
             @Html.AntiForgeryToken()
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="TicketId" value="@Model.TicketId" />
@@ -40,16 +40,16 @@
             </div>
             <div class="=form-group row">
                 <div class="col-4">
-                    <p> Project Name </p>
+                    <p> Ticket Description </p>
                 </div>
                 <div class="col-6">
-                    <input asp-for="TicketDesc" class="form-control" />
+                    <textarea asp-for="TicketDesc" class="form-control" rows="5" id="comment"></textarea>
                     <span asp-validation-for="TicketDesc" class="text-danger"></span>
                 </div>
             </div>
             <div class="=form-group row">
                 <div class="col-4">
-                    <p> Project Language </p>
+                    <p> Ticket Priority </p>
                 </div>
                 <div class="col-6">
                     @Html.DropDownListFor(Model => Model.TicketPriority, new SelectList(Enum.GetValues(typeof(Priority))), "Select a Ticket Priority")
@@ -81,7 +81,7 @@
                     }
                 </div>
             </form>
-            
+
             <div class="col-8 align-baseline">
                 @using (Html.BeginForm("Delete", "Ticket", new { id = Model.TicketId }))
                 {

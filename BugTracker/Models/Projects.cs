@@ -23,7 +23,7 @@ namespace BugTracker.Models
         [Required]
         public string Author { get; set; }
 
-        [Required]
+     //   [Required]
         public string userId { get; set; }
 
         public virtual ICollection<Tickets> TicketList { get; set; } = new Collection<Tickets>();

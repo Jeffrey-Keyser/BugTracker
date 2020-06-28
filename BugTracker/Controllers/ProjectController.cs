@@ -59,7 +59,7 @@ namespace BugTracker.Controllers
         }
 
         // First Lookup on Edit
-        public async Task<IActionResult> Edit(int? id)
+        public async Task<IActionResult> Edit(string ? id)
         {
             ClaimsPrincipal currentUser = this.User;
             var currentUserID = currentUser.FindFirst(ClaimTypes.NameIdentifier).Value;
@@ -80,17 +80,17 @@ namespace BugTracker.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, [Bind("projectId, Author, ProjectName, userId, projectLanguage")] Projects Project)
+        public async Task<IActionResult> Edit(string ? id, [Bind("projectId, Author, ProjectName, projectLanguage")] Projects Project)
         {
             ClaimsPrincipal currentUser = this.User;
             var currentUserID = currentUser.FindFirst(ClaimTypes.NameIdentifier).Value;
             ViewBag.userId = currentUserID;
 
 
-            if (id != Project.projectId)
+           /* if (id != Project.projectId)
             {
                 return NotFound();
-            }
+            } */
 
             if (ModelState.IsValid)
             {
