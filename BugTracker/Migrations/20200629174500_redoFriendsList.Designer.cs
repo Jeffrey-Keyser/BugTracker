@@ -4,14 +4,16 @@ using BugTracker.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace BugTracker.Migrations
 {
     [DbContext(typeof(BugTrackerContext))]
-    partial class BugTrackerContextModelSnapshot : ModelSnapshot
+    [Migration("20200629174500_redoFriendsList")]
+    partial class redoFriendsList
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -157,27 +159,6 @@ namespace BugTracker.Migrations
                     b.HasIndex("ProjectsprojectId");
 
                     b.ToTable("Tickets");
-                });
-
-            modelBuilder.Entity("BugTracker.Models.UserFriend", b =>
-                {
-                    b.Property<string>("senderId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("recieverId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<bool>("accepted")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("sent")
-                        .HasColumnType("bit");
-
-                    b.HasKey("senderId", "recieverId");
-
-                    b.HasIndex("recieverId");
-
-                    b.ToTable("UserFriends");
                 });
 
             modelBuilder.Entity("BugTracker.Models.UserModel", b =>
@@ -341,21 +322,6 @@ namespace BugTracker.Migrations
                     b.HasOne("BugTracker.Models.Projects", null)
                         .WithMany("TicketList")
                         .HasForeignKey("ProjectsprojectId");
-                });
-
-            modelBuilder.Entity("BugTracker.Models.UserFriend", b =>
-                {
-                    b.HasOne("BugTracker.Areas.Identity.Data.BugTrackerUser", "reciever")
-                        .WithMany("UserFriends")
-                        .HasForeignKey("recieverId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("BugTracker.Areas.Identity.Data.BugTrackerUser", "sender")
-                        .WithMany()
-                        .HasForeignKey("senderId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("BugTracker.Models.UserProject", b =>

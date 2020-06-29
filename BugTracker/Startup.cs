@@ -16,6 +16,8 @@ using BugTracker.Areas.Identity.Data;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using BugTracker.Extensions;
 using Microsoft.AspNetCore.Http;
+using BugTracker.Models;
+using BugTracker.Models.Services;
 
 namespace BugTracker
 {
@@ -43,6 +45,11 @@ namespace BugTracker
 
             // For adding custom contexts
             services.AddScoped<IUserClaimsPrincipalFactory<BugTrackerUser>, AdditionalUserClaimsPrincipalFactory>();
+
+            // Service Injection for FriendsList
+            // Used for partial view
+            services.AddTransient<UserFriendService>();
+
 
             // To access current user...
            // services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();

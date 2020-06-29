@@ -7,26 +7,43 @@
 @inject SignInManager<BugTrackerUser> SignInManager
 @inject UserManager<BugTrackerUser> UserManager
 @inject IAuthorizationService AuthorizationService
+@inject BugTracker.Models.Services.UserFriendService FriendService
 
     <ul class="navbar-nav">
         @if (SignInManager.IsSignedIn(User))
         {
+            int numRequestsDisplay = 0;
             <ul class="navbar-nav ml-auto nav-flex-icons">
                 <li class="nav-item avatar dropdown">
                     <a class="nav-link waves-effect waves-light" id="navbarDropdownMenuLink-1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                        <span class="badge badge-danger ml-2">@FriendService.numFriendRequests()</span>
                         <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-person" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                             <path fill-rule="evenodd" d="M13 14s1 0 1-1-1-4-6-4-6 3-6 4 1 1 1 1h10zm-9.995-.944v-.002.002zM3.022 13h9.956a.274.274 0 0 0 .014-.002l.008-.002c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664a1.05 1.05 0 0 0 .022.004zm9.974.056v-.002.002zM8 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4zm3-2a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
                         </svg>
                     </a>
                     <div class="dropdown-menu dropdown-menu-lg-right dropdown-secondary" aria-labelledby="navbarDropdownMenuLink-1">
-                        <a class="dropdown-item waves-effect waves-light" href="#">Action <span class="badge badge-danger ml-2">4</span></a>
-                        <a class="dropdown-item waves-effect waves-light" href="#">Another action <span class="badge badge-danger ml-2">1</span></a>
-                        <a class="dropdown-item waves-effect waves-light" href="#">Something else here <span class="badge badge-danger ml-2">4</span></a>
+
+                        @foreach (var item in FriendService.getFriendRequests())
+                        {
+                            if (numRequestsDisplay == 0)
+                            {
+                            
+                        <a class="dropdown-item waves-effect waves-light" href="#">@Html.ActionLink(item.sender.FirstName, "AddFriend", "Home", new { userFriend = item }, null) <span class="badge badge-danger ml-2">@item.sender.Email</span></a>
+                        }
+                        else if (numRequestsDisplay == 1)
+                        {
+                            <a class="dropdown-item waves-effect waves-light" href="#">@item.sender.FirstName <span class="badge badge-danger ml-2">@item.sender.Email</span></a>
+                        }
+                        else if (numRequestsDisplay == 2)
+                        {
+                            <a class="dropdown-item waves-effect waves-light" href="#">@item.sender.FirstName <span class="badge badge-danger ml-2">@item.sender.Email</span></a>
+                        }
+                        numRequestsDisplay++;
+                    }
                     </div>
 
                 </li>
             </ul>
-
             <ul class="navbar-nav ml-auto nav-flex-icons">
                 <li class="nav-item avatar dropdown">
                     <a class="nav-link waves-effect waves-light" id="navbarDropdownMenuLink-2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">

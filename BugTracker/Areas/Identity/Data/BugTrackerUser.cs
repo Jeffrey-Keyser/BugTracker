@@ -24,14 +24,14 @@ namespace BugTracker.Areas.Identity.Data
         public BugTrackerUser()
         {
             UserProjects = new Collection<UserProject>();
-            FriendsList = new Collection<BugTrackerUser>();
+            UserFriends = new Collection<UserFriend>();
         }
 
         public string FirstName { get; set; }
 
         public virtual ICollection<UserProject> UserProjects { get; set; }
 
-        public ICollection<BugTrackerUser> FriendsList { get; set; }
+        public ICollection<UserFriend> UserFriends { get; set; }
 
         public static implicit operator BugTrackerUser(string v)
         {

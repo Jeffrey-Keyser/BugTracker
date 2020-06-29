@@ -6,6 +6,15 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Migrations\20200629175509_newFriendList.cs" />
+    <Compile Remove="Migrations\20200629175509_newFriendList.Designer.cs" />
+    <Compile Remove="Migrations\20200629175749_newFriendsList.cs" />
+    <Compile Remove="Migrations\20200629175749_newFriendsList.Designer.cs" />
+    <Compile Remove="Migrations\20200629181341_friendsList.cs" />
+    <Compile Remove="Migrations\20200629181341_friendsList.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="IdentityModel" Version="4.2.0" />
     <PackageReference Include="Microsoft.AspNet.Identity.Core" Version="2.2.3" />
     <PackageReference Include="Microsoft.AspNet.Mvc" Version="5.2.7" />

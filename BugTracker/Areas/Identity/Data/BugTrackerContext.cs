@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.CodeAnalysis;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Conventions;
 
 namespace BugTracker.Data
 {
@@ -30,6 +31,9 @@ namespace BugTracker.Data
             // For example, you can rename the ASP.NET Identity table names and more.
             // Add your customizations after calling base.OnModelCreating(builder);
 
+
+            // UserProject Config
+
             builder.Entity<UserProject>()
                 .HasKey(bc => new { bc.projectId, bc.Id });
 
@@ -43,6 +47,26 @@ namespace BugTracker.Data
                 .WithMany(b => b.UserProjects)
                 .HasForeignKey(bc => bc.Id);
 
+
+            // UserFriend Config
+
+            builder.Entity<UserFriend>()
+                .HasKey(bc => new { bc.senderId, bc.recieverId });
+
+
+            /*  builder.Entity<UserFriend>()
+                  .HasOne(bc => bc.sender)
+                  .WithMany(b => b.UserFriends)
+                  .HasForeignKey(bc => bc.senderId); */
+
+            builder.Entity<UserFriend>()
+                .HasOne(bc => bc.reciever)
+                .WithMany(b => b.UserFriends)
+                .HasForeignKey(bc => bc.recieverId)
+                .OnDelete(DeleteBehavior.Restrict);
+                 
+
+
         }
 
         public DbSet<Projects> Projects { get; set; }
@@ -51,6 +75,10 @@ namespace BugTracker.Data
         public DbSet<UserModel> UserModels { get; set; }
 
         public DbSet<UserProject> UserProjects { get; set; }
+
+
+        public DbSet<UserFriend> UserFriends { get; set; }
+
 
     }
 }

@@ -36,7 +36,7 @@ namespace BugTracker.Areas.Identity.Pages.Account.Manage
 
         public virtual ICollection<UserProject> myUserProjects { get; set; } = new List<UserProject>();
 
-        public ICollection<BugTrackerUser> friendsList { get; set; } = new System.Collections.ObjectModel.Collection<BugTrackerUser>();
+        public ICollection<UserFriend> UserFriends { get; set; } = new System.Collections.ObjectModel.Collection<UserFriend>();
 
         [BindProperty]
         public InputModel Input { get; set; }
@@ -53,10 +53,9 @@ namespace BugTracker.Areas.Identity.Pages.Account.Manage
             myUserId = user.Id;
 
             // Load the FriendsList
-            var result = await _context.Users
-                        .Include(c => c.FriendsList).ToListAsync();
-
-            friendsList = user.FriendsList;
+            UserFriends = await _context.UserFriends
+                                .Include(b => b.reciever)
+                                .ToListAsync();
 
             Input = new InputModel()
             {
@@ -80,7 +79,8 @@ namespace BugTracker.Areas.Identity.Pages.Account.Manage
 
         public async Task<IActionResult> OnPostAsync()
         {
-            var user = await _userManager.GetUserAsync(User);
+            BugTrackerUser user = await _userManager.GetUserAsync(User);
+
             if (user == null)
             {
                 return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
@@ -97,7 +97,10 @@ namespace BugTracker.Areas.Identity.Pages.Account.Manage
                 {
                     if (Input.FriendUserName == item.UserName)
                     {
-                        user.FriendsList.Add(item);
+
+                        UserFriend newFriendRequest = new UserFriend { sender = user, senderId = user.Id, reciever = item, recieverId = item.Id, accepted = false, sent = true };
+
+                        _context.UserFriends.Add(newFriendRequest);
 
                         break;
                     }

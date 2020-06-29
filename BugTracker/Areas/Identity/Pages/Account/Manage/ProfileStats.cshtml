@@ -43,11 +43,11 @@
     <button id="update-friend-button" type="submit" class="btn btn-primary">Submit</button>
 </form>
 
-@foreach (var item in Model.friendsList)
+@foreach (var item in Model.UserFriends)
 {
     <div>
-        @item.UserName
-        @item.Id
+        @item.reciever
+        @item.recieverId
         <br />
     </div>
 }
