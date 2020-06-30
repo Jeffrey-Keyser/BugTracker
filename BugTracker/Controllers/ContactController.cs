@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using BugTracker.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BugTracker.Controllers
@@ -13,5 +14,7 @@ namespace BugTracker.Controllers
         {
             return View();
         }
+
+
     }
 }

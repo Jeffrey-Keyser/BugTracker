@@ -168,18 +168,6 @@ namespace BugTracker.Controllers
             return View(userProjects);
         }
 
-        [HttpPost]
-        public async Task<IActionResult> AddFriend(UserFriend userFriend)
-        {
-            userFriend.accepted = true;
-
-            _context.UserFriends.Update(userFriend);
-
-            var result = await _context.SaveChangesAsync();
-
-            return RedirectToAction("Index");
-        }
-
 
         public IActionResult Privacy()
         {

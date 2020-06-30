@@ -32,6 +32,10 @@ namespace BugTracker.Models
         [Required]
         public string ProjectId { get; set; }
 
+        public string ? projectName { get; set; }
+
+        public string ? authorName { get; set; }
+
         [Required]
         public bool Completed { get; set; } = false;
 

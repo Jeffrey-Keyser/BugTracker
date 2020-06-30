@@ -1,46 +1,75 @@
-﻿@model IEnumerable<BugTracker.Models.Projects>
+﻿@model IEnumerable<BugTracker.Models.Tickets>
 
 @{
     ViewData["Title"] = "Index";
 }
 
-<h1 class="text-info">Pick Project to Examine</h1>
+<h1 class="text-info">Pick Ticket to Examine</h1>
 
-<p>
-    <a> Project List </a>
-</p>
-<table class="table">
+<table id="proj_table" class="display" style="width:100%">
     <thead>
         <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.ProjectName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Author)
-            </th>
+            <th>Ticket Name</th>
+            <th>Ticket Description</th>
+            <th>Project Name</th>
+            <th>Author</th>
+            <th>Date Created</th>
+            <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-    if (item.userId == ViewBag.userId)
-    {
-        <tr>
-            <td>
-                <div>
-                @Html.ActionLink(item.ProjectName, "Project", new { id = item.projectId })
-                </div>
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Author)
-            </td>
-            <td>
 
-                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
-            </td>
-        </tr>
-    }
-}
+        @foreach (var item in Model)
+        {
+            // TODO: Should switch this to use TicketList in Project Model
+            if (item.userId == ViewBag.userId)
+            {
+                <tr>
+                    <td>
+                        @Html.ActionLink(item.TicketName, "Ticket", "Ticket", new { id = item.TicketId })
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TicketDesc)
+                    </td>
+                    <td>
+                        @Html.ActionLink(item.projectName, "Project", new { id = item.ProjectId })
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.authorName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CreationDate)
+                    </td>
+                    <td>
+                        <form method="post" action="@Url.Action("Complete", "Ticket", new { id = item.TicketId } )">
+                            <div>
+                                @using (Html.BeginForm("Complete", "Ticket", new { id = item.TicketId }))
+                                {
+                                    @Html.AntiForgeryToken()
+                                    if (!item.Completed)
+                                    {
+                                        <button type="submit" class="btn btn-danger" value="Complete"> Not Completed </button>
+                                    }
+                                    else
+                                    {
+                                        <button type="submit" class="btn btn-success" value="Complete"> Completed </button>
+                                    }
+                                }
+                            </div>
+                        </form>
+                    </td>
+                </tr>
+            }
+        }
+
     </tbody>
+    <tfoot>
+    </tfoot>
 </table>
+
+
+
+
+@section Scripts{
+    <script src="~/js/DataTables/DataTable1.js"></script>
+}

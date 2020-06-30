@@ -23,7 +23,7 @@
                 <span asp-validation-for="TicketDesc" class="text-danger"></span>
             </div>
             <div>
-               @Html.DropDownListFor(Model => Model.TicketPriority, new SelectList(Enum.GetValues(typeof(Priority))), "Select a Priority")
+                @Html.DropDownListFor(Model => Model.TicketPriority, new SelectList(Enum.GetValues(typeof(Priority))), "Select a Priority")
             </div>
             <div>
                 <input type="hidden" asp-for="ProjectId" value="@ViewBag.projectId" />
@@ -33,6 +33,12 @@
             </div>
             <div>
                 <input type="hidden" asp-for="CreationDate" value="@ViewBag.creationDate" />
+            </div>
+            <div>
+                <input type="hidden" asp-for="projectName" value="@ViewBag.projectName" />
+            </div>
+            <div>
+                <input type="hidden" asp-for="authorName" value="@ViewBag.authorName" />
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />

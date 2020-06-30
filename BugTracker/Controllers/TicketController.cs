@@ -32,7 +32,7 @@ namespace BugTracker.Controllers
             var currentUserID = currentUser.FindFirst(ClaimTypes.NameIdentifier).Value;
             ViewBag.userId = currentUserID;
 
-            return View(await _context.Projects.ToListAsync());
+            return View(await _context.Tickets.ToListAsync());
         }
 
         public async Task<IActionResult> Ticket(string ? id)
@@ -180,6 +180,9 @@ namespace BugTracker.Controllers
             }
 
             var project = await _context.Projects.FirstOrDefaultAsync(m => m.projectId == id);
+            ViewBag.projectName = project.ProjectName;
+            ViewBag.authorName = project.Author;
+
             if (project == null)
             {
                 return NotFound();
@@ -193,7 +196,7 @@ namespace BugTracker.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(string? id, [Bind("TicketId, TicketName, TicketDesc, userId, ProjectId, TicketPriority")] Tickets Ticket)
+        public async Task<IActionResult> Create(string? id, [Bind("TicketId, TicketName, TicketDesc, userId, ProjectId, TicketPriority, projectName, authorName")] Tickets Ticket)
         {
             // 0:dd/MMM/yyyy HH:mm:ss
             // Get Current DateTime

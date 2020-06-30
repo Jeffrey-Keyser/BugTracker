@@ -54,7 +54,9 @@ namespace BugTracker.Areas.Identity.Pages.Account.Manage
 
             // Load the FriendsList
             UserFriends = await _context.UserFriends
-                                .Include(b => b.reciever)
+                                .Where(b => b.accepted == true)
+                                .Where(b => b.recieverId == user.Id)
+                                .Include(b => b.sender)
                                 .ToListAsync();
 
             Input = new InputModel()
@@ -97,11 +99,29 @@ namespace BugTracker.Areas.Identity.Pages.Account.Manage
                 {
                     if (Input.FriendUserName == item.UserName)
                     {
+                        // First search to make sure there isn't a request pending
+                        var similarRequest1 = await _context.UserFriends
+                                            .Where(i => i.senderId == user.Id)
+                                            .Where(j => j.recieverId == item.Id)
+                                            .ToListAsync();
 
-                        UserFriend newFriendRequest = new UserFriend { sender = user, senderId = user.Id, reciever = item, recieverId = item.Id, accepted = false, sent = true };
+                        // Try both sender and reciever switched
 
-                        _context.UserFriends.Add(newFriendRequest);
+                        var similarRequest2 = await _context.UserFriends
+                                            .Where(i => i.senderId == item.Id)
+                                            .Where(j => j.recieverId == user.Id)
+                                            .ToListAsync();
 
+                        if (similarRequest1.Count() > 0 || similarRequest2.Count() > 0)
+                        { } // Do nothing, request is already pending
+                        else
+                        {
+                            // Create new friend request
+
+                            UserFriend newFriendRequest = new UserFriend { sender = user, senderId = user.Id, reciever = item, recieverId = item.Id, accepted = false, sent = true };
+
+                            _context.UserFriends.Add(newFriendRequest);
+                        }
                         break;
                     }
                 }
