@@ -165,8 +165,14 @@
 </div>
 
 
-<div>
+<div class="containerTickets">
+    <div>
     @Html.ActionLink("Create New Ticket", "Create", "Ticket", new { id = Model.projectId })
+    </div>
+    
+    <div style="padding-left: 20px">
+    @Html.ActionLink("Completed Tickets Page", "Project", "Ticket", new { id = Model.projectId })
+    </div>
 </div>
 
 @section Scripts{

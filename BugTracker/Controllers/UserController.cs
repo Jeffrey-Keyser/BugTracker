@@ -65,5 +65,28 @@ namespace BugTracker.Controllers
             return RedirectToAction("Index");
         }
 
+
+        public async Task<IActionResult> SeenNotification(string authorId, string affectedId)
+        {
+
+            UserNotification notification = await _context.UserNotifications
+                                                .Where(i => i.AuthorId == authorId)
+                                                .Where(j => j.AffectedId == affectedId)
+                                                .SingleOrDefaultAsync();
+
+            // Hmm.... maybe dont need this
+            notification.NotificationSeen = true;
+
+
+            // Just remove the notification from database, save space
+            _context.Remove(notification);
+
+            var result = await _context.SaveChangesAsync();
+
+            return RedirectToAction("Index", "Home");
+
+
+        }
+
     }
 }

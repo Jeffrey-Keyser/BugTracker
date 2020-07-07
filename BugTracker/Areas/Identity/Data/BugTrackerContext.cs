@@ -32,7 +32,7 @@ namespace BugTracker.Data
             // Add your customizations after calling base.OnModelCreating(builder);
 
 
-            // UserProject Config
+            // UserProject Config (Many-to-Many)
 
             builder.Entity<UserProject>()
                 .HasKey(bc => new { bc.projectId, bc.Id });
@@ -64,7 +64,17 @@ namespace BugTracker.Data
                 .WithMany(b => b.UserFriends)
                 .HasForeignKey(bc => bc.recieverId)
                 .OnDelete(DeleteBehavior.Restrict);
-                 
+
+
+            // UserNotification Config
+
+            builder.Entity<UserNotification>()
+                .HasKey(bc => new { bc.AffectedId, bc.AuthorId });
+
+            /*
+            builder.Entity<UserNotification>()
+                .HasOne(bc => bc.AffectedUser)
+                .WithMany(b => b.UserNotifications) */
 
 
         }
@@ -78,6 +88,8 @@ namespace BugTracker.Data
 
 
         public DbSet<UserFriend> UserFriends { get; set; }
+
+        public DbSet<UserNotification> UserNotifications { get; set; }
 
 
     }

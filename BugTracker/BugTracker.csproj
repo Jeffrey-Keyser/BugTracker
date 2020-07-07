@@ -12,6 +12,8 @@
     <Compile Remove="Migrations\20200629175749_newFriendsList.Designer.cs" />
     <Compile Remove="Migrations\20200629181341_friendsList.cs" />
     <Compile Remove="Migrations\20200629181341_friendsList.Designer.cs" />
+    <Compile Remove="Migrations\20200707194758_userNotification.cs" />
+    <Compile Remove="Migrations\20200707194758_userNotification.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

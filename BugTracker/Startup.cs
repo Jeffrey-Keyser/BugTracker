@@ -47,9 +47,12 @@ namespace BugTracker
             services.AddScoped<IUserClaimsPrincipalFactory<BugTrackerUser>, AdditionalUserClaimsPrincipalFactory>();
 
             // Service Injection for FriendsList
-            // Used for partial view
+            // Used for login partial
             services.AddTransient<UserFriendService>();
 
+            // Service Injection for UserNotification
+            // Used in login partial
+            services.AddTransient<UserNotificationService>();
 
             // To access current user...
            // services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();

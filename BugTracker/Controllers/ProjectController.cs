@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using BugTracker.Areas.Identity.Data;
 using BugTracker.Data;
 using BugTracker.Models;
+using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.CodeAnalysis;
@@ -86,6 +87,7 @@ namespace BugTracker.Controllers
             var currentUserID = currentUser.FindFirst(ClaimTypes.NameIdentifier).Value;
             ViewBag.userId = currentUserID;
 
+            BugTrackerUser editAuthor = await _context.Users.FindAsync(currentUserID);
 
            /* if (id != Project.projectId)
             {
@@ -96,6 +98,31 @@ namespace BugTracker.Controllers
             {
                 try
                 {
+                    // Load the UserProjects
+                    var loadedUserProjects = await _context.UserProjects
+                                        .Where(p => p.projectId == Project.projectId)
+                                        .ToListAsync();
+
+
+                    // Create notification for everyone whose included on project
+                    foreach (var item in loadedUserProjects)
+                    {
+                        if (item.Id != editAuthor.Id)
+                        {
+                            UserNotification editNotification = new UserNotification
+                            {
+                                AuthorId = editAuthor.Id,
+                                NotificationAuthor = editAuthor,
+                                AffectedId = item.Id,
+                                AffectedUser = item.BugTrackerUser,
+                                NotificationMessage = $"An edit has been made to {Project.ProjectName}",
+                                NotificationSeen = false
+                            };
+
+                            _context.UserNotifications.Add(editNotification);
+                        }
+                    }
+
                     _context.Update(Project);
                     await _context.SaveChangesAsync();
                 }
