@@ -83,6 +83,8 @@ namespace BugTracker.Areas.Identity.Pages.Account.Manage
         {
             BugTrackerUser user = await _userManager.GetUserAsync(User);
 
+            bool requestSent = false;
+
             if (user == null)
             {
                 return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
@@ -117,6 +119,7 @@ namespace BugTracker.Areas.Identity.Pages.Account.Manage
                         else
                         {
                             // Create new friend request
+                            requestSent = true;
 
                             UserFriend newFriendRequest = new UserFriend { sender = user, senderId = user.Id, reciever = item, recieverId = item.Id, accepted = false, sent = true };
 
@@ -133,8 +136,14 @@ namespace BugTracker.Areas.Identity.Pages.Account.Manage
 
             await _signInManager.RefreshSignInAsync(user);
 
+            if (requestSent)
+                TempData["Msg"] = "Success";
+            else
+                TempData["Msg"] = "Failure";
 
             return RedirectToPage();
         }
+
+
     }
 }

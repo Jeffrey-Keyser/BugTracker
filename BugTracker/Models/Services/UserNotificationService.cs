@@ -41,6 +41,24 @@ namespace BugTracker.Models.Services
             var result = _context.UserNotifications.ToList()
                             .Where(r => r.AffectedId == userId)
                             .Where(p => p.NotificationSeen == false)
+                            .Where(b => b.Bug == false)
+                            .ToList();
+
+            notifications = result.Count();
+
+            return notifications;
+        }
+
+        public int numBugs()
+        {
+            var userId = _httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            int notifications;
+
+            var result = _context.UserNotifications.ToList()
+                            .Where(r => r.AffectedId == userId)
+                            .Where(p => p.NotificationSeen == false)
+                            .Where(b => b.Bug == true)
                             .ToList();
 
             notifications = result.Count();
@@ -49,13 +67,14 @@ namespace BugTracker.Models.Services
         }
 
 
-        public ICollection<UserNotification> GetNotifications()
+        public ICollection<UserNotification> GetNotifications(bool bug)
         {
             var userId = _httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
 
             ICollection<UserNotification> result = _context.UserNotifications
                 .Where(r => r.AffectedId == userId)
                 .Where(p => p.NotificationSeen == false)
+                .Where(b => b.Bug == bug)
                 .Include(j => j.NotificationAuthor)
                 .ToList();
 

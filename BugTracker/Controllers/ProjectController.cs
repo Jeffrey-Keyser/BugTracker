@@ -116,7 +116,8 @@ namespace BugTracker.Controllers
                                 AffectedId = item.Id,
                                 AffectedUser = item.BugTrackerUser,
                                 NotificationMessage = $"An edit has been made to {Project.ProjectName}",
-                                NotificationSeen = false
+                                NotificationSeen = false,
+                                Bug = false
                             };
 
                             _context.UserNotifications.Add(editNotification);

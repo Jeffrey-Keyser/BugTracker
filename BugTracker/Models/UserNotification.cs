@@ -20,6 +20,11 @@ namespace BugTracker.Models
 
         public string NotificationMessage { get; set; }
 
+
+        // Used for new bug notifications
+        // TODO: Switch to Enum?
+        public Boolean Bug { get; set; }
+
         public Boolean NotificationSeen { get; set; }
 
     }

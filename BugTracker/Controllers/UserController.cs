@@ -74,7 +74,7 @@ namespace BugTracker.Controllers
                                                 .Where(j => j.AffectedId == affectedId)
                                                 .SingleOrDefaultAsync();
 
-            // Hmm.... maybe dont need this
+            // Hmm.... maybe dont need this variable
             notification.NotificationSeen = true;
 
 

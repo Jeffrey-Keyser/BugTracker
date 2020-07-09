@@ -227,6 +227,35 @@ namespace BugTracker.Controllers
 
             if (ModelState.IsValid)
             {
+
+                // Load the UserProjects
+                var loadedUserProjects = await _context.UserProjects
+                                    .Where(p => p.projectId == Ticket.ProjectId)
+                                    .ToListAsync();
+
+                BugTracker.Areas.Identity.Data.BugTrackerUser user = await _context.Users.FindAsync(Ticket.userId);
+
+                // Create notification for everyone whose included on project
+                foreach (var item in loadedUserProjects)
+                {
+                    if (item.Id != Ticket.userId)
+                    {
+                        UserNotification editNotification = new UserNotification
+                        {
+                            AuthorId = Ticket.userId,
+                            NotificationAuthor = user,
+                            AffectedId = item.Id,
+                            AffectedUser = item.BugTrackerUser,
+                            NotificationMessage = $"A new bug has been created in {Ticket.projectName}",
+                            NotificationSeen = false,
+                            Bug = true
+                        };
+
+                        _context.UserNotifications.Add(editNotification);
+                    }
+                }
+
+
                 _context.Tickets.Add(Ticket);
                 await _context.SaveChangesAsync();
                 return RedirectToAction("Project", new { id = Ticket.ProjectId });
