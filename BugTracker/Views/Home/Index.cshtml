@@ -60,7 +60,13 @@
 }
 else
 {
-    <div class="profilecorner"> ADD USER INFORMATION </div>
+<div class="profilecorner">
+    <div class="card-img-top">Your Profile</div>
+    <div class="card-body">
+        <h5 class="card-title">@SignInManager.UserManager.GetUserAsync(User).Result.FirstName</h5>
+        <p class="card-text">@SignInManager.UserManager.GetUserAsync(User).Result.Email</p>
+    </div>
+</div>
 
     <div class="text-center jumbotron">
         <h1 class="display-4">Welcome @User.Identity.Name!</h1>

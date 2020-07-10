@@ -239,6 +239,9 @@ namespace BugTracker.Controllers
             string friendUserName = form["Friend"];
             string id = form["Id"];
 
+            // For the toast
+            bool requestSent = false;
+
             var Project = await _context.Projects.FindAsync(id);
 
             if (friendUserName != null)
@@ -254,12 +257,19 @@ namespace BugTracker.Controllers
                         item.UserProjects.Add(newUserProject);
                         // TODO: Check for duplicates
 
+                        requestSent = true;
+
                         // TODO: Add functionality so that users / project collections are useful
                         break;
                     }
                 }
             }
 
+            // Display correct toast
+            if (requestSent)
+                TempData["Msg"] = "Success";
+            else
+                TempData["Msg"] = "Failure";
 
             var result = await _context.SaveChangesAsync();
 
