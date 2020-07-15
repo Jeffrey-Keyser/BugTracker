@@ -62,6 +62,28 @@ namespace BugTracker.Models.Services
             return result;
         }
 
+        public int getFriendCount()
+        {
+            var userId = _httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            int friends;
+
+            var result1 = _context.UserFriends.ToList()
+                            .Where(r => r.recieverId == userId)
+                            .Where(p => p.accepted == true)
+                            .ToList();
+
+            var result2 = _context.UserFriends.ToList()
+                .Where(r => r.senderId == userId)
+                .Where(p => p.accepted == true)
+                .ToList();
+
+            friends = result1.Count() + result2.Count();
+
+            return friends;
+
+
+        }
 
     }
 }

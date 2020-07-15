@@ -4,46 +4,46 @@
     ViewData["Title"] = "Project";
 }
 
-    <div class="projectcorner" style="background-image: linear-gradient( @Html.Raw(ViewBag.projectCornerColorPrimary) , @Html.Raw(ViewBag.projectCornerColorSecond)">
+        <div class="projectcorner" style="background-image: linear-gradient( @Html.Raw(ViewBag.projectCornerColorPrimary) , @Html.Raw(ViewBag.projectCornerColorSecond)">
 
 
-        <div>
-            <h2>@Model.ProjectName </h2>
-            @using (Html.BeginForm("Project", "Project", FormMethod.Post))
-            {
-                <div>
-                    <p> Enter user to add to project </p>
-                    @Html.TextBox("Friend")
-                    <input name="Id" type="hidden" value="@Model.projectId" />
-                    <input type="submit" value="submit" />
-                </div>
-            }
-        </div>
-        <br />
-        <form method="post" action="@Url.Action("Complete", "Project", new { id = Model.projectId } )">
-            <div class="col-6" style="align-content: center">
-                @using (Html.BeginForm("Complete", "Project", new { id = Model.projectId }))
+            <div>
+                <h2>@Model.ProjectName </h2>
+                @using (Html.BeginForm("Project", "Project", FormMethod.Post))
                 {
-                    if (!Model.completed)
-                    {
-                        <button type="submit" class="btn btn-danger" value="Complete"> Not Completed </button>
-                    }
-                    else
-                    {
-                        <button type="submit" class="btn btn-success" value="Complete"> Completed </button>
-                    }
+                    <div>
+                        <p> Enter user to add to project </p>
+                        @Html.TextBox("Friend")
+                        <input name="Id" type="hidden" value="@Model.projectId" />
+                        <input type="submit" value="submit" />
+                    </div>
                 }
             </div>
-        </form>
-    </div>
+            <br />
+            <form method="post" action="@Url.Action("Complete", "Project", new { id = Model.projectId } )">
+                <div class="col-6" style="align-content: center">
+                    @using (Html.BeginForm("Complete", "Project", new { id = Model.projectId }))
+                    {
+                        if (!Model.completed)
+                        {
+                            <button type="submit" class="btn btn-danger" value="Complete"> Not Completed </button>
+                        }
+                        else
+                        {
+                            <button type="submit" class="btn btn-success" value="Complete"> Completed </button>
+                        }
+                    }
+                </div>
+            </form>
+        </div>
 
 
 
 
-<!DOCTYPE HTML>
-<html>
-<head>
-    <script>
+        <!DOCTYPE HTML>
+        <html>
+        <head>
+            <script>
     window.onload = function () {
 
         CanvasJS.addColorSet("ticketShades",
@@ -96,118 +96,119 @@
 
 
     }
-    </script>
-</head>
-<body>
-    <div id="chartContainer" style="height: 370px; width: 100%;"></div>
-    <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
-</body>
-</html>
+            </script>
+        </head>
+        <body>
+            <div id="chartContainer" style="height: 370px; width: 100%;"></div>
+            <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+        </body>
+    </html>
 
-<br />
-<br />
+    <br />
+    <br />
 
-<div id="wrapper">
+    <div id="wrapper">
 
-    <div id="toastSuccess" class="toast" style="background-color: lightgreen; position: absolute; top: 0; right: 0;" data-delay="2000">
-        <div class="toast-header">
-            <strong style="text-align: center" class="mr-auto">Success</strong>
-            <small></small>
-            <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
+        <div id="toastSuccess" class="toast" style="background-color: lightgreen; position: absolute; top: 0; right: 0;" data-delay="2000">
+            <div class="toast-header">
+                <strong style="text-align: center" class="mr-auto">Success</strong>
+                <small></small>
+                <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="toast-body">
+                User was successfully added!
+            </div>
         </div>
-        <div class="toast-body">
-            User was successfully added!
+
+
+
+        <div id="toastFailure" class="toast" style="background-color: lightcoral; position: absolute; top: 0; right: 0;" data-delay="2000">
+            <div class="toast-header">
+                <strong style="text-align:center" class="mr-auto">Failure</strong>
+                <small></small>
+                <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="toast-body">
+                Error adding user to project!
+            </div>
         </div>
-    </div>
 
 
-
-    <div id="toastFailure" class="toast" style="background-color: lightcoral; position: absolute; top: 0; right: 0;" data-delay="2000">
-        <div class="toast-header">
-            <strong style="text-align:center" class="mr-auto">Failure</strong>
-            <small></small>
-            <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
-        <div class="toast-body">
-            Error adding user to project!
-        </div>
-    </div>
-
-
-    <div id="left">
-        <p> Outstanding Tickets </p>
-        <table class="table table-striped border">
-            <tr class="table-secondary">
-                <td>
-                    <p> Project Name </p>
-                </td>
-                <td>
-                    <p> Author </p>
-                </td>
-            </tr>
-            @foreach (var item in Model.TicketList)
-            {
-                if (!item.Completed)
+        <div id="left">
+            <p> Outstanding Tickets </p>
+            <table class="table table-striped border">
+                <tr class="table-secondary">
+                    <td>
+                        <p> Project Name </p>
+                    </td>
+                    <td>
+                        <p> Author </p>
+                    </td>
+                </tr>
+                @foreach (var item in Model.TicketList)
+                {
+                    if (!item.Completed)
+                    {
+                        <tr>
+                            <td>
+                                @Html.ActionLink(item.TicketName, "Ticket", "Ticket", new { id = item.TicketId })
+                            </td>
+                            <td>
+                                @item.TicketDesc
+                            </td>
+                        </tr>
+                    }
+                }
+            </table>
+            <br />
+            <br />
+            <p> Users Assigned </p>
+            <table class="table table-striped border">
+                <tr class="table-secondary">
+                    <td>
+                        <p> Username </p>
+                    </td>
+                    <td>
+                        <p> Id </p>
+                    </td>
+                </tr>
+                @foreach (var item in Model.UserProjects)
                 {
                     <tr>
                         <td>
-                            @Html.ActionLink(item.TicketName, "Ticket", "Ticket", new { id = item.TicketId })
+                            @item.BugTrackerUser.UserName
                         </td>
                         <td>
-                            @item.TicketDesc
+                            @item.Id
                         </td>
                     </tr>
                 }
-            }
-        </table>
-        <br />
-        <br />
-        <p> Users Assigned </p>
-        <table class="table table-striped border">
-            <tr class="table-secondary">
-                <td>
-                    <p> Username </p>
-                </td>
-                <td>
-                    <p> Id </p>
-                </td>
-            </tr>
-            @foreach (var item in Model.UserProjects)
-            {
-                <tr>
-                    <td>
-                        @item.BugTrackerUser.UserName
-                    </td>
-                    <td>
-                        @item.Id
-                    </td>
-                </tr>
-            }
-        </table>
+            </table>
+        </div>
+
+        <div id="right">
+
+            <p> Weekly Statistics </p>
+
+            <div id="chartContainer2" style="height: 370px; width: 100%;"></div>
+        </div>
     </div>
 
-    <div id="right">
 
-        <p> Weekly Statistics </p>
+    <div class="containerTickets">
+        <div>
+            @Html.ActionLink("Create New Ticket", "Create", "Ticket", new { id = Model.projectId })
+        </div>
 
-        <div id="chartContainer2" style="height: 370px; width: 100%;"></div>
-    </div>
-</div>
-
-
-<div class="containerTickets">
-    <div>
-        @Html.ActionLink("Create New Ticket", "Create", "Ticket", new { id = Model.projectId })
+        <div style="padding-left: 20px">
+            @Html.ActionLink("Completed Tickets Page", "Project", "Ticket", new { id = Model.projectId })
+        </div>
     </div>
 
-    <div style="padding-left: 20px">
-        @Html.ActionLink("Completed Tickets Page", "Project", "Ticket", new { id = Model.projectId })
-    </div>
-</div>
 
 @section Scripts{
     <script src="~/js/complete.js"></script>

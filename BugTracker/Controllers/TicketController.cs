@@ -51,24 +51,40 @@ namespace BugTracker.Controllers
             }
 
 
+            /* COLORS
+            "#d4edda"
+            "#fff3cd"
+            "#f8d7da"
+            "#cce5ff"
+            */
             // Set color based on the ticket's priority
             String alertColor;
             switch ((int)ticket.TicketPriority)
             {
                 case 0:
                     alertColor = "alert-success";
+                    ViewBag.background = "#d4edda";
+                    ViewBag.backgroundLight = "#dbf0e0";
                     break;
                 case 1:
                     alertColor = "alert-warning";
+                    ViewBag.background = "#fff3cd";
+                    ViewBag.backgroundLight = "#fff9e6";
                     break;
                 case 2:
                     alertColor = "alert-danger";
+                    ViewBag.background = "#f8d7da";
+                    ViewBag.backgroundLight = "#fbe9eb";
                     break;
                 case 3:
                     alertColor = "alert-primary";
+                    ViewBag.background = "#cce5ff";
+                    ViewBag.backgroundLight = "#e6f2ff";
                     break;
                 default:
                     alertColor = "alert-secondary";
+                    ViewBag.background = "#d4edda";
+                    ViewBag.backgroundLight = "#dbf0e0";
                     break;
             }
 

@@ -2,6 +2,7 @@
 @using BugTracker.Areas.Identity.Data
 @using Microsoft.AspNetCore.Authorization
 
+@inject BugTracker.Models.Services.UserFriendService UserFriendService
 @inject SignInManager<BugTrackerUser> SignInManager
 @inject UserManager<BugTrackerUser> UserManager
 @model IEnumerable<BugTracker.Models.Projects>;
@@ -65,136 +66,89 @@ else
     <div class="card-body">
         <h5 class="card-title">@SignInManager.UserManager.GetUserAsync(User).Result.FirstName</h5>
         <p class="card-text">@SignInManager.UserManager.GetUserAsync(User).Result.Email</p>
+        <small>
+            Number Friends: @UserFriendService.getFriendCount() <br />
+            Number Projects: @Model.Count()
+        </small>
     </div>
 </div>
 
     <div class="text-center jumbotron">
         <h1 class="display-4">Welcome @User.Identity.Name!</h1>
-        <p class="lead"> This is a simple bug tracking implementation created by a guy named Jeff</p>
+        <p class="lead"> This is a barebones bug tracking implementation created by a guy named Jeff</p>
         <hr class="my-4" />
         <p class="lead"> If you wish to know more about me or how I implemented it, follow the link below</p>
         <a class="btn btn-primary btn-lg" href="https://localhost:44364/Contact/Index" role="button"> Learn more</a>
     </div>
 
-
-    <div class="my-3 p-3 bg-white rounded shadow-sm">
-        <div class="container col-mb-12">
-            <h1 class="text-info">My Recent Projects</h1>
-            <br />
+    <div class="containerTickets">
+        <div class="col-6 bg-white rounded shadow-sm">
             <div class="container col-mb-12">
-                <table id="proj_table" class="display" style="width: 100%">
-                    <thead>
-                        <tr>
-                            <th style="font-size:22px">Project Name</th>
-                            <th style="font-size:22px">Author</th>
-                            <th style="font-size:22px">Programming Language</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @if (Model.Count() > 0)
-                        {
-                            var display_num = 3;
-                            var i = 0;
-                            @foreach (var item in Model)
+                <h1 class="text-info">My Recent Projects</h1>
+                <br />
+                <div class="container col-mb-12">
+                    <table id="proj_table" class="display" style="width: 100%">
+                        <thead>
+                            <tr>
+                                <th style="font-size:18px">Project Name</th>
+                                <th style="font-size:18px">Author</th>
+                                <th style="font-size:18px">Programming Language</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (Model.Count() > 0)
                             {
-                                if (item.completed)
+                                var display_num = 3;
+                                var i = 0;
+                                @foreach (var item in Model)
                                 {
-                                    if ((Model.Count() - display_num) <= i)
+                                    if (!item.completed)
                                     {
-                                    <tr>
+                                        if ((Model.Count() - display_num) <= i)
+                                        {
+                                            <tr>
 
-                                        <td style="font-size:22px">
-                                            @Html.ActionLink(item.ProjectName, "Project", "Project", new { id = item.projectId })
-                                        </td>
-                                        <td style="font-size:22px">
-                                            @Html.DisplayFor(modelItem => item.Author)
-                                        </td>
-                                        <td style="font-size:22px">
-                                            @Html.DisplayFor(modelItem => item.projectLanguage)
-                                        </td>
-                                    </tr>
+                                                <td style="font-size:18px">
+                                                    @Html.ActionLink(item.ProjectName, "Project", "Project", new { id = item.projectId })
+                                                </td>
+                                                <td style="font-size:18px">
+                                                    @Html.DisplayFor(modelItem => item.Author)
+                                                </td>
+                                                <td style="font-size:18px">
+                                                    @Html.DisplayFor(modelItem => item.projectLanguage)
+                                                </td>
+                                            </tr>
                                         }
                                         i++;
                                     }
                                 }
                             }
-                        else
-                        {
-                            <tr>
-                                <td></td>
-                                <td></td>
-                                <img src="..." class="rounded col-mb-4" alt="...">
-                                <img src="..." class="rounded col-mb-4" alt="...">
-                                <img src="..." class="rounded col-mb-4" alt="...">
-                            </tr>
-                        }
-                    </tbody>
-                    <tfoot>
-                    </tfoot>
-                </table>
+                            else
+                            {
+                                <tr>
+                                    <td></td>
+                                    <td></td>
+                                    <img src="..." class="rounded col-mb-4" alt="...">
+                                    <img src="..." class="rounded col-mb-4" alt="...">
+                                    <img src="..." class="rounded col-mb-4" alt="...">
+                                </tr>
+                            }
+                        </tbody>
+                        <tfoot>
+                        </tfoot>
+                    </table>
+                </div>
+
+                <small class="d-block text-right mt-3" style="font-size: 20px">
+                    <a href="https://localhost:44364/Project/Index">All Projects</a>
+                </small>
+
             </div>
         </div>
-    </div>
 
-        // Port Code to a method in HomeController
-        /*
-        var ticket1 = new Tickets();
-        var ticket2 = new Tickets();
-        var ticket3 = new Tickets();
 
-        int index = 0;
-
-        index = 0;
-        // Store the 3 most recent tickets
-        foreach (var ticket in ViewBag.Tickets)
-        {
-        if (ticket.userId == ViewBag.userId)
-        {
-
-        if (index % 3 == 0)
-        {
-        ticket1 = ticket;
-        }
-        else if (index % 3 == 1)
-        {
-        ticket2 = ticket;
-        }
-        else if (index % 3 == 2)
-        {
-        ticket3 = ticket;
-        }
-
-        index++;
-        }
-        }
-
-        // Reorganization
-        if (index % 3 == 0)
-        {
-        var tempT3 = ticket3;
-
-        ticket3 = ticket1;
-        ticket1 = tempT3;
-        }
-        else if (index % 3 == 1)
-        {
-        var tempT2 = ticket2;
-
-        ticket2 = ticket3;
-        ticket3 = tempT2;
-
-        }
-        else if (index % 3 == 2)
-        {
-        var tempT1 = ticket1;
-
-        ticket1 = ticket2;
-        ticket2 = tempT1;
-        }
-        */
-
-        <div class="my-3 p-3 bg-white rounded shadow-sm">
-            <h6 class="border-bottom border-gray pb-2 mb-0">Recent Tickets</h6>
+        <div class="col-6 bg-white rounded shadow-sm">
+            <h1 class="text-info">My Recent Tickets</h1>
 
             <div class="media text-muted pt-3" style="background: @Html.Raw(ViewBag.ticket1Color)">
                 @if (ViewBag.ticket1.TicketName != null)
@@ -239,6 +193,6 @@ else
                 <a href="https://localhost:44364/Ticket/Index">All Tickets</a>
             </small>
         </div>
-
+    </div>
         }
 

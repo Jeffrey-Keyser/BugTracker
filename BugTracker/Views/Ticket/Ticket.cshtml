@@ -3,105 +3,109 @@
 @{
     ViewData["Title"] = "Ticket";
 }
-
-<div class="card profilecorner" style="border-radius: 15px; width: 18rem;">
-    <div class="card-img-top">@Html.Raw(ViewBag.projectImage)</div>
-    <div class="card-body">
-        <h5 class="card-title">@ViewBag.ProjectName</h5>
-        <p class="card-text">Project Description</p>
-        <a href="@Url.Action("Project", "Project", new { id = Model.ProjectId } )" class="btn btn-primary">Go to Project</a>
-    </div>
-</div>
-
-<div class="alert @ViewBag.alertColor">
-    <h1>@Model.TicketName -- @Model.TicketPriority <tab1> @Model.CreationDate</tab1></h1>
-</div>
-
-<div class="col-12 border p-3 mt-3">
-
-    <div class="col-12 p-3 mt-3">
-
-        <h2 class="text-info"> Ticket Information </h2>
-
-        <form asp-action="Edit">
-            @Html.AntiForgeryToken()
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="TicketId" value="@Model.TicketId" />
-            <input type="hidden" asp-for="userId" value="@Model.userId" />
-            <input type="hidden" asp-for="ProjectId" value="@Model.ProjectId" />
-            <div class="=form-group row">
-                <div class="col-4">
-                    <p> Ticket Name </p>
-                </div>
-                <div class="col-6">
-                    <input asp-for="TicketName" class="form-control" />
-                    <span asp-validation-for="TicketName" class="text-danger"></span>
-                </div>
-            </div>
-            <div class="=form-group row">
-                <div class="col-4">
-                    <p> Ticket Description </p>
-                </div>
-                <div class="col-6">
-                    <textarea asp-for="TicketDesc" class="form-control" rows="5" id="comment"></textarea>
-                    <span asp-validation-for="TicketDesc" class="text-danger"></span>
-                </div>
-            </div>
-            <div class="=form-group row">
-                <div class="col-4">
-                    <p> Ticket Priority </p>
-                </div>
-                <div class="col-6">
-                    @Html.DropDownListFor(Model => Model.TicketPriority, new SelectList(Enum.GetValues(typeof(Priority))), "Select a Ticket Priority")
-                    <span asp-validation-for="TicketPriority" class="text-danger"></span>
-                </div>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
-            </div>
-        </form>
-
-        <br />
-        <br />
-
-        <div class="containerTickets">
-            <form method="post" action="@Url.Action("Complete", "Ticket", new { id = Model.TicketId } )">
-                <div class="col-4">
-                    @using (Html.BeginForm("Complete", "Ticket", new { id = Model.TicketId }))
-                    {
-                        @Html.AntiForgeryToken()
-                        if (!Model.Completed)
-                        {
-                            <button type="submit" class="btn btn-danger" value="Complete"> Not Completed </button>
-                        }
-                        else
-                        {
-                            <button type="submit" class="btn btn-success" value="Complete"> Completed </button>
-                        }
-                    }
-                </div>
-            </form>
-
-            <div class="col-8 align-baseline">
-                @using (Html.BeginForm("Delete", "Ticket", new { id = Model.TicketId }))
-                {
-                    @Html.AntiForgeryToken()
-
-                    <a style="color:whitesmoke" class="btn btn-danger delete"
-                       data-id="@Model.TicketId"
-                       data-controller="Ticket"
-                       data-action="Delete"
-                       data-body-message="Are you sure you wish to delete?"
-                       data-redirect-url="/Ticket/Project?id=@Model.ProjectId"> Delete </a>
-
-                }
+    <body style="background-color: @Html.Raw(ViewBag.background)">
+        <div class="card profilecorner shadow-lg" style="border-radius: 15px; width: 18rem; background-color: @Html.Raw(ViewBag.backgroundLight)">
+            <div class="card-img-top">@Html.Raw(ViewBag.projectImage)</div>
+            <div class="card-body">
+                <h5 class="card-title" style="font-size:28px">@ViewBag.ProjectName</h5>
+                <a href="@Url.Action("Project", "Project", new { id = Model.ProjectId } )" class="btn btn-primary">Go to Project</a>
             </div>
         </div>
 
-    </div>
+        <div class="alert @ViewBag.alertColor; shadow-lg">
+            <h1>@Model.TicketName by @Model.authorName</h1>
+        </div>
 
-</div>
+        <div class="col-12 shadow-lg p-3 mt-3">
 
+            <div class="col-12 p-3 mt-3">
+
+                <h2> Ticket Information </h2>
+
+                <small> @Model.CreationDate </small>
+                <br />
+                <br />
+
+
+
+                <form asp-action="Edit">
+                    @Html.AntiForgeryToken()
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <input type="hidden" asp-for="TicketId" value="@Model.TicketId" />
+                    <input type="hidden" asp-for="userId" value="@Model.userId" />
+                    <input type="hidden" asp-for="ProjectId" value="@Model.ProjectId" />
+                    <div class="=form-group row">
+                        <div class="col-4">
+                            <p> Ticket Name </p>
+                        </div>
+                        <div class="col-6">
+                            <input asp-for="TicketName" class="form-control" />
+                            <span asp-validation-for="TicketName" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="=form-group row">
+                        <div class="col-4">
+                            <p> Ticket Description </p>
+                        </div>
+                        <div class="col-6">
+                            <textarea asp-for="TicketDesc" class="form-control" rows="5" id="comment"></textarea>
+                            <span asp-validation-for="TicketDesc" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="=form-group row">
+                        <div class="col-4">
+                            <p> Ticket Priority </p>
+                        </div>
+                        <div class="col-6">
+                            @Html.DropDownListFor(Model => Model.TicketPriority, new SelectList(Enum.GetValues(typeof(Priority))), "Select a Ticket Priority")
+                            <span asp-validation-for="TicketPriority" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="Save" class="btn btn-primary" />
+                    </div>
+                </form>
+
+                <br />
+                <br />
+
+                <form method="post" action="@Url.Action("Complete", "Ticket", new { id = Model.TicketId } )">
+                    <div>
+                        <p> Status: </p>
+                        @using (Html.BeginForm("Complete", "Ticket", new { id = Model.TicketId }))
+                        {
+                            @Html.AntiForgeryToken()
+                            if (!Model.Completed)
+                            {
+                                <button type="submit" class="btn btn-danger" value="Complete"> Not Completed </button>
+                            }
+                            else
+                            {
+                                <button type="submit" class="btn btn-success" value="Complete"> Completed </button>
+                            }
+                        }
+                    </div>
+                </form>
+
+                <div style="position:absolute; bottom:0; right:0">
+                    @using (Html.BeginForm("Delete", "Ticket", new { id = Model.TicketId }))
+                    {
+                        @Html.AntiForgeryToken()
+
+                        <a style="color:whitesmoke" class="btn btn-danger delete"
+                           data-id="@Model.TicketId"
+                           data-controller="Ticket"
+                           data-action="Delete"
+                           data-body-message="Are you sure you wish to delete?"
+                           data-redirect-url="/Ticket/Project?id=@Model.ProjectId"> Delete </a>
+
+                    }
+                </div>
+
+            </div>
+
+        </div>
+    </body>
 
 @section Scripts{
     <script src="~/js/delete.js"></script>
